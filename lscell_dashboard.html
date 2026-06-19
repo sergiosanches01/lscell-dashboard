@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LSCELL — Dashboard Semanal</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0d0d0d;color:#eee;font-family:Arial,sans-serif;font-size:13px;padding:16px}
+h1{color:#cc0000;text-align:center;font-size:18px;letter-spacing:2px;margin-bottom:2px}
+.sub{text-align:center;color:#555;font-size:11px;margin-bottom:4px}
+.semana-badge{text-align:center;margin-bottom:14px}
+.sbadge{display:inline-block;background:#1a0000;border:1px solid #cc0000;color:#cc0000;padding:4px 16px;border-radius:99px;font-size:12px;font-weight:bold;letter-spacing:1px}
+#tabs{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:14px}
+.tab{padding:6px 13px;border-radius:4px;border:1px solid #2a2a2a;background:#141414;cursor:pointer;color:#777;font-size:12px;transition:.15s}
+.tab.on{background:#cc0000;border-color:#cc0000;color:#fff;font-weight:bold}
+.tab:hover:not(.on){border-color:#cc0000;color:#cc0000}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:10px;margin-bottom:14px}
+.card{background:#141414;border:1px solid #222;border-radius:7px;padding:12px 14px}
+.lb{font-size:10px;color:#555;text-transform:uppercase;letter-spacing:.8px}
+.vl{font-size:19px;font-weight:bold;margin:3px 0 1px}
+.sb{font-size:11px;color:#555}
+.box{background:#141414;border:1px solid #1e1e1e;border-radius:7px;padding:14px;margin-bottom:12px}
+.bt{font-size:11px;color:#cc0000;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;font-weight:bold}
+table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:4px}
+th{background:#111;color:#cc0000;padding:7px 8px;text-align:left;border-bottom:1px solid #222;font-size:10px;text-transform:uppercase;letter-spacing:.6px}
+td{padding:6px 8px;border-bottom:1px solid #181818}
+tr:hover td{background:#161616}
+.g{color:#2ecc71;font-weight:bold}.r{color:#e74c3c;font-weight:bold}.y{color:#f39c12;font-weight:bold}.d{color:#444}
+.bdg{padding:2px 7px;border-radius:99px;font-size:10px;font-weight:bold;display:inline-block}
+.bg{background:#1a3a25;color:#2ecc71}.br2{background:#3a1515;color:#e74c3c}.by{background:#3a2a08;color:#f39c12}.bp{background:#1a1a3a;color:#7799ff}
+.ins{background:#141414;border-left:3px solid #cc0000;padding:8px 12px;border-radius:0 5px 5px 0;margin-bottom:8px;font-size:12px;line-height:1.6;color:#bbb}
+.ins.gr{border-left-color:#2ecc71}.ins.ye{border-left-color:#f39c12}.ins.re{border-left-color:#e74c3c}
+.ins strong{color:#eee}
+.loja-btns{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.lbtn{padding:6px 14px;border-radius:4px;border:1px solid #333;background:#111;cursor:pointer;color:#888;font-size:11px;transition:.15s}
+.lbtn.on{border-color:#cc0000;background:#1a0000;color:#cc0000;font-weight:bold}
+.lbtn:hover:not(.on){border-color:#cc0000;color:#cc0000}
+.prog-wrap{background:#1a1a1a;border-radius:3px;height:26px;position:relative;overflow:hidden;margin-bottom:6px}
+.prog-real{position:absolute;left:0;top:0;height:100%;background:#e74c3c;display:flex;align-items:center;padding-left:8px;font-size:11px;font-weight:bold;color:#fff;white-space:nowrap;overflow:hidden}
+.prog-proj{position:absolute;top:0;height:100%;background:repeating-linear-gradient(45deg,#7a5500,#7a5500 4px,#5a3a00 4px,#5a3a00 8px);display:flex;align-items:center;padding-left:6px;font-size:10px;color:#f39c12;white-space:nowrap;overflow:hidden}
+.prog-meta{position:absolute;top:0;height:100%;width:2px;background:rgba(255,255,255,.4)}
+.prog-lbl{position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:10px;color:#aaa;pointer-events:none}
+.alerta{background:#1a0800;border:1px solid #cc4400;border-radius:6px;padding:10px 14px;margin-bottom:8px;font-size:12px;line-height:1.6}
+.alerta.ok{background:#001a08;border-color:#007733}
+.alerta.warn{background:#1a1000;border-color:#cc8800}
+.semrow{display:flex;gap:6px;margin-bottom:8px}
+.semcell{flex:1;border-radius:5px;padding:8px;text-align:center;font-size:11px}
+.semcell.real{background:#1a1a1a;border:1px solid #333}
+.semcell.proj{background:#1a1000;border:1px solid #5a3a00}
+.semcell.future{background:#0d0d0d;border:1px dashed #2a2a2a}
+.semcell .slbl{font-size:9px;color:#555;text-transform:uppercase;margin-bottom:4px}
+.semcell .sval{font-size:14px;font-weight:bold}
+.semcell .spct{font-size:10px;margin-top:2px}
+</style>
+</head>
+<body>
+<h1>LSCELL — DASHBOARD SEMANAL</h1>
+<p class="sub">Gerado em: Segunda, 16 de Junho de 2026</p>
+<div class="semana-badge"><span class="sbadge">📅 JUNHO 2026 — SEMANA 2 DE 4</span></div>
+<div id="tabs"></div>
+<div id="content"></div>
+
+<script>
+/* =========== DADOS DO MÊS ATUAL =========== */
+/* ===== DADOS_START ===== */
+const MES_ATUAL = 'Junho';
+const SEM_ATUAL = 2;
+const META_MES_GERAL = 210000;
+
+const GERAL = {
+  s: [
+    {n:'S1', fat:52779, meta:63000, real:true},
+    {n:'S2', fat:58296, meta:42000, real:true},
+    {n:'S3', fat:49528, meta:52500, real:false},
+    {n:'S4', fat:51798, meta:52500, real:false},
+  ],
+  fat_real: 111075,
+  fat_proj: 101326,
+  meta: 210000,
+  tm_real: (97.99+110.68)/2,
+  orc_real: 419+437,
+};
+GERAL.fat_total_proj = GERAL.fat_real + GERAL.fat_proj;
+
+const LOJAS = {
+  'Esteio': {
+    meta:45000, tm:[89.63,113.66], orc:163,
+    s_real:[11208,12677], s_meta:[13500,9000,11250,11250],
+    hist_s3:[8093,5165,12109,6037,5913], hist_s4:[7686,8282,12032,3904,14788]
+  },
+  'Esteio Shop.': {
+    meta:35000, tm:[128.53,72.49], orc:143,
+    s_real:[9591,6809], s_meta:[10500,7000,8750,8750],
+    hist_s3:[5009,3949,7177,7681,9768], hist_s4:[6802,4396,7144,6178,6770]
+  },
+  'Canoas': {
+    meta:35000, tm:[78.51,117.41], orc:180,
+    s_real:[9047,11965], s_meta:[10500,7000,8750,8750],
+    hist_s3:[5679,3994,9190,8823,10778], hist_s4:[12346,9012,10437,10840,11767]
+  },
+  'Avenida': {
+    meta:15000, tm:[144.11,102.50], orc:61,
+    s_real:[5058,5301], s_meta:[4500,3000,3750,3750],
+    hist_s3:[3013,3872,3404,2069,3647], hist_s4:[3294,3660,2159,2895,8512]
+  },
+  'Parque': {
+    meta:45000, tm:[70.56,106.90], orc:184,
+    s_real:[6822,12429], s_meta:[13500,9000,11250,11250],
+    hist_s3:[10531,4147,10007,7151,10927], hist_s4:[7049,6257,7626,4449,14574]
+  },
+  'Gravataí': {
+    meta:35000, tm:[113.30,126.90], orc:125,
+    s_real:[11054,9115], s_meta:[10500,7000,8750,8750],
+    hist_s3:[6368,3771,7425,10971,5905], hist_s4:[5589,8094,10310,5936,8164]
+  },
+};
+
+const NOMES = Object.keys(LOJAS);
+let curLoja = 'Esteio', curTab = 'anual';
+
+// Calcular projecao por loja (60% ritmo atual + 40% historico)
+Object.keys(LOJAS).forEach(function(n){
+  var l = LOJAS[n];
+  l.fat_real = l.s_real.reduce(function(a,b){return a+b;},0);
+  var ritmo = l.fat_real / SEM_ATUAL;
+  var avg3 = l.hist_s3.reduce(function(a,b){return a+b;},0)/l.hist_s3.length;
+  var avg4 = l.hist_s4.reduce(function(a,b){return a+b;},0)/l.hist_s4.length;
+  l.proj_s3 = SEM_ATUAL >= 3 ? l.s_real[2] : Math.round(ritmo*0.60 + avg3*0.40);
+  l.proj_s4 = SEM_ATUAL >= 4 ? l.s_real[3] : Math.round(ritmo*0.60 + avg4*0.40);
+  l.fat_proj  = (SEM_ATUAL < 3 ? l.proj_s3 : 0) + (SEM_ATUAL < 4 ? l.proj_s4 : 0);
+  l.fat_total = l.fat_real + l.fat_proj;
+  l.tm_atual  = l.tm.reduce(function(a,b){return a+b;},0)/l.tm.length;
+  l.pct_meta  = Math.round(l.fat_real/l.meta*100);
+  l.pct_proj  = Math.round(l.fat_total/l.meta*100);
+});
+
+const REAL_MESES = [
+  {m:'Janeiro',  fat:166737, meta:205000, fechado:true},
+  {m:'Fevereiro',fat:145524, meta:205000, fechado:true},
+  {m:'Marco',    fat:191180, meta:205000, fechado:true},
+  {m:'Abril',    fat:220383, meta:210000, fechado:true},
+  {m:'Maio',     fat:251613, meta:210000, fechado:true},
+  {m:'Junho', fat:111075, meta:210000, fechado:false, parcial:true}
+];
+
+const JUNHO_PROJ_TOTAL = GERAL.fat_total_proj;
+
+const PROJ_2SEM = [
+  {m:'Julho',    meta:210000, r:207000, o:231000},
+  {m:'Agosto',   meta:210000, r:215000, o:244000},
+  {m:'Setembro', meta:210000, r:224000, o:259000},
+  {m:'Outubro',  meta:210000, r:233000, o:274000},
+  {m:'Novembro', meta:210000, r:243000, o:290000},
+  {m:'Dezembro', meta:250000, r:254000, o:307000}
+];
+/* ===== DADOS_END ===== */
+
+/* =========== HELPERS =========== */
+function f(v){return Math.round(v).toLocaleString('pt-BR');}
+function fr(v){return 'R '+f(v);}
+function pct(r,m){return Math.round(r/m*100);}
+function cor(r,m){
+  var p = r/m;
+  if(p >= 1.00) return '#2ecc71';   // 100%+ verde total
+  if(p >= 0.95) return '#5dca6a';   // 95-99% verde claro
+  if(p >= 0.88) return '#a8c835';   // 88-94% verde amarelado
+  if(p >= 0.80) return '#f0c020';   // 80-87% amarelo
+  if(p >= 0.70) return '#f39c12';   // 70-79% laranja
+  return '#e74c3c';                  // abaixo 70% vermelho
+}
+function bdg(r,m){
+  if(r>=m)return '<span class="bdg bg">✓ META</span>';
+  if(r/m>.85)return '<span class="bdg by">⚠ PERTO</span>';
+  return '<span class="bdg br2">✗ ABAIXO</span>';
+}
+function bdgProj(r,m){
+  if(r>=m)return '<span class="bdg bg">✓ Proj. META</span>';
+  if(r/m>.85)return '<span class="bdg by">⚠ Proj. perto</span>';
+  return '<span class="bdg br2">✗ Proj. abaixo</span>';
+}
+function semBar(fat_real, fat_proj, meta){
+  var maxV = Math.max(fat_real+fat_proj, meta)*1.05;
+  var pr = Math.min(fat_real/maxV*100,100);
+  var pp = Math.min(fat_proj/maxV*100, 100-pr);
+  var pm = Math.min(meta/maxV*100,100);
+  var total = fat_real+fat_proj;
+  var c = cor(fat_real, meta);       // cor baseada no real acumulado
+  var cTotal = cor(total, meta);     // cor baseada no total projetado
+  return '<div class="prog-wrap">'
+    +'<div class="prog-real" style="width:'+pr+'%;background:'+c+'">'+(fat_real>0?fr(fat_real):'')+'</div>'
+    +'<div class="prog-proj" style="left:'+pr+'%;width:'+pp+'%">'+(fat_proj>0?'+'+fr(fat_proj)+' proj.':'')+'</div>'
+    +'<div class="prog-meta" style="left:'+pm+'%"></div>'
+    +'<div class="prog-lbl" style="color:'+cTotal+'">'+pct(total,meta)+'% → '+fr(total)+'</div>'
+    +'</div>';
+}
+function barSimples(lbl, real, meta, maxV, proj, note){
+  if(real===undefined||real===null)return '';
+  var pr=Math.min(real/maxV*100,100);
+  var pp=proj?Math.min(proj/maxV*100,100-pr):0;
+  var pm=Math.min(meta/maxV*100,100);
+  var c=cor(real+(proj||0),meta);
+  return '<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">'
+    +'<div style="width:90px;font-size:11px;color:#999;text-align:right;flex-shrink:0">'+lbl+'</div>'
+    +'<div style="flex:1;background:#1a1a1a;border-radius:3px;height:22px;position:relative;overflow:hidden">'
+    +'<div style="position:absolute;left:0;top:0;height:100%;width:'+pr+'%;background:'+c+';display:flex;align-items:center;padding-left:6px;font-size:11px;font-weight:bold;color:#fff;white-space:nowrap;overflow:hidden">'+fr(real)+'</div>'
+    +(proj?'<div style="position:absolute;left:'+pr+'%;top:0;height:100%;width:'+pp+'%;background:repeating-linear-gradient(45deg,#7a5500,#7a5500 3px,#5a3a00 3px,#5a3a00 6px)"></div>':'')
+    +'<div style="position:absolute;top:0;left:'+pm+'%;height:100%;width:2px;background:rgba(255,255,255,.35)"></div>'
+    +'<div style="position:absolute;right:6px;top:50%;transform:translateY(-50%);font-size:10px;color:#aaa">'+(note||pct(real+(proj||0),meta)+'%')+'</div>'
+    +'</div></div>';
+}
+
+
+/* =========== FUNCAO SEMANAS GERAL =========== */
+function buildSemGeral(){
+  // Calcular saldo acumulado das semanas reais
+  var saldoAcum = 0;
+  GERAL.s.forEach(function(s){ if(s.real) saldoAcum += (s.meta - s.fat); });
+  var futuras = GERAL.s.filter(function(s){ return !s.real; });
+  var nFuturas = futuras.length;
+  var deficitPorSem = nFuturas > 0 ? saldoAcum / nFuturas : 0;
+
+  var html = '';
+  GERAL.s.forEach(function(s){
+    var c = s.real ? cor(s.fat,s.meta) : '#f39c12';
+    var tipoLabel = s.real ? '\u2713 real' : 'projetado';
+
+    // Bloco superior: faturamento
+    var topBloco = '<div class="semcell ' + (s.real?'real':'proj') + '" style="margin-bottom:6px">'
+      + '<div class="slbl">' + s.n + ' ' + tipoLabel + '</div>'
+      + '<div class="sval" style="color:' + c + '">' + fr(s.fat) + '</div>'
+      + '<div class="spct" style="color:' + c + '">' + pct(s.fat,s.meta) + '% meta</div>'
+      + '<div style="font-size:9px;color:#555;margin-top:2px">meta orig.: ' + fr(s.meta) + '</div>'
+      + '</div>';
+
+    // Bloco inferior: resultado ou alvo
+    var botBloco = '';
+    if(s.real){
+      var diff = s.fat - s.meta;
+      if(diff >= 0){
+        botBloco = '<div style="background:#001a08;border:1px solid #1a6e3a;border-radius:5px;padding:8px;text-align:center">'
+          + '<div style="font-size:9px;color:#555;text-transform:uppercase;letter-spacing:.7px;margin-bottom:4px">Resultado</div>'
+          + '<div style="font-size:14px;font-weight:bold;color:#2ecc71">\uD83C\uDFAF Meta batida</div>'
+          + '<div style="font-size:11px;color:#2ecc71;margin-top:3px">+' + fr(diff) + ' acima</div>'
+          + '</div>';
+      } else {
+        botBloco = '<div style="background:#1a0800;border:1px solid #7a2200;border-radius:5px;padding:8px;text-align:center">'
+          + '<div style="font-size:9px;color:#555;text-transform:uppercase;letter-spacing:.7px;margin-bottom:4px">Resultado</div>'
+          + '<div style="font-size:14px;font-weight:bold;color:#e74c3c">Faltou ' + fr(Math.abs(diff)) + '</div>'
+          + '<div style="font-size:10px;color:#7a3a2a;margin-top:3px">redistribuido nas proximas</div>'
+          + '</div>';
+      }
+    } else {
+      var alvo    = s.meta + deficitPorSem;
+      var alvoDia = Math.ceil(alvo / 6);
+      var temDef  = deficitPorSem > 0;
+      var temSob  = deficitPorSem < 0;
+      var corA  = temDef ? '#f39c12' : (temSob ? '#2ecc71' : '#eee');
+      var bgA   = temDef ? '#1a1000' : (temSob ? '#001508' : '#141414');
+      var bdA   = temDef ? '#7a5500' : (temSob ? '#1a5e2a' : '#2a2a2a');
+      var label = temDef
+        ? ('Meta + deficit (' + fr(Math.round(deficitPorSem)) + ')')
+        : (temSob ? ('Meta - sobra (' + fr(Math.round(Math.abs(deficitPorSem))) + ')') : 'Meta da semana');
+      botBloco = '<div style="background:' + bgA + ';border:1px solid ' + bdA + ';border-radius:5px;padding:8px;text-align:center">'
+        + '<div style="font-size:9px;color:#666;text-transform:uppercase;letter-spacing:.7px;margin-bottom:4px">' + label + '</div>'
+        + '<div style="font-size:15px;font-weight:bold;color:' + corA + '">' + fr(Math.round(alvo)) + '</div>'
+        + '<div style="font-size:9px;color:#555;margin-top:5px;border-top:1px solid ' + bdA + ';padding-top:5px">Por dia util (div 6)</div>'
+        + '<div style="font-size:14px;font-weight:bold;color:' + corA + ';margin-top:2px">' + fr(alvoDia) + '/dia</div>'
+        + '</div>';
+    }
+
+    html += '<div style="flex:1;min-width:130px">' + topBloco + botBloco + '</div>';
+  });
+  return html;
+}
+
+/* =========== FUNÇÃO SEMANAS POR LOJA =========== */
+function buildSemLoja(l){
+  // Saldo acumulado das semanas reais
+  let saldo = 0;
+  l.s_real.forEach(function(v,i){ saldo += (l.s_meta[i] - v); });
+  var ajuste = saldo / 2; // divide entre S3 e S4
+
+  // Bloco inferior para semana REAL
+  function blocoReal(v, meta){
+    var diff = v - meta;
+    if(diff >= 0){
+      return '<div style="background:#001a08;border:1px solid #1a6e3a;border-radius:5px;padding:8px;text-align:center">'
+        + '<div style="font-size:9px;color:#555;text-transform:uppercase;letter-spacing:.7px;margin-bottom:4px">Resultado</div>'
+        + '<div style="font-size:14px;font-weight:bold;color:#2ecc71">🎯 Meta batida</div>'
+        + '<div style="font-size:11px;color:#2ecc71;margin-top:3px">+' + fr(diff) + ' acima</div>'
+        + '</div>';
+    } else {
+      return '<div style="background:#1a0800;border:1px solid #7a2200;border-radius:5px;padding:8px;text-align:center">'
+        + '<div style="font-size:9px;color:#555;text-transform:uppercase;letter-spacing:.7px;margin-bottom:4px">Resultado</div>'
+        + '<div style="font-size:14px;font-weight:bold;color:#e74c3c">Faltou ' + fr(Math.abs(diff)) + '</div>'
+        + '<div style="font-size:10px;color:#7a3a2a;margin-top:3px">redistribuído nas próximas</div>'
+        + '</div>';
+    }
+  }
+
+  // Bloco inferior para semana FUTURA com ajuste
+  function blocoFutura(metaOrig, ajustePorSem){
+    var alvo    = metaOrig + ajustePorSem;
+    var alvoDia = Math.ceil(alvo / 6);
+    var temDef  = ajustePorSem > 0;
+    var temSob  = ajustePorSem < 0;
+    var corA  = temDef ? '#f39c12' : (temSob ? '#2ecc71' : '#eee');
+    var bgA   = temDef ? '#1a1000' : (temSob ? '#001508' : '#141414');
+    var bdA   = temDef ? '#7a5500' : (temSob ? '#1a5e2a' : '#2a2a2a');
+    var label = temDef
+      ? ('Meta + déficit (' + fr(Math.round(ajustePorSem)) + ')')
+      : (temSob ? ('Meta - sobra (' + fr(Math.round(Math.abs(ajustePorSem))) + ')') : 'Meta da semana');
+    return '<div style="background:' + bgA + ';border:1px solid ' + bdA + ';border-radius:5px;padding:8px;text-align:center">'
+      + '<div style="font-size:9px;color:#666;text-transform:uppercase;letter-spacing:.7px;margin-bottom:4px">' + label + '</div>'
+      + '<div style="font-size:15px;font-weight:bold;color:' + corA + '">' + fr(Math.round(alvo)) + '</div>'
+      + '<div style="font-size:9px;color:#555;margin-top:5px;border-top:1px solid ' + bdA + ';padding-top:5px">Por dia útil (÷ 6)</div>'
+      + '<div style="font-size:14px;font-weight:bold;color:' + corA + ';margin-top:2px">' + fr(alvoDia) + '/dia</div>'
+      + '</div>';
+  }
+
+  // Montar HTML de cada semana
+  var html = '<div class="semrow" style="flex-wrap:wrap;gap:10px">';
+
+  // Semanas reais (S1, S2)
+  l.s_real.forEach(function(v,i){
+    var c = cor(v, l.s_meta[i]);
+    html += '<div style="flex:1;min-width:130px">'
+      + '<div class="semcell real" style="margin-bottom:6px">'
+      + '<div class="slbl">S' + (i+1) + ' \u2713 real</div>'
+      + '<div class="sval" style="color:' + c + '">' + fr(v) + '</div>'
+      + '<div class="spct" style="color:' + c + '">' + pct(v,l.s_meta[i]) + '% meta</div>'
+      + '<div style="font-size:9px;color:#555;margin-top:2px">meta orig.: ' + fr(l.s_meta[i]) + '</div>'
+      + '</div>'
+      + blocoReal(v, l.s_meta[i])
+      + '</div>';
+  });
+
+  // Semanas projetadas (S3, S4)
+  var projs = [l.proj_s3, l.proj_s4];
+  projs.forEach(function(v,i){
+    var metaO = l.s_meta[i+2];
+    var cP = '#f39c12';
+    html += '<div style="flex:1;min-width:130px">'
+      + '<div class="semcell proj" style="margin-bottom:6px">'
+      + '<div class="slbl">S' + (i+3) + ' projetado</div>'
+      + '<div class="sval" style="color:' + cP + '">' + fr(v) + '</div>'
+      + '<div class="spct" style="color:' + cP + '">' + pct(v,metaO) + '% meta</div>'
+      + '<div style="font-size:9px;color:#555;margin-top:2px">meta orig.: ' + fr(metaO) + '</div>'
+      + '</div>'
+      + blocoFutura(metaO, ajuste)
+      + '</div>';
+  });
+
+  html += '</div>';
+  return html;
+}
+
+/* =========== VIEWS =========== */
+const V = {
+
+mes(){
+  // Semanas geral
+  // Semanas geral — construidas por funcao auxiliar sem template literals aninhados
+  const semsHTML = buildSemGeral();
+
+
+  const fat_acum = GERAL.fat_real;
+  const fat_proj_total = GERAL.fat_total_proj;
+  const c_acum = cor(fat_acum, META_MES_GERAL*0.5); // 2 de 4 semanas = 50% esperado
+
+  return`
+  <div class="cards">
+    <div class="card"><div class="lb">Acumulado Real (S1+S2)</div><div class="vl" style="color:${c_acum}">${fr(fat_acum)}</div><div class="sb">${pct(fat_acum,META_MES_GERAL)}% da meta do mês</div></div>
+    <div class="card"><div class="lb">Projeção Fechamento</div><div class="vl" style="color:${cor(fat_proj_total,META_MES_GERAL)}">${fr(fat_proj_total)}</div><div class="sb">${pct(fat_proj_total,META_MES_GERAL)}% da meta ${fr(META_MES_GERAL)}</div></div>
+    <div class="card"><div class="lb">Falta Realizar (S3+S4)</div><div class="vl" style="color:#f39c12">${fr(META_MES_GERAL - fat_acum)}</div><div class="sb">para bater a meta</div></div>
+    <div class="card"><div class="lb">TM Médio (S1+S2)</div><div class="vl" style="color:${GERAL.tm_real>100?'#2ecc71':'#f39c12'}">R$ ${GERAL.tm_real.toFixed(0)}</div><div class="sb">orçamentos: ${f(GERAL.orc_real)}</div></div>
+    <div class="card"><div class="lb">Semanas Restantes</div><div class="vl" style="color:#7799ff">2 de 4</div><div class="sb">S3 e S4 projetadas</div></div>
+    <div class="card"><div class="lb">Ritmo Semanal Atual</div><div class="vl" style="color:#eee">${fr(fat_acum/SEM_ATUAL)}</div><div class="sb">média S1+S2 desta semana</div></div>
+  </div>
+
+  <div class="box"><div class="bt">Progresso do Mês — ${MES_ATUAL} 2026</div>
+    ${semBar(fat_acum, fat_proj_total-fat_acum, META_MES_GERAL)}
+    <div style="font-size:10px;color:#444;margin-top:4px">
+      <span style="color:#cc0000">■</span> Real (${fr(fat_acum)}) &nbsp;
+      <span style="color:#f39c12">▤</span> Projeção (+${fr(fat_proj_total-fat_acum)}) &nbsp;
+      <span style="color:#777">│</span> Meta (${fr(META_MES_GERAL)})
+    </div>
+  </div>
+
+  <div class="box"><div class="bt">Semanas — Real vs Projeção vs Meta</div>
+    <div class="semrow" style="flex-wrap:wrap;gap:10px">${semsHTML}</div>
+  </div>
+
+  <div class="box"><div class="bt">Ranking das Lojas no Mês (acumulado S1+S2)</div>
+  ${[...NOMES].sort((a,b)=>LOJAS[b].fat_real-LOJAS[a].fat_real).map((n,i)=>{
+    const l=LOJAS[n];
+    return barSimples(['🥇','🥈','🥉','4º','5º','6º'][i]+' '+n, l.fat_real, l.meta, Math.max(...NOMES.map(x=>LOJAS[x].fat_real))*1.1, l.fat_proj, null);
+  }).join('')}
+  <div style="font-size:10px;color:#444;margin-top:6px"><span style="color:#f39c12">▤</span> = projeção S3+S4 | Linha branca = meta | Barra sólida = real</div>
+  </div>
+
+  <div class="box"><div class="bt">Tabela Geral — ${MES_ATUAL} 2026</div>
+  <table><thead><tr><th>Loja</th><th>S1 (real)</th><th>S2 (real)</th><th>S3 (proj.)</th><th>S4 (proj.)</th><th>Total Real</th><th>Projeção Final</th><th>Meta</th><th>% Proj.</th><th>Status</th></tr></thead>
+  <tbody>${NOMES.map(n=>{
+    const l=LOJAS[n];
+    return`<tr>
+      <td><strong>${n}</strong></td>
+      <td class="g">${fr(l.s_real[0])}</td>
+      <td class="g">${fr(l.s_real[1])}</td>
+      <td class="y">${fr(l.proj_s3)}</td>
+      <td class="y">${fr(l.proj_s4)}</td>
+      <td style="font-weight:bold">${fr(l.fat_real)}</td>
+      <td style="color:${cor(l.fat_total,l.meta)};font-weight:bold">${fr(l.fat_total)}</td>
+      <td class="d">${fr(l.meta)}</td>
+      <td style="color:${cor(l.fat_total,l.meta)};font-weight:bold">${pct(l.fat_total,l.meta)}%</td>
+      <td>${bdgProj(l.fat_total,l.meta)}</td>
+    </tr>`;}).join('')}
+  <tr style="background:#111;font-weight:bold">
+    <td>TOTAL GERAL</td>
+    <td class="g">${fr(NOMES.reduce((a,n)=>a+LOJAS[n].s_real[0],0))}</td>
+    <td class="g">${fr(NOMES.reduce((a,n)=>a+LOJAS[n].s_real[1],0))}</td>
+    <td class="y">${fr(NOMES.reduce((a,n)=>a+LOJAS[n].proj_s3,0))}</td>
+    <td class="y">${fr(NOMES.reduce((a,n)=>a+LOJAS[n].proj_s4,0))}</td>
+    <td>${fr(GERAL.fat_real)}</td>
+    <td style="color:${cor(GERAL.fat_total_proj,META_MES_GERAL)};font-weight:bold">${fr(GERAL.fat_total_proj)}</td>
+    <td class="d">${fr(META_MES_GERAL)}</td>
+    <td style="color:${cor(GERAL.fat_total_proj,META_MES_GERAL)};font-weight:bold">${pct(GERAL.fat_total_proj,META_MES_GERAL)}%</td>
+    <td>${bdgProj(GERAL.fat_total_proj,META_MES_GERAL)}</td>
+  </tr></tbody></table></div>`;
+},
+
+loja(){
+  const l = LOJAS[curLoja];
+  const metaRestante = l.meta - l.fat_real;
+  const semanas_hist = [
+    {m:'Janeiro',  s3:l.hist_s3[0], s4:l.hist_s4[0]},
+    {m:'Fevereiro',s3:l.hist_s3[1], s4:l.hist_s4[1]},
+    {m:'Março',    s3:l.hist_s3[2], s4:l.hist_s4[2]},
+    {m:'Abril',    s3:l.hist_s3[3], s4:l.hist_s4[3]},
+    {m:'Maio',     s3:l.hist_s3[4], s4:l.hist_s4[4]},
+    {m:'Junho',    s3:l.proj_s3,    s4:l.proj_s4, proj:true},
+  ];
+
+  // Fat acumulado S1+S2 nos meses anteriores (para comparar posição)
+  const hist_acum_s1s2 = {
+    'Esteio':       [7746+9317, 7746+8966, 13737+8967, 25276+10425, 15036+11971],
+    'Esteio Shop.': [4335+4084, 4335+5119, 7189+7320,  10900+5021,  11336+6114],
+    'Canoas':       [10278+8088,10278+3914, 7786+8922,  13771+6186,  18700+7921],
+    'Avenida':      [4441+3186, 4201+1720,  4252+1754,  5301+3704,   11281+10245],
+    'Parque':       [12552+8687,12552+8787, 10795+6226, 20080+12985, 14303+9319],
+    'Gravataí':     [7180+5385, 7180+6129,  7142+8073,  18145+11657, 14204+9671],
+  };
+  const acumHist = hist_acum_s1s2[curLoja]||[];
+  const mediaCum = acumHist.reduce((a,b)=>a+b,0)/acumHist.length;
+  const vs_media = ((l.fat_real/mediaCum-1)*100).toFixed(1);
+
+  return`
+  <div style="margin-bottom:10px">
+    <div style="font-size:10px;color:#666;margin-bottom:6px;text-transform:uppercase;letter-spacing:.8px">Selecione a loja:</div>
+    <div class="loja-btns">${NOMES.map(n=>`<div class="lbtn${n===curLoja?' on':''}" onclick="selLoja('${n}')">${n}</div>`).join('')}</div>
+  </div>
+
+  <div class="cards">
+    <div class="card"><div class="lb">Acumulado no mês</div><div class="vl" style="color:${cor(l.fat_real,l.meta*0.5)}">${fr(l.fat_real)}</div><div class="sb">${pct(l.fat_real,l.meta)}% da meta</div></div>
+    <div class="card"><div class="lb">Projeção fechamento</div><div class="vl" style="color:${cor(l.fat_total,l.meta)}">${fr(l.fat_total)}</div><div class="sb">${pct(l.fat_total,l.meta)}% da meta ${fr(l.meta)}</div></div>
+    <div class="card"><div class="lb">Falta para meta</div><div class="vl" style="color:#f39c12">${fr(Math.max(0,metaRestante))}</div><div class="sb">em S3 + S4</div></div>
+    <div class="card"><div class="lb">TM Médio atual</div><div class="vl" style="color:${l.tm_atual>100?'#2ecc71':'#f39c12'}">R$ ${l.tm_atual.toFixed(0)}</div><div class="sb">S1: R$ ${l.tm[0].toFixed(0)} | S2: R$ ${l.tm[1].toFixed(0)}</div></div>
+    <div class="card"><div class="lb">vs histórico S1+S2</div><div class="vl" style="color:${vs_media>=0?'#2ecc71':'#e74c3c'}">${vs_media>=0?'+':''}${vs_media}%</div><div class="sb">média histórica: ${fr(mediaCum)}</div></div>
+    <div class="card"><div class="lb">Status projeção</div><div class="vl" style="font-size:14px">${bdgProj(l.fat_total,l.meta)}</div><div class="sb">${pct(l.fat_total,l.meta)}% da meta projetado</div></div>
+  </div>
+
+  <div class="box"><div class="bt">Progresso do Mês — ${curLoja}</div>
+    ${semBar(l.fat_real, l.fat_proj, l.meta)}
+    <div style="font-size:10px;color:#444;margin-top:4px">
+      <span style="color:#cc0000">■</span> Real ${fr(l.fat_real)} &nbsp;
+      <span style="color:#f39c12">▤</span> Projeção +${fr(l.fat_proj)} &nbsp;
+      Total → ${fr(l.fat_total)} | Meta: ${fr(l.meta)}
+    </div>
+  </div>
+
+  <div class="box"><div class="bt">Semanas — ${curLoja} — Junho 2026</div>
+  ${buildSemLoja(l)}
+  </div>
+
+  <div class="box"><div class="bt">Histórico S3+S4 — ${curLoja} (meses anteriores vs projeção atual)</div>
+  <table><thead><tr><th>Mês</th><th>S3</th><th>S4</th><th>S3+S4 Total</th><th>Obs.</th></tr></thead>
+  <tbody>${semanas_hist.map(h=>{
+    const total=h.s3+h.s4;
+    return`<tr style="${h.proj?'background:#1a1000':''}">
+      <td><strong>${h.m}</strong></td>
+      <td style="color:${h.proj?'#f39c12':'#eee'}">${fr(h.s3)}</td>
+      <td style="color:${h.proj?'#f39c12':'#eee'}">${fr(h.s4)}</td>
+      <td style="color:${h.proj?'#f39c12':'#eee'};font-weight:bold">${fr(total)}</td>
+      <td style="font-size:10px;color:${h.proj?'#f39c12':'#555'}">${h.proj?'⚡ projeção':''}</td>
+    </tr>`;}).join('')}</tbody></table>
+  <div style="font-size:10px;color:#444;margin-top:6px">Projeção = 60% ritmo atual da loja + 40% média histórica por posição de semana.</div>
+  </div>
+
+  <div class="box"><div class="bt">Posição no Ranking — ${curLoja} nesta semana</div>
+  <table><thead><tr><th>Rank</th><th>Loja</th><th>Acumulado S1+S2</th><th>Projeção mês</th><th>% Meta proj.</th><th>TM atual</th></tr></thead>
+  <tbody>${[...NOMES].sort((a,b)=>LOJAS[b].fat_real-LOJAS[a].fat_real).map((n,i)=>`<tr style="${n===curLoja?'background:#1a0000;border-left:2px solid #cc0000':''}">
+    <td>${['🥇','🥈','🥉','4º','5º','6º'][i]}</td>
+    <td><strong>${n}</strong>${n===curLoja?' ◀':''}</td>
+    <td style="color:${n===curLoja?'#cc0000':'#eee'};font-weight:${n===curLoja?'bold':'normal'}">${fr(LOJAS[n].fat_real)}</td>
+    <td style="color:${cor(LOJAS[n].fat_total,LOJAS[n].meta)}">${fr(LOJAS[n].fat_total)}</td>
+    <td style="color:${cor(LOJAS[n].fat_total,LOJAS[n].meta)};font-weight:bold">${pct(LOJAS[n].fat_total,LOJAS[n].meta)}%</td>
+    <td style="color:${LOJAS[n].tm_atual>100?'#2ecc71':'#f39c12'}">R$ ${LOJAS[n].tm_atual.toFixed(0)}</td>
+  </tr>`).join('')}</tbody></table></div>`;
+},
+
+alertas(){
+  const alerts = [];
+
+  // Verificar cada loja
+  NOMES.forEach(n=>{
+    const l=LOJAS[n];
+    if(l.fat_total < l.meta*0.85){
+      alerts.push({tipo:'re', msg:`<strong>${n}</strong> projetada para fechar em ${pct(l.fat_total,l.meta)}% da meta (${fr(l.fat_total)}). Precisa de R$ ${fr(l.meta-l.fat_real)} em S3+S4.`});
+    } else if(l.fat_total >= l.meta){
+      alerts.push({tipo:'gr', msg:`<strong>${n}</strong> projetada para BATER A META — ${fr(l.fat_total)} (${pct(l.fat_total,l.meta)}%).`});
+    } else {
+      alerts.push({tipo:'ye', msg:`<strong>${n}</strong> projetada em ${pct(l.fat_total,l.meta)}% da meta. Realista se S3 e S4 mantiverem o ritmo.`});
+    }
+    // TM caindo entre S1 e S2
+    if(l.tm[1]>l.tm[0]){
+      alerts.push({tipo:'gr', msg:`TM de <strong>${n}</strong> subiu de S1 para S2: R$ ${l.tm[0].toFixed(0)} → R$ ${l.tm[1].toFixed(0)} (+${((l.tm[1]/l.tm[0]-1)*100).toFixed(0)}%). Boleto funcionando.`});
+    } else if(l.tm[0]-l.tm[1]>20){
+      alerts.push({tipo:'ye', msg:`TM de <strong>${n}</strong> caiu entre S1 e S2: R$ ${l.tm[0].toFixed(0)} → R$ ${l.tm[1].toFixed(0)}. Monitorar em S3.`});
+    }
+  });
+
+  // Projeção geral
+  if(GERAL.fat_total_proj >= META_MES_GERAL){
+    alerts.unshift({tipo:'gr', msg:`<strong>GERAL:</strong> Projeção de fechamento em ${fr(GERAL.fat_total_proj)} (${pct(GERAL.fat_total_proj,META_MES_GERAL)}% da meta). No caminho certo!`});
+  } else {
+    alerts.unshift({tipo:'ye', msg:`<strong>GERAL:</strong> Projeção de fechamento em ${fr(GERAL.fat_total_proj)} (${pct(GERAL.fat_total_proj,META_MES_GERAL)}% da meta). Necessário R$ ${fr(META_MES_GERAL-GERAL.fat_real)} em S3+S4.`});
+  }
+
+  return`<div class="box"><div class="bt">Alertas e Destaques da Semana 2</div>
+    ${alerts.map(a=>`<div class="ins ${a.tipo}">${a.msg}</div>`).join('')}
+  </div>
+  <div class="box"><div class="bt">O que precisa acontecer em S3 e S4</div>
+  <table><thead><tr><th>Loja</th><th>Real S1+S2</th><th>Falta para meta</th><th>Precisa S3+S4</th><th>Histórico S3+S4</th><th>Viável?</th></tr></thead>
+  <tbody>${NOMES.map(n=>{
+    const l=LOJAS[n];
+    const falta=Math.max(0,l.meta-l.fat_real);
+    const hist_med = (l.hist_s3.reduce((a,b)=>a+b,0)+l.hist_s4.reduce((a,b)=>a+b,0))/(l.hist_s3.length+l.hist_s4.length)*2;
+    const viavel = falta<=hist_med*1.2;
+    return`<tr>
+      <td><strong>${n}</strong></td>
+      <td>${fr(l.fat_real)}</td>
+      <td class="${falta===0?'g':'y'}">${fr(falta)}</td>
+      <td style="color:${falta<=l.fat_proj?'#2ecc71':'#e74c3c'};font-weight:bold">${fr(falta)}</td>
+      <td class="d">${fr(hist_med)}</td>
+      <td>${viavel?'<span class="bdg bg">✓ Sim</span>':'<span class="bdg br2">⚠ Difícil</span>'}</td>
+    </tr>`;}).join('')}</tbody></table>
+  <div style="font-size:10px;color:#444;margin-top:6px">Histórico S3+S4 = média dos 5 meses anteriores para essas posições.</div>
+  </div>`;
+}
+};
+
+/* =========== DADOS ANUAIS =========== */
+const META_ANO = 3000000;
+
+V.anual = function(){
+  const fat_jan_mai = REAL_MESES.slice(0,5).reduce((a,d)=>a+d.fat,0);
+  const fat_acum_real = fat_jan_mai + GERAL.fat_real;
+  const fat_jun_proj  = JUNHO_PROJ_TOTAL;
+  const fat_1sem      = fat_jan_mai + fat_jun_proj;
+  const ritmo_mensal  = fat_jan_mai / 5;
+
+  const tot2r = PROJ_2SEM.reduce((a,d)=>a+d.r,0);
+  const tot2o = PROJ_2SEM.reduce((a,d)=>a+d.o,0);
+  const anoR  = fat_1sem + tot2r;
+  const anoO  = fat_1sem + tot2o;
+
+  function barAno(real, proj, meta, corProj){
+    const maxV = Math.max(real+proj, meta)*1.02;
+    const pr = Math.min(real/maxV*100,100);
+    const pp = Math.min(proj/maxV*100, 100-pr);
+    const pm = Math.min(meta/maxV*100,100);
+    const total = real+proj;
+    const cTotal = cor(total,meta);
+    return`<div class="prog-wrap" style="height:32px;margin-bottom:6px">
+      <div class="prog-real" style="width:${pr}%;font-size:12px">${real>0?fr(real):''}</div>
+      <div class="prog-proj" style="left:${pr}%;width:${pp}%;background:repeating-linear-gradient(45deg,${corProj}aa,${corProj}aa 4px,${corProj}44 4px,${corProj}44 8px)">${proj>0?'+'+fr(proj):''}</div>
+      <div class="prog-meta" style="left:${pm}%"></div>
+      <div class="prog-lbl" style="font-size:11px;color:${cTotal}">${pct(total,meta)}% → ${fr(total)}</div>
+    </div>`;
+  }
+
+  return`
+  <div class="cards">
+    <div class="card"><div class="lb">Acumulado Real (Jan–Jun S2)</div><div class="vl" style="color:#f39c12">${fr(fat_acum_real)}</div><div class="sb">${pct(fat_acum_real,META_ANO)}% da meta anual</div></div>
+    <div class="card"><div class="lb">1º Semestre (c/ Jun proj.)</div><div class="vl" style="color:#eee">${fr(fat_1sem)}</div><div class="sb">Junho projetado: ${fr(fat_jun_proj)}</div></div>
+    <div class="card"><div class="lb">Meta Anual</div><div class="vl" style="color:#cc0000">${fr(META_ANO)}</div><div class="sb">falta ${fr(META_ANO-fat_acum_real)} realizar</div></div>
+    <div class="card"><div class="lb">Ritmo Mensal Atual</div><div class="vl" style="color:#eee">${fr(ritmo_mensal)}</div><div class="sb">média Jan–Mai fechados</div></div>
+    <div class="card"><div class="lb">🟡 Fechamento Realista</div><div class="vl" style="color:#f39c12">${fr(anoR)}</div><div class="sb">${pct(anoR,META_ANO)}% da meta R$ 3M</div></div>
+    <div class="card"><div class="lb">🟢 Fechamento Otimista</div><div class="vl" style="color:#2ecc71">${fr(anoO)}</div><div class="sb">${pct(anoO,META_ANO)}% da meta R$ 3M</div></div>
+  </div>
+
+  <div class="box"><div class="bt">Progresso Anual — Real + Projeção vs Meta R$ 3M</div>
+    <div style="font-size:11px;color:#f39c12;margin-bottom:6px;font-weight:bold">🟡 Realista — ${fr(anoR)} (${pct(anoR,META_ANO)}%)</div>
+    ${barAno(fat_acum_real, anoR-fat_acum_real, META_ANO,'#cc8800')}
+    <div style="font-size:11px;color:#2ecc71;margin-bottom:6px;font-weight:bold;margin-top:14px">🟢 Otimista — ${fr(anoO)} (${pct(anoO,META_ANO)}%)</div>
+    ${barAno(fat_acum_real, anoO-fat_acum_real, META_ANO,'#1a7a3a')}
+    <div style="font-size:10px;color:#444;margin-top:8px">
+      <span style="color:#cc0000">■</span> Real acumulado (${fr(fat_acum_real)}) &nbsp;
+      <span style="color:#888">▤</span> Projeção restante &nbsp;
+      <span style="color:#777">│</span> Meta R$ 3M
+    </div>
+  </div>
+
+  <div class="box"><div class="bt">Projeção Mês a Mês — Cenário Otimista 2026</div>
+  <table><thead><tr><th>Mês</th><th>Faturamento</th><th>Meta Mês</th><th>% Meta</th><th>Acumulado Ano</th><th>% Meta R$ 3M</th><th>Status</th></tr></thead>
+  <tbody>
+    ${REAL_MESES.map((d,i)=>{
+      const fatMes = d.fechado ? d.fat : fat_jun_proj;
+      const acum   = REAL_MESES.slice(0,i).reduce((a,x)=>a+(x.fechado?x.fat:fat_jun_proj),0) + fatMes;
+      const cMes   = d.fechado ? cor(d.fat,d.meta) : cor(fat_jun_proj,d.meta);
+      const isProj = !d.fechado;
+      return`<tr style="${isProj?'background:#1a1200':''}">
+        <td><strong>${d.m}</strong>${isProj?' <span style="font-size:9px;color:#f39c12">(proj.)</span>':''}</td>
+        <td style="color:${cMes};font-weight:bold">${fr(fatMes)}</td>
+        <td class="d">${fr(d.meta)}</td>
+        <td style="color:${cMes};font-weight:bold">${pct(fatMes,d.meta)}%</td>
+        <td style="font-weight:bold">${fr(acum)}</td>
+        <td style="color:${acum/META_ANO>.66?'#2ecc71':acum/META_ANO>.33?'#f39c12':'#e74c3c'}">${pct(acum,META_ANO)}%</td>
+        <td>${d.fechado?bdg(d.fat,d.meta):'<span class="bdg by">⚡ Jun proj.</span>'}</td>
+      </tr>`;
+    }).join('')}
+    ${PROJ_2SEM.map((d,i)=>{
+      const acum_ate = fat_1sem + PROJ_2SEM.slice(0,i+1).reduce((a,x)=>a+x.o,0);
+      const cMes = cor(d.o,d.meta);
+      return`<tr style="background:#001a08">
+        <td><strong>${d.m}</strong> <span style="font-size:9px;color:#2ecc71">🟢 otimista</span></td>
+        <td style="color:#2ecc71;font-weight:bold">${fr(d.o)}</td>
+        <td class="d">${fr(d.meta)}</td>
+        <td style="color:${cMes};font-weight:bold">${pct(d.o,d.meta)}%</td>
+        <td style="color:#2ecc71;font-weight:bold">${fr(acum_ate)}</td>
+        <td style="color:${cor(acum_ate,META_ANO)};font-weight:bold">${pct(acum_ate,META_ANO)}%</td>
+        <td><span class="bdg bg">🟢 Proj.</span></td>
+      </tr>`;
+    }).join('')}
+  </tbody>
+  <tfoot>
+    <tr style="background:#001a08;font-weight:bold;border-top:1px solid #1a6e3a">
+      <td>TOTAL ANO 🟢</td>
+      <td colspan="3" style="color:#555;font-size:11px">Cenário Otimista</td>
+      <td style="color:#2ecc71;font-size:16px">${fr(anoO)}</td>
+      <td style="color:#2ecc71;font-size:16px">${pct(anoO,META_ANO)}%</td>
+      <td>${bdg(anoO,META_ANO)}</td>
+    </tr>
+  </tfoot>
+  </table></div>
+
+  <div class="box"><div class="bt">Comparativo dos 2 Cenários — Fechamento Anual</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+    <div style="border:1px solid #8a6000;border-radius:7px;padding:14px">
+      <div style="color:#f39c12;font-weight:bold;font-size:13px;margin-bottom:6px">🟡 Realista</div>
+      <div style="font-size:26px;font-weight:bold;color:#f39c12;margin-bottom:4px">${fr(anoR)}</div>
+      <div style="font-size:12px;color:#888;margin-bottom:10px">${pct(anoR,META_ANO)}% da meta · ${anoR>=META_ANO?'<span style="color:#2ecc71">META BATIDA 🎯</span>':'falta <b>'+fr(META_ANO-anoR)+'</b>'}</div>
+      <div style="font-size:11px;color:#555;line-height:1.9;border-top:1px solid #333;padding-top:8px">
+        TM crescendo R$ 5/mês<br>
+        Orçamentos +3%/mês<br>
+        Serviços em R$ 52–58k<br>
+        2º semestre: ${fr(tot2r)}
+      </div>
+    </div>
+    <div style="border:1px solid #1a6e3a;border-radius:7px;padding:14px">
+      <div style="color:#2ecc71;font-weight:bold;font-size:13px;margin-bottom:6px">🟢 Otimista</div>
+      <div style="font-size:26px;font-weight:bold;color:#2ecc71;margin-bottom:4px">${fr(anoO)}</div>
+      <div style="font-size:12px;color:#888;margin-bottom:10px">${pct(anoO,META_ANO)}% da meta · supera em <b style="color:#2ecc71">${fr(anoO-META_ANO)}</b></div>
+      <div style="font-size:11px;color:#555;line-height:1.9;border-top:1px solid #333;padding-top:8px">
+        TM crescendo R$ 8/mês<br>
+        Orçamentos +5%/mês<br>
+        Serviços voltando a R$ 60k+<br>
+        2º semestre: ${fr(tot2o)}
+      </div>
+    </div>
+  </div></div>`;
+};
+
+/* =========== CONTROLES =========== */
+const TABS=['anual','mes','loja','alertas'];
+const LBLS=['📊 Resultado Anual','📅 Mês Atual','🏪 Por Loja','🚨 Alertas'];
+
+function selLoja(n){curLoja=n;document.getElementById('content').innerHTML=V.loja();}
+
+function render(){
+  document.getElementById('tabs').innerHTML=TABS.map((t,i)=>`<div class="tab${t===curTab?' on':''}" onclick="goTab('${t}')">${LBLS[i]}</div>`).join('');
+  document.getElementById('content').innerHTML=V[curTab]();
+}
+function goTab(t){curTab=t;render();}
+render();
+</script>
+</body>
+</html>
