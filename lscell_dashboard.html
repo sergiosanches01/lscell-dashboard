@@ -187,10 +187,22 @@ function semBar(fat_real, fat_proj, meta){
   var total = fat_real+fat_proj;
   var c = cor(fat_real, meta);       // cor baseada no real acumulado
   var cTotal = cor(total, meta);     // cor baseada no total projetado
-  return '<div class="prog-wrap">'
+
+  // Marcacoes de checkpoint: acumulado esperado ao fim de S1, S2 e S3 (1/4, 2/4, 3/4 da meta)
+  var marcas = '';
+  [1,2,3].forEach(function(s){
+    var metaAcumS = meta * (s/4);
+    var pS = Math.min(metaAcumS/maxV*100,100);
+    var atingiu = fat_real >= metaAcumS;
+    marcas += '<div style="position:absolute;top:-3px;left:'+pS+'%;width:1px;height:28px;background:'+(atingiu?'#5dca6a':'rgba(255,255,255,.45)')+'"></div>'
+            + '<div style="position:absolute;top:-13px;left:'+pS+'%;transform:translateX(-50%);font-size:8px;color:'+(atingiu?'#5dca6a':'#999')+'">S'+s+'</div>';
+  });
+
+  return '<div class="prog-wrap" style="overflow:visible;margin-top:14px">'
     +'<div class="prog-real" style="width:'+pr+'%;background:'+c+'">'+(fat_real>0?fr(fat_real):'')+'</div>'
     +'<div class="prog-proj" style="left:'+pr+'%;width:'+pp+'%">'+(fat_proj>0?'+'+fr(fat_proj)+' proj.':'')+'</div>'
     +'<div class="prog-meta" style="left:'+pm+'%"></div>'
+    + marcas
     +'<div class="prog-lbl" style="color:'+cTotal+'">'+pct(total,meta)+'% → '+fr(total)+'</div>'
     +'</div>';
 }
@@ -582,10 +594,24 @@ V.anual = function(){
     const pm = Math.min(meta/maxV*100,100);
     const total = real+proj;
     const cTotal = cor(total,meta);
-    return`<div class="prog-wrap" style="height:32px;margin-bottom:6px">
+
+    // Checkpoint: onde deveria estar HOJE se o ritmo fosse linear até a meta
+    const hoje = new Date();
+    const inicioAno = new Date(hoje.getFullYear(), 0, 1);
+    const fimAno    = new Date(hoje.getFullYear(), 11, 31);
+    const diaDoAno  = Math.floor((hoje - inicioAno) / 86400000);
+    const totalDias = Math.floor((fimAno - inicioAno) / 86400000);
+    const fracaoAno = diaDoAno / totalDias;
+    const metaEsperadaHoje = meta * fracaoAno;
+    const pCheckpoint = Math.min(metaEsperadaHoje/maxV*100, 100);
+    const noRitmo = real >= metaEsperadaHoje;
+
+    return`<div class="prog-wrap" style="height:32px;margin-bottom:6px;margin-top:18px;overflow:visible">
       <div class="prog-real" style="width:${pr}%;font-size:12px">${real>0?fr(real):''}</div>
       <div class="prog-proj" style="left:${pr}%;width:${pp}%;background:repeating-linear-gradient(45deg,${corProj}aa,${corProj}aa 4px,${corProj}44 4px,${corProj}44 8px)">${proj>0?'+'+fr(proj):''}</div>
       <div class="prog-meta" style="left:${pm}%"></div>
+      <div style="position:absolute;top:-4px;left:${pCheckpoint}%;width:2px;height:40px;background:${noRitmo?'#5dca6a':'#fff'};box-shadow:0 0 3px rgba(255,255,255,.6)" title="Ritmo esperado para ${MES_ATUAL}"></div>
+      <div style="position:absolute;top:-16px;left:${pCheckpoint}%;transform:translateX(-50%);font-size:9px;color:${noRitmo?'#5dca6a':'#ddd'};white-space:nowrap">↓ ${MES_ATUAL.substring(0,3)}</div>
       <div class="prog-lbl" style="font-size:11px;color:${cTotal}">${pct(total,meta)}% → ${fr(total)}</div>
     </div>`;
   }
