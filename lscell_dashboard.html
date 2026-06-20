@@ -90,32 +90,50 @@ const LOJAS = {
   'Esteio': {
     meta:45000, tm:[89.63,113.66], orc:163,
     s_real:[11208,12677], s_meta:[13500,9000,11250,11250],
-    hist_s3:[8093,5165,12109,6037,5913], hist_s4:[7686,8282,12032,3904,14788]
+    hist_s3:[8093,5165,12109,6037,5913], hist_s4:[7686,8282,12032,3904,14788],
+    prodMetaMes:25000, servMetaMes:20000,
+    prodSReal:[7708,8752], prodSMeta:[7500,5000,6250,6250],
+    servSReal:[3500,3925], servSMeta:[6000,4000,5000,5000]
   },
   'Esteio Shop.': {
     meta:35000, tm:[128.53,72.49], orc:143,
     s_real:[9591,6809], s_meta:[10500,7000,8750,8750],
-    hist_s3:[5009,3949,7177,7681,9768], hist_s4:[6802,4396,7144,6178,6770]
+    hist_s3:[5009,3949,7177,7681,9768], hist_s4:[6802,4396,7144,6178,6770],
+    prodMetaMes:31000, servMetaMes:4000,
+    prodSReal:[8976,5364], prodSMeta:[9300,6200,7750,7750],
+    servSReal:[615,1445], servSMeta:[1200,800,1000,1000]
   },
   'Canoas': {
     meta:35000, tm:[78.51,117.41], orc:180,
     s_real:[9047,11965], s_meta:[10500,7000,8750,8750],
-    hist_s3:[5679,3994,9190,8823,10778], hist_s4:[12346,9012,10437,10840,11767]
+    hist_s3:[5679,3994,9190,8823,10778], hist_s4:[12346,9012,10437,10840,11767],
+    prodMetaMes:22000, servMetaMes:13000,
+    prodSReal:[7302,10215], prodSMeta:[6600,4400,5500,5500],
+    servSReal:[1745,1750], servSMeta:[3900,2600,3250,3250]
   },
   'Avenida': {
     meta:15000, tm:[144.11,102.50], orc:61,
     s_real:[5058,5301], s_meta:[4500,3000,3750,3750],
-    hist_s3:[3013,3872,3404,2069,3647], hist_s4:[3294,3660,2159,2895,8512]
+    hist_s3:[3013,3872,3404,2069,3647], hist_s4:[3294,3660,2159,2895,8512],
+    prodMetaMes:7500, servMetaMes:7500,
+    prodSReal:[4323,3177], prodSMeta:[2250,1500,1875,1875],
+    servSReal:[735,2124], servSMeta:[2250,1500,1875,1875]
   },
   'Parque': {
     meta:45000, tm:[70.56,106.90], orc:184,
     s_real:[6822,12429], s_meta:[13500,9000,11250,11250],
-    hist_s3:[10531,4147,10007,7151,10927], hist_s4:[7049,6257,7626,4449,14574]
+    hist_s3:[10531,4147,10007,7151,10927], hist_s4:[7049,6257,7626,4449,14574],
+    prodMetaMes:33000, servMetaMes:12000,
+    prodSReal:[5222,11759], prodSMeta:[9900,6600,8250,8250],
+    servSReal:[1600,670], servSMeta:[3600,2400,3000,3000]
   },
   'Gravataí': {
     meta:35000, tm:[113.30,126.90], orc:125,
     s_real:[11054,9115], s_meta:[10500,7000,8750,8750],
-    hist_s3:[6368,3771,7425,10971,5905], hist_s4:[5589,8094,10310,5936,8164]
+    hist_s3:[6368,3771,7425,10971,5905], hist_s4:[5589,8094,10310,5936,8164],
+    prodMetaMes:20000, servMetaMes:15000,
+    prodSReal:[7624,7360], prodSMeta:[6000,4000,5000,5000],
+    servSReal:[3430,1755], servSMeta:[4500,3000,3750,3750]
   },
 };
 
@@ -136,6 +154,8 @@ Object.keys(LOJAS).forEach(function(n){
   l.tm_atual  = l.tm.reduce(function(a,b){return a+b;},0)/l.tm.length;
   l.pct_meta  = Math.round(l.fat_real/l.meta*100);
   l.pct_proj  = Math.round(l.fat_total/l.meta*100);
+  l.prodRealAcum = (l.prodSReal||[]).reduce(function(a,b){return a+b;},0);
+  l.servRealAcum = (l.servSReal||[]).reduce(function(a,b){return a+b;},0);
 });
 
 const REAL_MESES = [
@@ -172,6 +192,23 @@ function cor(r,m){
   if(p >= 0.70) return '#f39c12';   // 70-79% laranja
   return '#e74c3c';                  // abaixo 70% vermelho
 }
+// Gera o estilo CSS (background + background-size) para a barra preenchida ter um gradiente
+// vermelho->verde que se "revela" conforme o progresso real em relação a META (nao a largura visual).
+// Em baixo % da meta, mostra so o trecho vermelho do gradiente; conforme se aproxima de 100%,
+// vai revelando mais do gradiente até o verde. Em 100%+, fica verde solido.
+function estiloGradienteBarra(r, m){
+  var pctMeta = Math.max(1, Math.min(r/m*100, 100)); // % da meta, entre 1 e 100
+  if(r/m >= 1.00){
+    return 'background:#2ecc71';
+  }
+  var escala = 10000 / pctMeta; // quanto menor o %, mais "esticado" o gradiente, revelando so o inicio
+  return 'background:linear-gradient(90deg,#e74c3c 0%,#f39c12 55%,#f0c020 75%,#a8c835 87%,#5dca6a 95%,#2ecc71 100%);'
+       + 'background-size:'+escala+'% 100%;background-position:left center';
+}
+// Borda do card/box: fica verde quando a meta foi batida, neutra caso contrario
+function bordaMeta(r,m){
+  return (r>=m) ? '#1a6e3a' : '#1e1e1e';
+}
 function bdg(r,m){
   if(r>=m)return '<span class="bdg bg">✓ META</span>';
   if(r/m>.85)return '<span class="bdg by">⚠ PERTO</span>';
@@ -183,13 +220,14 @@ function bdgProj(r,m){
   return '<span class="bdg br2">✗ Proj. abaixo</span>';
 }
 function semBar(fat_real, fat_proj, meta){
+  // maxV agora cresce dinamicamente com o real, permitindo a barra continuar somando alem da meta
   var maxV = Math.max(fat_real+fat_proj, meta)*1.05;
   var pr = Math.min(fat_real/maxV*100,100);
   var pp = Math.min(fat_proj/maxV*100, 100-pr);
   var pm = Math.min(meta/maxV*100,100);
   var total = fat_real+fat_proj;
-  var c = cor(fat_real, meta);       // cor baseada no real acumulado
-  var cTotal = cor(total, meta);     // cor baseada no total projetado
+  var estiloBar = estiloGradienteBarra(fat_real, meta);
+  var cTotal = cor(total, meta);
 
   // Marcacoes de checkpoint: acumulado esperado ao fim de S1, S2 e S3 (1/4, 2/4, 3/4 da meta)
   var marcas = '';
@@ -202,7 +240,7 @@ function semBar(fat_real, fat_proj, meta){
   });
 
   return '<div class="prog-wrap" style="overflow:visible;margin-top:14px">'
-    +'<div class="prog-real" style="width:'+pr+'%;background:'+c+'">'+(fat_real>0?fr(fat_real):'')+'</div>'
+    +'<div class="prog-real" style="width:'+pr+'%;'+estiloBar+'">'+(fat_real>0?fr(fat_real):'')+'</div>'
     +'<div class="prog-proj" style="left:'+pr+'%;width:'+pp+'%">'+(fat_proj>0?'+'+fr(fat_proj)+' proj.':'')+'</div>'
     +'<div class="prog-meta" style="left:'+pm+'%"></div>'
     + marcas
@@ -214,15 +252,46 @@ function barSimples(lbl, real, meta, maxV, proj, note){
   var pr=Math.min(real/maxV*100,100);
   var pp=proj?Math.min(proj/maxV*100,100-pr):0;
   var pm=Math.min(meta/maxV*100,100);
-  var c=cor(real+(proj||0),meta);
+  var total=real+(proj||0);
+  // Verde escuro quando a projecao total supera a meta - destaque extra de "vai bater"
+  var corBar = (total > meta) ? '#1a8a4a' : cor(total,meta);
+  var textoLabel = note || (pct(total,meta)+'% → '+fr(total));
   return '<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">'
     +'<div style="width:90px;font-size:11px;color:#999;text-align:right;flex-shrink:0">'+lbl+'</div>'
-    +'<div style="flex:1;background:#1a1a1a;border-radius:3px;height:22px;position:relative;overflow:hidden">'
-    +'<div style="position:absolute;left:0;top:0;height:100%;width:'+pr+'%;background:'+c+';display:flex;align-items:center;padding-left:6px;font-size:11px;font-weight:bold;color:#fff;white-space:nowrap;overflow:hidden">'+fr(real)+'</div>'
+    +'<div style="flex:1;background:#1a1a1a;border-radius:3px;height:22px;position:relative;overflow:visible">'
+    +'<div style="position:absolute;left:0;top:0;height:100%;width:'+pr+'%;background:'+corBar+';display:flex;align-items:center;padding-left:6px;font-size:11px;font-weight:bold;color:#fff;white-space:nowrap;overflow:hidden;border-radius:3px 0 0 3px">'+fr(real)+'</div>'
     +(proj?'<div style="position:absolute;left:'+pr+'%;top:0;height:100%;width:'+pp+'%;background:repeating-linear-gradient(45deg,#7a5500,#7a5500 3px,#5a3a00 3px,#5a3a00 6px)"></div>':'')
-    +'<div style="position:absolute;top:0;left:'+pm+'%;height:100%;width:2px;background:rgba(255,255,255,.35)"></div>'
-    +'<div style="position:absolute;right:6px;top:50%;transform:translateY(-50%);font-size:10px;color:#aaa">'+(note||pct(real+(proj||0),meta)+'%')+'</div>'
+    +'<div style="position:absolute;top:0;left:'+pm+'%;height:100%;width:2px;background:rgba(255,255,255,.6);box-shadow:0 0 2px rgba(255,255,255,.4)"></div>'
+    +'<div style="position:absolute;right:6px;top:50%;transform:translateY(-50%);font-size:10px;color:#ddd;font-weight:bold;text-shadow:0 1px 2px #000">'+textoLabel+'</div>'
     +'</div></div>';
+}
+// Mini-barra para Produto/Servico individuais — gradiente, cresce alem de 100%, com checkpoints S1/S2/S3
+function miniBarProdServ(lbl, real, meta){
+  var safemeta = Math.max(meta,1);
+  var maxV = Math.max(real, safemeta) * 1.05;
+  var pr = Math.min(real/maxV*100, 100);
+  var pm = Math.min(safemeta/maxV*100, 100);
+  var bateu = real >= safemeta;
+  var estiloBar = estiloGradienteBarra(real, safemeta);
+  var corLbl = bateu ? '#5dca6a' : '#888';
+
+  var marcas = '';
+  [1,2,3].forEach(function(s){
+    var metaAcumS = safemeta * (s/4);
+    var pS = Math.min(metaAcumS/maxV*100,100);
+    var atingiu = real >= metaAcumS;
+    marcas += '<div style="position:absolute;top:0;left:'+pS+'%;width:1px;height:100%;background:'+(atingiu?'rgba(93,202,106,.7)':'rgba(255,255,255,.3)')+'"></div>';
+  });
+
+  return '<div style="margin-bottom:10px">'
+    +'<div style="display:flex;align-items:center;gap:8px">'
+    +'<div style="width:64px;font-size:11px;color:#999;text-align:right;flex-shrink:0">'+lbl+'</div>'
+    +'<div style="flex:1;background:#1a1a1a;border-radius:3px;height:18px;position:relative;overflow:hidden;border:1px solid '+(bateu?'#1a6e3a':'transparent')+'">'
+    +'<div style="position:absolute;left:0;top:0;height:100%;width:'+pr+'%;'+estiloBar+';display:flex;align-items:center;padding-left:6px;font-size:10px;font-weight:bold;color:#fff;white-space:nowrap;overflow:hidden">'+fr(real)+'</div>'
+    + marcas
+    +'<div style="position:absolute;top:0;left:'+pm+'%;height:100%;width:2px;background:rgba(255,255,255,.5)"></div>'
+    +'<div style="position:absolute;right:6px;top:50%;transform:translateY(-50%);font-size:9px;color:'+corLbl+'">'+(bateu?'🎯 ':'')+pct(real,safemeta)+'% de '+fr(safemeta)+'</div>'
+    +'</div></div></div>';
 }
 
 
@@ -485,12 +554,16 @@ loja(){
     <div class="card"><div class="lb">Status projeção</div><div class="vl" style="font-size:14px">${bdgProj(l.fat_total,l.meta)}</div><div class="sb">${pct(l.fat_total,l.meta)}% da meta projetado</div></div>
   </div>
 
-  <div class="box"><div class="bt">Progresso do Mês — ${curLoja}</div>
+  <div class="box" style="border-color:${bordaMeta(l.fat_real,l.meta)}"><div class="bt">Progresso do Mês — ${curLoja}</div>
     ${semBar(l.fat_real, l.fat_proj, l.meta)}
-    <div style="font-size:10px;color:#444;margin-top:4px">
+    <div style="font-size:10px;color:#444;margin-top:4px;margin-bottom:14px">
       <span style="color:#cc0000">■</span> Real ${fr(l.fat_real)} &nbsp;
       <span style="color:#f39c12">▤</span> Projeção +${fr(l.fat_proj)} &nbsp;
       Total → ${fr(l.fat_total)} | Meta: ${fr(l.meta)}
+    </div>
+    <div style="border-top:1px solid #1e1e1e;padding-top:14px">
+      ${miniBarProdServ('📦 Produto', l.prodRealAcum, l.prodMetaMes)}
+      ${miniBarProdServ('🔧 Serviço', l.servRealAcum, l.servMetaMes)}
     </div>
   </div>
 
@@ -610,7 +683,7 @@ V.anual = function(){
     const noRitmo = real >= metaEsperadaHoje;
 
     return`<div class="prog-wrap" style="height:32px;margin-bottom:6px;margin-top:18px;overflow:visible">
-      <div class="prog-real" style="width:${pr}%;font-size:12px">${real>0?fr(real):''}</div>
+      <div class="prog-real" style="width:${pr}%;font-size:12px;${estiloGradienteBarra(real,meta)}">${real>0?fr(real):''}</div>
       <div class="prog-proj" style="left:${pr}%;width:${pp}%;background:repeating-linear-gradient(45deg,${corProj}aa,${corProj}aa 4px,${corProj}44 4px,${corProj}44 8px)">${proj>0?'+'+fr(proj):''}</div>
       <div class="prog-meta" style="left:${pm}%"></div>
       <div style="position:absolute;top:-4px;left:${pCheckpoint}%;width:2px;height:40px;background:${noRitmo?'#5dca6a':'#fff'};box-shadow:0 0 3px rgba(255,255,255,.6)" title="Ritmo esperado para ${MES_ATUAL}"></div>
