@@ -132,7 +132,7 @@ const LOJAS = {
   'Parque': {
     meta:45000, tm:[70.56,106.90,87.23], orc:275,
     s_real:[6822,12429,9747], s_meta:[13500,9000,11250,11250],
-    hist_s3:[10531,4147,10007,7151,10927], hist_s4:[7049,6257,7626,4449,14574],
+    hist_s3:[10530,4147,10007,7151,10927], hist_s4:[7049,6257,7626,4449,14574],
     prodMetaMes:33000, servMetaMes:12000,
     prodSReal:[5222,11759,7938], prodSMeta:[9900,6600,8250,8250],
     servSReal:[1600,670,1809], servSMeta:[3600,2400,3000,3000]
@@ -140,7 +140,7 @@ const LOJAS = {
   'Gravataí': {
     meta:35000, tm:[113.30,126.90,59.26], orc:184,
     s_real:[11054,9115,5675], s_meta:[10500,7000,8750,8750],
-    hist_s3:[6368,3771,7425,10971,5905], hist_s4:[5589,8094,10310,5936,8164],
+    hist_s3:[6368,3771,7424,10971,5905], hist_s4:[5588,8094,10310,5936,8164],
     prodMetaMes:20000, servMetaMes:15000,
     prodSReal:[7624,7360,3575], prodSMeta:[6000,4000,5000,5000],
     servSReal:[3430,1755,2100], servSMeta:[4500,3000,3750,3750]
@@ -506,6 +506,147 @@ function buildSemLoja(l){
 }
 
 /* =========== VIEWS =========== */
+// Monta a serie Jan-Dez (12 valores) de faturamento para uma loja, combinando real + projecao.
+// meses fechados (Jan-Mai) = hist S1+S2 (hist_acum_s1s2) + hist_s3 + hist_s4 daquela loja.
+// mes atual = fat_real (real) + fat_proj (projetado).
+// Jul-Dez = projecao estimada proporcional a participacao historica da loja no total geral.
+const HIST_ACUM_S1S2_GLOBAL = {
+  'Esteio':       [7746+9317, 7746+8966, 13737+8967, 25276+10425, 15036+11971],
+  'Esteio Shop.': [4335+4084, 4335+5119, 7189+7320,  10900+5021,  11336+6114],
+  'Canoas':       [10278+8088,10278+3914, 7786+8922,  13771+6186,  18700+7921],
+  'Avenida':      [4441+3186, 4201+1720,  4252+1754,  5301+3704,   11281+10245],
+  'Parque':       [12552+8687,12552+8787, 10795+6226, 20080+12985, 14303+9319],
+  'Gravataí':     [7180+5385, 7180+6129,  7142+8073,  18145+11657, 14204+9671],
+};
+function montarSerieMensalLoja(l, nomeLoja){
+  const mesesFechados = HIST_ACUM_S1S2_GLOBAL[nomeLoja].map(function(s1s2,i){
+    return s1s2 + l.hist_s3[i] + l.hist_s4[i];
+  }); // Jan a Mai, 5 valores reais
+
+  const mesAtualReal = l.fat_real;       // parte ja realizada do mes atual
+  const mesAtualProj = l.fat_proj;       // parte ainda projetada do mes atual
+  const mesAtual = mesAtualReal + mesAtualProj;
+
+  // Participacao historica da loja no total geral (media Jan-Mai) - usada para estimar Jul-Dez
+  const totalGeralMesesFechados = NOMES.reduce(function(acc,n){
+    const ld = LOJAS[n];
+    const serieGeral = HIST_ACUM_S1S2_GLOBAL[n].map(function(s1s2,i){ return s1s2 + ld.hist_s3[i] + ld.hist_s4[i]; });
+    return acc + serieGeral.reduce(function(a,b){return a+b;},0);
+  },0);
+  const totalLojaMesesFechados = mesesFechados.reduce(function(a,b){return a+b;},0);
+  const participacao = totalGeralMesesFechados>0 ? (totalLojaMesesFechados/totalGeralMesesFechados) : (1/NOMES.length);
+
+  const projFuturos = PROJ_2SEM.map(function(p){ return Math.round(p.r * participacao); });
+
+  const valores = mesesFechados.concat([mesAtual]).concat(projFuturos); // 12 valores
+  const valoresReal = mesesFechados.concat([mesAtualReal]).concat(projFuturos.map(function(){return 0;}));
+  const valoresProj  = mesesFechados.map(function(){return 0;}).concat([mesAtualProj]).concat(projFuturos);
+  const labels = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+  const isProjetado = [false,false,false,false,false,(mesAtualProj>0), true,true,true,true,true,true];
+  return { valores: valores, valoresReal: valoresReal, valoresProj: valoresProj, labels: labels, isProjetado: isProjetado };
+}
+
+// Monta a serie Jan-Dez do GERAL (todas as lojas somadas) - usa REAL_MESES + GERAL + PROJ_2SEM
+function montarSerieMensalGeral(){
+  const fechados = REAL_MESES.filter(function(m){return m.fechado;}).map(function(m){return m.fat;});
+  const mesAtualParcial = REAL_MESES.find(function(m){return !m.fechado;});
+  const temMesParcial = !!mesAtualParcial;
+  const mesAtualReal = temMesParcial ? GERAL.fat_real : null;
+  const mesAtualProj = temMesParcial ? GERAL.fat_proj : null;
+  const mesAtual = temMesParcial ? (GERAL.fat_real+GERAL.fat_proj) : null;
+
+  const valores = fechados.slice();
+  const valoresReal = fechados.slice();
+  const valoresProj = fechados.map(function(){return 0;});
+  const indiceMesAtual = mesAtual!==null ? valores.length : -1; // posicao do mes corrente, antes de inserir
+
+  if(mesAtual!==null){
+    valores.push(mesAtual);
+    valoresReal.push(mesAtualReal);
+    valoresProj.push(mesAtualProj);
+  }
+  PROJ_2SEM.forEach(function(p){
+    valores.push(p.r);
+    valoresReal.push(0);
+    valoresProj.push(p.r);
+  });
+
+  const labels = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+  const isProjetado = labels.map(function(_,i){
+    if(i === indiceMesAtual) return GERAL.fat_proj > 0; // mes corrente: projetado so se ainda faltar semana
+    return i > indiceMesAtual; // meses depois do atual = sempre projecao (2o semestre)
+  });
+  return { valores: valores, valoresReal: valoresReal, valoresProj: valoresProj, labels: labels, isProjetado: isProjetado };
+}
+
+// Desenha o grafico de barras simples Jan-Dez (real solido + projetado mais claro/listrado)
+function buildGraficoAnualBarras(serie, metasLinhas){
+  const ALTURA = 140; // altura da area de barras em px (sem contar labels)
+  const metas = metasLinhas || []; // array de {valor, label, cor}
+  const maiorMeta = metas.length ? Math.max.apply(null, metas.map(function(m){return m.valor;})) : 0;
+  const max = Math.max(Math.max.apply(null, serie.valores), maiorMeta) * 1.12;
+
+  // Definir 4 linhas de grade horizontais com valores redondos, cobrindo todo o "max"
+  const NUM_LINHAS = 4;
+  const passoBruto = max / NUM_LINHAS;
+  const ordem = Math.pow(10, Math.floor(Math.log10(passoBruto||1)));
+  const passo = Math.ceil(passoBruto/ordem)*ordem;
+  const maxGrade = passo*NUM_LINHAS;
+
+  function yPx(valor){ return (valor/maxGrade)*ALTURA; }
+
+  const linhasGrade = [];
+  for(var g=0; g<=NUM_LINHAS; g++){
+    linhasGrade.push({valor: passo*g, posY: yPx(passo*g)});
+  }
+
+  const gradeHtml = linhasGrade.map(function(gl){
+    const valK = gl.valor>=1000 ? (gl.valor/1000).toFixed(0)+'k' : gl.valor.toFixed(0);
+    return '<div style="position:absolute;left:0;right:0;bottom:'+gl.posY+'px;border-top:1px solid #2a2a2a;pointer-events:none"></div>'
+      + '<div style="position:absolute;left:0;bottom:'+gl.posY+'px;transform:translateY(50%);font-size:8px;color:#555;background:#141414;padding-right:3px">'+valK+'</div>';
+  }).join('');
+
+  // Linhas de meta (tracejadas, por cima da grade) - ex: meta oficial 210k, meta maxima 250k
+  const metasHtml = metas.map(function(m){
+    const posY = yPx(m.valor);
+    const valK = m.valor>=1000 ? (m.valor/1000).toFixed(0)+'k' : m.valor.toFixed(0);
+    return '<div style="position:absolute;left:0;right:0;bottom:'+posY+'px;border-top:2px dashed '+m.cor+';pointer-events:none"></div>'
+      + '<div style="position:absolute;left:0;bottom:'+posY+'px;transform:translateY(-100%);font-size:8px;color:'+m.cor+';background:#141414;padding:0 3px;font-weight:bold">'+(m.label||'')+' '+valK+'</div>';
+  }).join('');
+
+  const barras = serie.valores.map(function(v,i){
+    const vReal = serie.valoresReal ? serie.valoresReal[i] : (serie.isProjetado[i]?0:v);
+    const vProj = serie.valoresProj ? serie.valoresProj[i] : (serie.isProjetado[i]?v:0);
+    const alturaReal = Math.max(0, yPx(vReal));
+    const alturaProj = Math.max(0, yPx(vProj));
+    const temAmbos = vReal>0 && vProj>0;
+    const valK = v>=1000 ? (v/1000).toFixed(0)+'k' : v.toFixed(0);
+    const corLabel = serie.isProjetado[i] ? '#aa6666' : '#999';
+
+    return '<div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;flex:1;min-width:0;height:100%;position:relative;z-index:1">'
+      + '<div style="font-size:8px;color:'+corLabel+';margin-bottom:3px;white-space:nowrap">'+valK+'</div>'
+      + '<div style="display:flex;flex-direction:column-reverse;width:100%;max-width:34px">'
+      + (vReal>0 ? '<div style="width:100%;height:'+alturaReal+'px;background:#cc0000;border-radius:'+(vProj>0?'0 0 3px 3px':'3px 3px 3px 3px')+'"></div>' : '')
+      + (vProj>0 ? '<div style="width:100%;height:'+alturaProj+'px;background:repeating-linear-gradient(45deg,#7a2222,#7a2222 4px,#5a1818 4px,#5a1818 8px);'+(temAmbos?'':'border-radius:3px 3px 0 0')+'"></div>' : '')
+      + '</div>'
+      + '</div>';
+  }).join('');
+
+  const labelsHtml = serie.labels.map(function(lbl){
+    return '<div style="flex:1;text-align:center;font-size:9px;color:#777">'+lbl+'</div>';
+  }).join('');
+
+  return '<div style="position:relative;height:'+ALTURA+'px;margin-left:24px;margin-top:8px">'
+    + gradeHtml
+    + metasHtml
+    + '<div style="display:flex;align-items:flex-end;gap:4px;height:100%;position:relative">'+barras+'</div>'
+    + '</div>'
+    + '<div style="display:flex;gap:4px;margin-left:24px;margin-top:2px">'+labelsHtml+'</div>'
+    + '<div style="font-size:10px;color:#444;margin-top:10px;margin-left:24px"><span style="color:#cc0000">■</span> Realizado &nbsp; <span style="color:#7a2222">▤</span> Projetado'
+    + (metas.length ? ' &nbsp; ' + metas.map(function(m){return '<span style="color:'+m.cor+'">┄</span> '+(m.label||'Meta');}).join(' &nbsp; ') : '')
+    + '</div>';
+}
+
 const V = {
 
 mes(){
@@ -610,7 +751,7 @@ loja(){
   const mesesLabel = ['Janeiro','Fevereiro','Março','Abril','Maio'];
   const semanas_hist = mesesLabel.map((m,i)=>({
     m: m,
-    acum3: acumHist[i] + l.hist_s3[i], // S1+S2+S3 daquele mes
+    acum3: acumHist[i], // acumHist ja contem S1+S2+S3 quando SEM_ATUAL>=3 (ver calculo acima)
     s4: l.hist_s4[i]
   }));
   semanas_hist.push({
@@ -666,6 +807,12 @@ loja(){
       <td style="font-size:10px;color:${s4IsProj?'#f39c12':'#555'}">${s4IsProj?'⚡ S4 projetada':''}</td>
     </tr>`;}).join('')}</tbody></table>
   <div style="font-size:10px;color:#444;margin-top:6px">Acum. ${labelPosicao} = soma de tudo que já foi realizado no mês até a semana atual. ⚡ = S4 ainda projetada (60% ritmo atual da loja + 40% média histórica da mesma posição).</div>
+  </div>
+
+  <div class="box"><div class="bt">Faturamento Jan–Dez — ${curLoja}</div>
+  ${buildGraficoAnualBarras(montarSerieMensalLoja(l, curLoja), [
+    {valor: l.meta, label: 'Meta', cor: '#f39c12'}
+  ])}
   </div>
 
   <div class="box"><div class="bt">Posição no Ranking — ${curLoja} nesta semana</div>
@@ -890,6 +1037,13 @@ V.anual = function(){
       <span style="color:#888">▤</span> Projeção restante &nbsp;
       <span style="color:#777">│</span> Meta R$ 3M
     </div>
+  </div>
+
+  <div class="box"><div class="bt">Faturamento Jan–Dez — Todas as Lojas</div>
+  ${buildGraficoAnualBarras(montarSerieMensalGeral(), [
+    {valor: 210000, label: 'Meta', cor: '#f39c12'},
+    {valor: 250000, label: 'Meta máx.', cor: '#2ecc71'}
+  ])}
   </div>
 
   <div class="box"><div class="bt">Projeção Mês a Mês — Cenário Otimista 2026</div>
