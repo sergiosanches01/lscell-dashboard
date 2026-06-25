@@ -611,7 +611,7 @@ function buildGraficoAnualBarras(serie, metasLinhas){
     const posY = yPx(m.valor);
     const valK = m.valor>=1000 ? (m.valor/1000).toFixed(0)+'k' : m.valor.toFixed(0);
     return '<div style="position:absolute;left:0;right:0;bottom:'+posY+'px;border-top:2px dashed '+m.cor+';pointer-events:none"></div>'
-      + '<div style="position:absolute;left:0;bottom:'+posY+'px;transform:translateY(-100%);font-size:8px;color:'+m.cor+';background:#141414;padding:0 3px;font-weight:bold">'+(m.label||'')+' '+valK+'</div>';
+      + '<div style="position:absolute;left:0;bottom:'+posY+'px;transform:translateY(-40%);font-size:8px;color:'+m.cor+';background:#141414;padding:0 3px;font-weight:bold">'+(m.label||'')+' '+valK+'</div>';
   }).join('');
 
   const barras = serie.valores.map(function(v,i){
