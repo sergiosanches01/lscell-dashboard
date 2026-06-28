@@ -19,11 +19,11 @@ h1{color:#cc0000;text-align:center;font-size:18px;letter-spacing:2px;margin-bott
 .sbadge{display:inline-block;background:#1a0000;border:1px solid #cc0000;color:#cc0000;padding:4px 16px;border-radius:99px;font-size:12px;font-weight:bold;letter-spacing:1px}
 #tabs{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:14px}
 .tab{padding:6px 13px;border-radius:4px;border:1px solid #2a2a2a;background:#141414;cursor:pointer;color:#777;font-size:12px;transition:.15s}
-.main-nav{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:10px;flex-wrap:wrap}
-.main-btn{padding:10px 22px;border-radius:8px;border:1px solid #333;background:#1a1a1a;cursor:pointer;color:#999;font-size:13px;font-weight:bold;transition:.15s;letter-spacing:.3px;white-space:nowrap}
+.main-nav{display:flex;align-items:stretch;justify-content:center;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.main-btn{padding:10px 22px;border-radius:8px;border:1px solid #333;background:#1a1a1a;cursor:pointer;color:#999;font-size:13px;font-weight:bold;transition:.15s;letter-spacing:.3px;white-space:nowrap;display:flex;align-items:center;justify-content:center}
 .main-btn.on{background:#cc0000;border-color:#cc0000;color:#fff;box-shadow:0 2px 8px rgba(204,0,0,.35)}
 .main-btn:hover:not(.on){border-color:#cc0000;color:#cc0000}
-.home-btn-mini{padding:9px 12px;border-radius:8px;border:1px solid #333;background:#1a1a1a;cursor:pointer;color:#999;font-size:14px;transition:.15s;flex-shrink:0}
+.home-btn-mini{padding:9px 12px;border-radius:8px;border:1px solid #333;background:#1a1a1a;cursor:pointer;color:#999;font-size:14px;transition:.15s;flex-shrink:0;display:flex;align-items:center;justify-content:center}
 .home-btn-mini:hover{border-color:#cc0000;color:#cc0000}
 @media (max-width:430px){
   .main-nav{gap:6px;padding:0 2px}
@@ -1463,14 +1463,30 @@ function locBuscar(v){
 }
 function locLimpar(){ locBuscaQ=''; document.getElementById('content').innerHTML = V.localizacao(); }
 
-function locRenderCard(item, padrao){
+function locRenderCard(item, padrao, aba){
   const modeloPrincipal = item.modelos[0];
   const alternativos = item.modelos.slice(1).filter(Boolean);
+  const ehPelicula = aba === 'peliculas';
   let linhas = '';
   if(padrao === 'B'){
     const tem = item.locNormal && item.locNormal !== '-';
+    const labelUnico = ehPelicula ? 'Película' : 'Localização';
     linhas = '<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0">'
-      + '<span style="font-size:11px;color:#888">Localização</span>'
+      + '<span style="font-size:11px;color:#888">'+labelUnico+'</span>'
+      + (tem ? '<span style="color:#fff;font-size:15px;font-weight:bold">'+item.locNormal+'</span>'
+             : '<span style="color:#666;font-size:11px">—</span>')
+      + '</div>';
+    if(item.locCarteira && item.locCarteira !== '-'){
+      // Padrao B usa locCarteira para info extra (ex: armario/painel) - mostrar sempre que houver
+      linhas += '<div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-top:1px solid #333;margin-top:4px">'
+        + '<span style="font-size:11px;color:#888">Armário/Painel</span>'
+        + '<span style="color:#ccc;font-size:13px;font-weight:bold">'+item.locCarteira+'</span>'
+        + '</div>';
+    }
+  } else if(ehPelicula){
+    const tem = item.locNormal && item.locNormal !== '-';
+    linhas = '<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0">'
+      + '<span style="font-size:11px;color:#888">Película</span>'
       + (tem ? '<span style="color:#fff;font-size:15px;font-weight:bold">'+item.locNormal+'</span>'
              : '<span style="color:#666;font-size:11px">—</span>')
       + '</div>';
@@ -1519,7 +1535,7 @@ V.localizacao = function(){
   } else if(filtrados.length === 0){
     conteudoHtml = '<div style="text-align:center;color:#666;padding:40px 20px;font-size:13px">Nenhum modelo encontrado para "'+locBuscaQ+'".</div>';
   } else {
-    conteudoHtml = filtrados.map(function(item){ return locRenderCard(item, lojaData.padrao); }).join('');
+    conteudoHtml = filtrados.map(function(item){ return locRenderCard(item, lojaData.padrao, locAbaAtual); }).join('');
   }
 
   return '<div class="box"><div class="bt">📍 Localização de Capas e Películas</div>'
