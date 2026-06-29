@@ -18,7 +18,7 @@ h1{color:#cc0000;text-align:center;font-size:18px;letter-spacing:2px;margin-bott
 .semana-badge{text-align:center;margin-bottom:14px}
 .sbadge{display:inline-block;background:#1a0000;border:1px solid #cc0000;color:#cc0000;padding:4px 16px;border-radius:99px;font-size:12px;font-weight:bold;letter-spacing:1px}
 #tabs{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:14px}
-.tab{padding:6px 13px;border-radius:4px;border:1px solid #2a2a2a;background:#141414;cursor:pointer;color:#777;font-size:12px;transition:.15s;white-space:nowrap}
+.tab{padding:6px 13px;border-radius:4px;border:1px solid #2a2a2a;background:#141414;cursor:pointer;color:#777;font-size:12px;transition:.15s;white-space:nowrap;text-align:center}
 .main-nav{display:flex;align-items:stretch;justify-content:center;gap:8px;margin-bottom:10px;flex-wrap:wrap}
 .main-btn{padding:10px 22px;border-radius:8px;border:1px solid #333;background:#1a1a1a;cursor:pointer;color:#999;font-size:13px;font-weight:bold;transition:.15s;letter-spacing:.3px;white-space:nowrap;display:flex;align-items:center;justify-content:center}
 .main-btn.on{background:#cc0000;border-color:#cc0000;color:#fff;box-shadow:0 2px 8px rgba(204,0,0,.35)}
@@ -37,6 +37,7 @@ h1{color:#cc0000;text-align:center;font-size:18px;letter-spacing:2px;margin-bott
   .tab{flex:1;padding:7px 4px;font-size:10.5px;text-align:center;white-space:normal;line-height:1.2;min-width:0}
   .loja-btns{gap:5px}
   .lbtn{flex:1 1 30%;padding:7px 4px;font-size:11px;white-space:normal;line-height:1.2;min-width:0}
+  .cenarios-grid{grid-template-columns:1fr!important}
 }
 .tab.on{background:#cc0000;border-color:#cc0000;color:#fff;font-weight:bold}
 .tab:hover:not(.on){border-color:#cc0000;color:#cc0000}
@@ -832,7 +833,8 @@ loja(){
   </div>
 
   <div class="box"><div class="bt">Posição no Ranking — ${curLoja} nesta semana</div>
-  <table><thead><tr><th>Rank</th><th>Loja</th><th>Acumulado</th><th>Projeção mês</th><th>% Meta proj.</th><th>TM atual</th></tr></thead>
+  <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+  <table style="min-width:560px"><thead><tr><th>Rank</th><th>Loja</th><th>Acumulado</th><th>Projeção mês</th><th>% Meta proj.</th><th>TM atual</th></tr></thead>
   <tbody>${[...NOMES].sort((a,b)=>LOJAS[b].fat_real-LOJAS[a].fat_real).map((n,i)=>`<tr style="${n===curLoja?'background:#1a0000;border-left:2px solid #cc0000':''}">
     <td>${['🥇','🥈','🥉','4º','5º','6º'][i]}</td>
     <td><strong>${n}</strong>${n===curLoja?' ◀':''}</td>
@@ -840,7 +842,8 @@ loja(){
     <td style="color:${cor(LOJAS[n].fat_total,LOJAS[n].meta)}">${fr(LOJAS[n].fat_total)}</td>
     <td style="color:${cor(LOJAS[n].fat_total,LOJAS[n].meta)};font-weight:bold">${pct(LOJAS[n].fat_total,LOJAS[n].meta)}%</td>
     <td style="color:${LOJAS[n].tm_atual>100?'#2ecc71':'#f39c12'}">R$ ${LOJAS[n].tm_atual.toFixed(0)}</td>
-  </tr>`).join('')}</tbody></table></div>`;
+  </tr>`).join('')}</tbody></table>
+  </div></div>`;
 },
 
 alertas(){
@@ -1108,8 +1111,8 @@ V.anual = function(){
   </div></div>
 
   <div class="box"><div class="bt">Comparativo dos 2 Cenários — Fechamento Anual</div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-    <div style="border:1px solid #8a6000;border-radius:7px;padding:14px">
+  <div class="cenarios-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+    <div style="border:1px solid #8a6000;border-radius:7px;padding:14px;min-width:0;overflow:hidden">
       <div style="color:#f39c12;font-weight:bold;font-size:13px;margin-bottom:6px">🟡 Realista</div>
       <div style="font-size:26px;font-weight:bold;color:#f39c12;margin-bottom:4px">${fr(anoR)}</div>
       <div style="font-size:12px;color:#888;margin-bottom:10px">${pct(anoR,META_ANO)}% da meta · ${anoR>=META_ANO?'<span style="color:#2ecc71">META BATIDA 🎯</span>':'falta <b>'+fr(META_ANO-anoR)+'</b>'}</div>
@@ -1120,7 +1123,7 @@ V.anual = function(){
         2º semestre: ${fr(tot2r)}
       </div>
     </div>
-    <div style="border:1px solid #1a6e3a;border-radius:7px;padding:14px">
+    <div style="border:1px solid #1a6e3a;border-radius:7px;padding:14px;min-width:0;overflow:hidden">
       <div style="color:#2ecc71;font-weight:bold;font-size:13px;margin-bottom:6px">🟢 Otimista</div>
       <div style="font-size:26px;font-weight:bold;color:#2ecc71;margin-bottom:4px">${fr(anoO)}</div>
       <div style="font-size:12px;color:#888;margin-bottom:10px">${pct(anoO,META_ANO)}% da meta · supera em <b style="color:#2ecc71">${fr(anoO-META_ANO)}</b></div>
