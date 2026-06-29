@@ -92,73 +92,75 @@ const LOGO_B64 = 'iVBORw0KGgoAAAANSUhEUgAAAGsAAABuCAYAAAAgcu2/AAAKMWlDQ1BJQ0MgUH
 
 /* ===== DADOS_START ===== */
 const MES_ATUAL = 'Junho';
-const SEM_ATUAL = 3;
+const SEM_ATUAL = 4;
 const META_MES_GERAL = 210000;
 const DIAS_POR_SEMANA = [6,6,6,8];
+const SEMANA_ATUAL_PARCIAL = true;
+const DIAS_REALIZADOS_SEM_ATUAL = 6;
 
 const GERAL = {
   s: [
     {n:'S1', fat:52779, meta:63000, real:true},
     {n:'S2', fat:58296, meta:42000, real:true},
     {n:'S3', fat:58960, meta:52500, real:true},
-    {n:'S4', fat:69977, meta:52500, real:false},
+    {n:'S4', fat:56565, meta:52500, real:false},
   ],
-  fat_real: 170035,
-  fat_proj: 69977,
+  fat_real: 209170,
+  fat_proj: 17430,
   meta: 210000,
-  tm_real: (97.99+110.68+104.13)/3,
-  orc_real: 419+437+427,
+  tm_real: (97.99+110.68+104.13+84.11)/4,
+  orc_real: 419+437+427+354,
 };
 GERAL.fat_total_proj = GERAL.fat_real + GERAL.fat_proj;
 
 const LOJAS = {
   'Esteio': {
-    meta:45000, tm:[89.63,113.66,107.60], orc:235,
-    s_real:[11208,12677,10012], s_meta:[13500,9000,11250,11250],
+    meta:45000, tm:[89.63,113.66,107.60,65.38], orc:291,
+    s_real:[11208,12677,10012,5991], s_meta:[13500,9000,11250,11250],
     hist_s3:[8093,5165,12109,6037,5913], hist_s4:[7686,8282,12032,3904,14788],
     prodMetaMes:25000, servMetaMes:20000,
-    prodSReal:[7708,8752,7748], prodSMeta:[7500,5000,6250,6250],
-    servSReal:[3500,3925,2265], servSMeta:[6000,4000,5000,5000]
+    prodSReal:[7708,8752,7748,3661], prodSMeta:[7500,5000,6250,6250],
+    servSReal:[3500,3925,2265,2330], servSMeta:[6000,4000,5000,5000]
   },
   'Esteio Shop.': {
-    meta:35000, tm:[128.53,72.49,107.73], orc:217,
-    s_real:[9591,6809,12928], s_meta:[10500,7000,8750,8750],
+    meta:35000, tm:[128.53,72.49,107.73,59.27], orc:272,
+    s_real:[9591,6809,12928,5220], s_meta:[10500,7000,8750,8750],
     hist_s3:[5009,3949,7177,7681,9768], hist_s4:[6802,4396,7144,6178,6770],
     prodMetaMes:31000, servMetaMes:4000,
-    prodSReal:[8976,5364,8059], prodSMeta:[9300,6200,7750,7750],
-    servSReal:[615,1445,4869], servSMeta:[1200,800,1000,1000]
+    prodSReal:[8976,5364,8059,3260], prodSMeta:[9300,6200,7750,7750],
+    servSReal:[615,1445,4869,1960], servSMeta:[1200,800,1000,1000]
   },
   'Canoas': {
-    meta:35000, tm:[78.51,117.41,110.44], orc:265,
-    s_real:[9047,11965,11442], s_meta:[10500,7000,8750,8750],
+    meta:35000, tm:[78.51,117.41,110.44,122.54], orc:331,
+    s_real:[9047,11965,11442,8767], s_meta:[10500,7000,8750,8750],
     hist_s3:[5679,3994,9190,8823,10778], hist_s4:[12346,9012,10437,10840,11767],
     prodMetaMes:22000, servMetaMes:13000,
-    prodSReal:[7302,10215,9387], prodSMeta:[6600,4400,5500,5500],
-    servSReal:[1745,1750,2055], servSMeta:[3900,2600,3250,3250]
+    prodSReal:[7302,10215,9387,8087], prodSMeta:[6600,4400,5500,5500],
+    servSReal:[1745,1750,2055,680], servSMeta:[3900,2600,3250,3250]
   },
   'Avenida': {
-    meta:15000, tm:[144.11,102.50,165.34], orc:107,
-    s_real:[5058,5301,9156], s_meta:[4500,3000,3750,3750],
+    meta:15000, tm:[144.11,102.50,165.34,124.51], orc:138,
+    s_real:[5058,5301,9156,5710], s_meta:[4500,3000,3750,3750],
     hist_s3:[3013,3872,3404,2069,3647], hist_s4:[3294,3660,2159,2895,8512],
     prodMetaMes:7500, servMetaMes:7500,
-    prodSReal:[4323,3177,7756], prodSMeta:[2250,1500,1875,1875],
-    servSReal:[735,2124,1400], servSMeta:[2250,1500,1875,1875]
+    prodSReal:[4323,3177,7756,3860], prodSMeta:[2250,1500,1875,1875],
+    servSReal:[735,2124,1400,1850], servSMeta:[2250,1500,1875,1875]
   },
   'Parque': {
-    meta:45000, tm:[70.56,106.90,87.23], orc:275,
-    s_real:[6822,12429,9747], s_meta:[13500,9000,11250,11250],
+    meta:45000, tm:[70.56,106.90,87.23,67.43], orc:366,
+    s_real:[6822,12429,9747,6916], s_meta:[13500,9000,11250,11250],
     hist_s3:[10530,4147,10007,7151,10927], hist_s4:[7049,6257,7626,4449,14574],
     prodMetaMes:33000, servMetaMes:12000,
-    prodSReal:[5222,11759,7938], prodSMeta:[9900,6600,8250,8250],
-    servSReal:[1600,670,1809], servSMeta:[3600,2400,3000,3000]
+    prodSReal:[5222,11759,7938,6136], prodSMeta:[9900,6600,8250,8250],
+    servSReal:[1600,670,1809,780], servSMeta:[3600,2400,3000,3000]
   },
   'Gravataí': {
-    meta:35000, tm:[113.30,126.90,59.26], orc:184,
-    s_real:[11054,9115,5675], s_meta:[10500,7000,8750,8750],
+    meta:35000, tm:[113.30,126.90,59.26,85.28], orc:239,
+    s_real:[11054,9115,5675,6531], s_meta:[10500,7000,8750,8750],
     hist_s3:[6368,3771,7424,10971,5905], hist_s4:[5588,8094,10310,5936,8164],
     prodMetaMes:20000, servMetaMes:15000,
-    prodSReal:[7624,7360,3575], prodSMeta:[6000,4000,5000,5000],
-    servSReal:[3430,1755,2100], servSMeta:[4500,3000,3750,3750]
+    prodSReal:[7624,7360,3575,4771], prodSMeta:[6000,4000,5000,5000],
+    servSReal:[3430,1755,2100,1760], servSMeta:[4500,3000,3750,3750]
   },
 };
 
@@ -168,19 +170,41 @@ let curLoja = 'Esteio', curTab = 'anual';
 // Calcular projecao por loja (60% ritmo diario atual + 40% historico diario, ajustado por dias reais)
 Object.keys(LOJAS).forEach(function(n){
   var l = LOJAS[n];
-  l.fat_real = l.s_real.reduce(function(a,b){return a+b;},0);
-  var diasRealizados = 0;
-  for(var di=0; di<SEM_ATUAL; di++){ diasRealizados += (DIAS_POR_SEMANA[di]||6); }
-  var ritmoDiario = diasRealizados > 0 ? l.fat_real / diasRealizados : 0;
-  var avg3 = l.hist_s3.reduce(function(a,b){return a+b;},0)/l.hist_s3.length;
-  var avg4 = l.hist_s4.reduce(function(a,b){return a+b;},0)/l.hist_s4.length;
-  var avg3PorDia = avg3 / 6;
-  var avg4PorDia = avg4 / 6;
-  var diasS3 = DIAS_POR_SEMANA[2]||6;
-  var diasS4 = DIAS_POR_SEMANA[3]||6;
-  l.proj_s3 = SEM_ATUAL >= 3 ? l.s_real[2] : Math.round((ritmoDiario*0.60 + avg3PorDia*0.40) * diasS3);
-  l.proj_s4 = SEM_ATUAL >= 4 ? l.s_real[3] : Math.round((ritmoDiario*0.60 + avg4PorDia*0.40) * diasS4);
-  l.fat_proj  = (SEM_ATUAL < 3 ? l.proj_s3 : 0) + (SEM_ATUAL < 4 ? l.proj_s4 : 0);
+  var idxSemAtual = SEM_ATUAL - 1; // indice 0-based da semana atual
+
+  if(SEMANA_ATUAL_PARCIAL && SEM_ATUAL === 4){
+    // A S4 (ultima semana) so tem alguns dias somados ainda - projetar so os dias que faltam DENTRO dela
+    l.fat_real = l.s_real.slice(0, 3).reduce(function(a,b){return a+b;},0); // S1+S2+S3 completas
+    var fatParcialS4 = l.s_real[3] || 0; // o que ja foi somado da S4 (dias parciais)
+    l.fat_real += fatParcialS4;
+
+    var diasRealizadosAntesS4 = 0;
+    for(var di=0; di<3; di++){ diasRealizadosAntesS4 += (DIAS_POR_SEMANA[di]||6); }
+    var diasRealizadosTotal = diasRealizadosAntesS4 + DIAS_REALIZADOS_SEM_ATUAL;
+    var ritmoDiario = diasRealizadosTotal > 0 ? l.fat_real / diasRealizadosTotal : 0;
+
+    var diasS4Total = DIAS_POR_SEMANA[3]||6;
+    var diasFaltantesS4 = diasS4Total - DIAS_REALIZADOS_SEM_ATUAL;
+    var projDiasFaltantes = Math.round(ritmoDiario * diasFaltantesS4);
+
+    l.proj_s3 = l.s_real[2]; // S3 ja fechada
+    l.proj_s4 = fatParcialS4 + projDiasFaltantes; // parcial + projecao dos dias que faltam
+    l.fat_proj = projDiasFaltantes; // só os dias que ainda faltam contam como "projetado"
+  } else {
+    l.fat_real = l.s_real.reduce(function(a,b){return a+b;},0);
+    var diasRealizados = 0;
+    for(var di=0; di<SEM_ATUAL; di++){ diasRealizados += (DIAS_POR_SEMANA[di]||6); }
+    var ritmoDiario = diasRealizados > 0 ? l.fat_real / diasRealizados : 0;
+    var avg3 = l.hist_s3.reduce(function(a,b){return a+b;},0)/l.hist_s3.length;
+    var avg4 = l.hist_s4.reduce(function(a,b){return a+b;},0)/l.hist_s4.length;
+    var avg3PorDia = avg3 / 6;
+    var avg4PorDia = avg4 / 6;
+    var diasS3 = DIAS_POR_SEMANA[2]||6;
+    var diasS4 = DIAS_POR_SEMANA[3]||6;
+    l.proj_s3 = SEM_ATUAL >= 3 ? l.s_real[2] : Math.round((ritmoDiario*0.60 + avg3PorDia*0.40) * diasS3);
+    l.proj_s4 = SEM_ATUAL >= 4 ? l.s_real[3] : Math.round((ritmoDiario*0.60 + avg4PorDia*0.40) * diasS4);
+    l.fat_proj  = (SEM_ATUAL < 3 ? l.proj_s3 : 0) + (SEM_ATUAL < 4 ? l.proj_s4 : 0);
+  }
   l.fat_total = l.fat_real + l.fat_proj;
   l.tm_atual  = l.tm.reduce(function(a,b){return a+b;},0)/l.tm.length;
   l.pct_meta  = Math.round(l.fat_real/l.meta*100);
@@ -195,18 +219,18 @@ const REAL_MESES = [
   {m:'Marco',    fat:191180, meta:205000, fechado:true},
   {m:'Abril',    fat:220383, meta:210000, fechado:true},
   {m:'Maio',     fat:251613, meta:210000, fechado:true},
-  {m:'Junho', fat:170035, meta:210000, fechado:false, parcial:true}
+  {m:'Junho', fat:209170, meta:210000, fechado:true}
 ];
 
 const JUNHO_PROJ_TOTAL = GERAL.fat_total_proj;
 
 const PROJ_2SEM = [
-  {m:'Julho', meta:210000, r:250806, o:259933},
-  {m:'Agosto', meta:210000, r:267156, o:287604},
-  {m:'Setembro', meta:210000, r:284224, o:317288},
-  {m:'Outubro', meta:210000, r:302039, o:349123},
-  {m:'Novembro', meta:210000, r:320633, o:383256},
-  {m:'Dezembro', meta:250000, r:340037, o:419845}
+  {m:'Julho', meta:210000, r:230009, o:238578},
+  {m:'Agosto', meta:210000, r:245465, o:264732},
+  {m:'Setembro', meta:210000, r:261599, o:292790},
+  {m:'Outubro', meta:210000, r:278442, o:322884},
+  {m:'Novembro', meta:210000, r:296020, o:355154},
+  {m:'Dezembro', meta:250000, r:314366, o:389748}
 ];
 /* ===== DADOS_END ===== */
 
@@ -1443,6 +1467,88 @@ V.payjoy = function(){
     + '</div>';
 };
 
+/* =========== TABELA DE PREÇOS DE CELULAR (sub-aba de Loja/Operacional) =========== */
+// Tabela única para toda a rede. Cada item: {modelo:'...', vista:0, parcelado:0, obs:''}
+// Para atualizar: Sérgio envia a planilha nova e os preços são reprocessados aqui.
+const PRECOS_DATA = [
+  {modelo:'Note 60x 64GB', vista:799.0, credito:999.0, boleto:999.0, obs:''},
+  {modelo:'Note 60x 128GB', vista:799.0, credito:1290.0, boleto:1290.0, obs:''},
+  {modelo:'Itel A90 128GB', vista:1099.0, credito:1299.0, boleto:1299.0, obs:''},
+  {modelo:'Poco C71 128GB', vista:1099.0, credito:1299.0, boleto:1299.0, obs:''},
+  {modelo:'Poco C71 64GB', vista:899.0, credito:1099.0, boleto:1099.0, obs:''},
+  {modelo:'Poco C75 256GB', vista:1349.0, credito:1499.0, boleto:1499.0, obs:''},
+  {modelo:'Poco C85 256GB', vista:1749.0, credito:1899.0, boleto:1899.0, obs:''},
+  {modelo:'Realme C61 256GB', vista:1249.0, credito:1399.0, boleto:1399.0, obs:''},
+  {modelo:'Realme C63 256GB', vista:1249.0, credito:1399.0, boleto:1399.0, obs:''},
+  {modelo:'Realme C71 128GB', vista:1549.0, credito:1699.0, boleto:1699.0, obs:''},
+  {modelo:'Realme C71 256GB', vista:1749.0, credito:1899.0, boleto:1899.0, obs:''},
+  {modelo:'Realme Note 60 128GB', vista:1149.0, credito:1299.0, boleto:1299.0, obs:''},
+  {modelo:'Realme Note 70 128GB', vista:1349.0, credito:1499.0, boleto:1499.0, obs:''},
+  {modelo:'Realme Note 70 256GB', vista:1459.0, credito:1599.0, boleto:1599.0, obs:''},
+  {modelo:'Redmi 14C 256GB', vista:1299.0, credito:1499.0, boleto:1499.0, obs:''},
+  {modelo:'Redmi 15C 128GB', vista:1349.0, credito:1499.0, boleto:1499.0, obs:''},
+  {modelo:'Redmi 15C 256GB', vista:1549.0, credito:1699.0, boleto:1699.0, obs:''},
+  {modelo:'Redmi A5 128GB', vista:949.0, credito:1099.0, boleto:1099.0, obs:''}
+];
+let precoBuscaQ = '';
+
+function precoBuscar(v){
+  precoBuscaQ = v;
+  const el = document.getElementById('content');
+  el.innerHTML = V.precos();
+  const inp = document.getElementById('preco-busca-input');
+  if(inp){ inp.focus(); inp.setSelectionRange(v.length,v.length); }
+}
+function precoLimpar(){ precoBuscaQ=''; document.getElementById('content').innerHTML = V.precos(); }
+
+function precoRenderCard(item){
+  return '<div style="background:#262626;border:1px solid #555;border-radius:8px;padding:13px 15px;margin-bottom:10px;box-shadow:0 2px 6px rgba(0,0,0,.3)">'
+    + '<div style="font-weight:bold;color:#fff;font-size:16px;margin-bottom:10px">'+item.modelo+'</div>'
+    + '<div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid #333">'
+    + '<span style="font-size:11px;color:#888">À vista (dinheiro/PIX)</span>'
+    + '<span style="color:#2ecc71;font-size:16px;font-weight:bold">'+fr(item.vista)+'</span>'
+    + '</div>'
+    + '<div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid #333">'
+    + '<span style="font-size:11px;color:#888">Crédito (12x sem juros)</span>'
+    + '<span style="color:#fff;font-size:16px;font-weight:bold">'+fr(item.credito)+'</span>'
+    + '</div>'
+    + '<div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0">'
+    + '<span style="font-size:11px;color:#888">Boleto (até 24x)</span>'
+    + '<span style="color:#fff;font-size:16px;font-weight:bold">'+fr(item.boleto)+'</span>'
+    + '</div>'
+    + (item.obs ? '<div style="font-size:10px;color:#999;margin-top:8px;border-top:1px solid #333;padding-top:6px">'+item.obs+'</div>' : '')
+    + '</div>';
+}
+
+V.precos = function(){
+  const semDados = PRECOS_DATA.length === 0;
+  const q = locNorm(precoBuscaQ);
+  const filtrados = q ? PRECOS_DATA.filter(function(item){
+    return locNorm(item.modelo).indexOf(q) >= 0;
+  }) : PRECOS_DATA;
+
+  let conteudoHtml;
+  if(semDados){
+    conteudoHtml = '<div style="text-align:center;color:#555;padding:50px 20px;font-size:13px">💰 Ainda não há tabela de preços cadastrada.<br><span style="font-size:11px;color:#444">Envie a planilha de preços para o assistente processar.</span></div>';
+  } else if(filtrados.length === 0){
+    conteudoHtml = '<div style="text-align:center;color:#666;padding:40px 20px;font-size:13px">Nenhum modelo encontrado para "'+precoBuscaQ+'".</div>';
+  } else {
+    conteudoHtml = filtrados.map(precoRenderCard).join('');
+  }
+
+  return '<div class="box"><div class="bt">💰 Tabela de Preços de Celular</div>'
+    + (semDados ? '' :
+        '<div style="margin-bottom:14px">'
+        + '<input type="text" id="preco-busca-input" placeholder="Filtrar por modelo... (ex: Redmi, Poco)" value="'+precoBuscaQ.replace(/"/g,'&quot;')+'" '
+        + 'autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" inputmode="text" '
+        + 'oninput="precoBuscar(this.value)" '
+        + 'style="width:100%;padding:10px 12px;background:#1a1a1a;border:1px solid #333;border-radius:5px;color:#eee;font-size:13px;margin-bottom:8px">'
+        + (precoBuscaQ ? '<button onclick="precoLimpar()" style="padding:6px 14px;background:#222;border:1px solid #333;border-radius:5px;color:#aaa;font-size:11px;cursor:pointer">Limpar busca</button>' : '')
+        + '</div>')
+    + '<div style="max-height:520px;overflow-y:auto">'+conteudoHtml+'</div>'
+    + '</div>';
+};
+
 /* =========== LOCALIZAÇÃO DE CAPAS E PELÍCULAS (sub-aba de Loja/Operacional) =========== */
 // Dados por loja: cada chave tem {capas:[...], peliculas:[...], padrao:'A'|'B'|'C'}
 // Preencher conforme os Excels de cada loja forem processados. Estrutura de cada item:
@@ -1634,8 +1740,8 @@ V.home = function(){
 const GRUPOS = {
   operacional: {
     label: '📱 Loja/Operacional',
-    subTabs: ['localizacao','assistencia','payjoy'],
-    subLbls: ['📍 Localização Capas/Películas','🔧 Consulta de Assistência','💳 Calculadora Payjoy']
+    subTabs: ['localizacao','assistencia','payjoy','precos'],
+    subLbls: ['📍 Localização Capas/Películas','🔧 Consulta de Assistência','💳 Calculadora Payjoy','💰 Tabela de Preços']
   },
   resultados: {
     label: '📊 Resultados',
