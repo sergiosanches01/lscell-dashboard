@@ -18,17 +18,25 @@ h1{color:#cc0000;text-align:center;font-size:18px;letter-spacing:2px;margin-bott
 .semana-badge{text-align:center;margin-bottom:14px}
 .sbadge{display:inline-block;background:#1a0000;border:1px solid #cc0000;color:#cc0000;padding:4px 16px;border-radius:99px;font-size:12px;font-weight:bold;letter-spacing:1px}
 #tabs{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:14px}
-.tab{padding:6px 13px;border-radius:4px;border:1px solid #2a2a2a;background:#141414;cursor:pointer;color:#777;font-size:12px;transition:.15s}
+.tab{padding:6px 13px;border-radius:4px;border:1px solid #2a2a2a;background:#141414;cursor:pointer;color:#777;font-size:12px;transition:.15s;white-space:nowrap}
 .main-nav{display:flex;align-items:stretch;justify-content:center;gap:8px;margin-bottom:10px;flex-wrap:wrap}
 .main-btn{padding:10px 22px;border-radius:8px;border:1px solid #333;background:#1a1a1a;cursor:pointer;color:#999;font-size:13px;font-weight:bold;transition:.15s;letter-spacing:.3px;white-space:nowrap;display:flex;align-items:center;justify-content:center}
 .main-btn.on{background:#cc0000;border-color:#cc0000;color:#fff;box-shadow:0 2px 8px rgba(204,0,0,.35)}
 .main-btn:hover:not(.on){border-color:#cc0000;color:#cc0000}
 .home-btn-mini{padding:9px 12px;border-radius:8px;border:1px solid #333;background:#1a1a1a;cursor:pointer;color:#999;font-size:14px;transition:.15s;flex-shrink:0;display:flex;align-items:center;justify-content:center}
 .home-btn-mini:hover{border-color:#cc0000;color:#cc0000}
+.loja-btns{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.lbtn{padding:8px 10px;border-radius:6px;border:1px solid #2a2a2a;background:#141414;cursor:pointer;color:#aaa;font-size:12px;transition:.15s;text-align:center;white-space:nowrap}
+.lbtn.on{background:#cc0000;border-color:#cc0000;color:#fff;font-weight:bold}
+.lbtn:hover:not(.on){border-color:#cc0000;color:#cc0000}
 @media (max-width:430px){
   .main-nav{gap:6px;padding:0 2px}
   .main-btn{padding:9px 10px;font-size:11px;letter-spacing:0;flex:1;text-align:center;white-space:normal;line-height:1.2}
   .home-btn-mini{padding:9px 10px;font-size:13px}
+  #tabs{gap:5px}
+  .tab{flex:1;padding:7px 4px;font-size:10.5px;text-align:center;white-space:normal;line-height:1.2;min-width:0}
+  .loja-btns{gap:5px}
+  .lbtn{flex:1 1 30%;padding:7px 4px;font-size:11px;white-space:normal;line-height:1.2;min-width:0}
 }
 .tab.on{background:#cc0000;border-color:#cc0000;color:#fff;font-weight:bold}
 .tab:hover:not(.on){border-color:#cc0000;color:#cc0000}
@@ -49,10 +57,6 @@ tr:hover td{background:#161616}
 .ins{background:#141414;border-left:3px solid #cc0000;padding:8px 12px;border-radius:0 5px 5px 0;margin-bottom:8px;font-size:12px;line-height:1.6;color:#bbb}
 .ins.gr{border-left-color:#2ecc71}.ins.ye{border-left-color:#f39c12}.ins.re{border-left-color:#e74c3c}
 .ins strong{color:#eee}
-.loja-btns{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
-.lbtn{padding:6px 14px;border-radius:4px;border:1px solid #333;background:#111;cursor:pointer;color:#888;font-size:11px;transition:.15s}
-.lbtn.on{border-color:#cc0000;background:#1a0000;color:#cc0000;font-weight:bold}
-.lbtn:hover:not(.on){border-color:#cc0000;color:#cc0000}
 .prog-wrap{background:#1a1a1a;border-radius:3px;height:26px;position:relative;overflow:hidden;margin-bottom:6px}
 .prog-real{position:absolute;left:0;top:0;height:100%;background:#e74c3c;display:flex;align-items:center;padding-left:8px;font-size:11px;font-weight:bold;color:#fff;white-space:nowrap;overflow:hidden}
 .prog-proj{position:absolute;top:0;height:100%;background:repeating-linear-gradient(45deg,#7a5500,#7a5500 4px,#5a3a00 4px,#5a3a00 8px);display:flex;align-items:center;padding-left:6px;font-size:10px;color:#f39c12;white-space:nowrap;overflow:hidden}
@@ -703,7 +707,8 @@ mes(){
   </div>
 
   <div class="box"><div class="bt">Tabela Geral — ${MES_ATUAL} 2026</div>
-  <table><thead><tr><th>Loja</th><th>S1 ${SEM_ATUAL>=1?'(real)':'(proj.)'}</th><th>S2 ${SEM_ATUAL>=2?'(real)':'(proj.)'}</th><th>S3 ${SEM_ATUAL>=3?'(real)':'(proj.)'}</th><th>S4 ${SEM_ATUAL>=4?'(real)':'(proj.)'}</th><th>Total Real</th><th>Projeção Final</th><th>Meta</th><th>% Proj.</th><th>Status</th></tr></thead>
+  <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+  <table style="min-width:760px"><thead><tr><th>Loja</th><th>S1 ${SEM_ATUAL>=1?'(real)':'(proj.)'}</th><th>S2 ${SEM_ATUAL>=2?'(real)':'(proj.)'}</th><th>S3 ${SEM_ATUAL>=3?'(real)':'(proj.)'}</th><th>S4 ${SEM_ATUAL>=4?'(real)':'(proj.)'}</th><th>Total Real</th><th>Projeção Final</th><th>Meta</th><th>% Proj.</th><th>Status</th></tr></thead>
   <tbody>${NOMES.map(n=>{
     const l=LOJAS[n];
     const s1v = (l.s_real[0]!==undefined) ? l.s_real[0] : l.proj_s3; // fallback nunca deveria ocorrer
@@ -730,7 +735,8 @@ mes(){
     <td class="d">${fr(META_MES_GERAL)}</td>
     <td style="color:${cor(GERAL.fat_total_proj,META_MES_GERAL)};font-weight:bold">${pct(GERAL.fat_total_proj,META_MES_GERAL)}%</td>
     <td>${bdgProj(GERAL.fat_total_proj,META_MES_GERAL)}</td>
-  </tr></tbody></table></div>`;
+  </tr></tbody></table>
+  </div></div>`;
 },
 
 loja(){
@@ -1057,7 +1063,8 @@ V.anual = function(){
   </div>
 
   <div class="box"><div class="bt">Projeção Mês a Mês — Cenário Otimista 2026</div>
-  <table><thead><tr><th>Mês</th><th>Faturamento</th><th>Meta Mês</th><th>% Meta</th><th>Acumulado Ano</th><th>% Meta R$ 3M</th><th>Status</th></tr></thead>
+  <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+  <table style="min-width:680px"><thead><tr><th>Mês</th><th>Faturamento</th><th>Meta Mês</th><th>% Meta</th><th>Acumulado Ano</th><th>% Meta R$ 3M</th><th>Status</th></tr></thead>
   <tbody>
     ${REAL_MESES.map((d,i)=>{
       const fatMes = d.fechado ? d.fat : fat_jun_proj;
@@ -1097,7 +1104,8 @@ V.anual = function(){
       <td>${bdg(anoO,META_ANO)}</td>
     </tr>
   </tfoot>
-  </table></div>
+  </table>
+  </div></div>
 
   <div class="box"><div class="bt">Comparativo dos 2 Cenários — Fechamento Anual</div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
@@ -1188,12 +1196,14 @@ V.assistencia = function(){
     + '<div style="flex:1;min-width:160px">'
     + '<label style="font-size:10px;color:#666;text-transform:uppercase;letter-spacing:.7px;display:block;margin-bottom:4px">Modelo do aparelho</label>'
     + '<input type="text" id="assistModeloInput" placeholder="Ex: iPhone 11, A02s..." value="'+assistModeloQ.replace(/"/g,'&quot;')+'" '
+    + 'autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" inputmode="text" '
     + 'oninput="assistBuscarModelo(this.value)" '
     + 'style="width:100%;padding:9px 12px;background:#1a1a1a;border:1px solid #333;border-radius:5px;color:#eee;font-size:13px">'
     + '</div>'
     + '<div style="flex:1;min-width:160px">'
     + '<label style="font-size:10px;color:#666;text-transform:uppercase;letter-spacing:.7px;display:block;margin-bottom:4px">Tipo de serviço</label>'
     + '<input type="text" id="assistServicoInput" placeholder="Ex: tela, bateria, combo..." value="'+assistServicoQ.replace(/"/g,'&quot;')+'" '
+    + 'autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" inputmode="text" '
     + 'oninput="assistBuscarServico(this.value)" '
     + 'style="width:100%;padding:9px 12px;background:#1a1a1a;border:1px solid #333;border-radius:5px;color:#eee;font-size:13px">'
     + '</div>'
@@ -1552,6 +1562,7 @@ V.localizacao = function(){
     + (semDados ? '' :
         '<div style="margin-bottom:14px">'
         + '<input type="text" id="loc-busca-input" placeholder="Ex: iPhone 13, A54, G32..." value="'+locBuscaQ.replace(/"/g,'&quot;')+'" '
+        + 'autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" inputmode="text" '
         + 'oninput="locBuscar(this.value)" '
         + 'style="width:100%;padding:10px 12px;background:#1a1a1a;border:1px solid #333;border-radius:5px;color:#eee;font-size:13px;margin-bottom:8px">'
         + (locBuscaQ ? '<button onclick="locLimpar()" style="padding:6px 14px;background:#222;border:1px solid #333;border-radius:5px;color:#aaa;font-size:11px;cursor:pointer">Limpar busca</button>' : '')
