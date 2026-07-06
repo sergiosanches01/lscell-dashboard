@@ -79,7 +79,7 @@ tr:hover td{background:#161616}
 <body>
 <div id="app-header">
 <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:4px"><img id="logo-header-img" alt="LSCELL" style="height:32px;width:auto"><h1 style="margin:0">LSCELL — DASHBOARD SEMANAL</h1></div>
-<p class="sub">Gerado em: Segunda, 16 de Junho de 2026</p>
+<p class="sub">Gerado em: Segunda, 6 de Julho de 2026</p>
 <div class="semana-badge"><span class="sbadge" id="semana-badge-txt">📅 ...</span></div>
 <div id="main-nav-container"></div>
 <div id="tabs"></div>
@@ -91,120 +91,127 @@ tr:hover td{background:#161616}
 const LOGO_B64 = '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';
 
 /* ===== DADOS_START ===== */
-const MES_ATUAL = 'Junho';
-const SEM_ATUAL = 4;
+const MES_ATUAL = 'Julho';
+const SEM_ATUAL = 1;
 const META_MES_GERAL = 210000;
-const DIAS_POR_SEMANA = [6,6,6,8];
+const DIAS_POR_SEMANA = [4,6,6,11]; // Julho/2026: S1 = 1 a 4 (qua-sab); S4 = 20 a 31 (sem domingos)
 const SEMANA_ATUAL_PARCIAL = false;
-const DIAS_REALIZADOS_SEM_ATUAL = 8;
+const DIAS_REALIZADOS_SEM_ATUAL = 4;
+const MESES_FECHADOS_LABELS = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho'];
 
 const GERAL = {
   s: [
-    {n:'S1', fat:52779, meta:63000, real:true},
-    {n:'S2', fat:58296, meta:42000, real:true},
-    {n:'S3', fat:58960, meta:52500, real:true},
-    {n:'S4', fat:56565, meta:52500, real:false},
+    {n:'S1', fat:38465, meta:63000, real:true},
+    {n:'S2', fat:0, meta:42000, real:false},
+    {n:'S3', fat:0, meta:52500, real:false},
+    {n:'S4', fat:0, meta:52500, real:false},
   ],
-  fat_real: 223889,
+  fat_real: 38465,
   fat_proj: 0,
   meta: 210000,
-  tm_real: (97.99+110.68+104.13+84.11)/4,
-  orc_real: 419+437+427+354,
+  tm_real: 104.07,
+  orc_real: 280,
 };
 GERAL.fat_total_proj = GERAL.fat_real + GERAL.fat_proj;
 
 const LOJAS = {
   'Esteio': {
-    meta:45000, tm:[89.63,113.66,107.60,65.38], orc:291,
-    s_real:[11208,12677,10012,12262], s_meta:[13500,9000,11250,11250],
-    hist_s3:[8093,5165,12109,6037,5913], hist_s4:[7686,8282,12032,3904,14788],
+    meta:45000, tm:[99.82], orc:53,
+    s_real:[6905], s_meta:[13500,9000,11250,11250],
+    hist_s1:[7746,7746,13737,25276,15036,11208], hist_s2:[9317,8966,8967,10425,11971,12677],
+    hist_s3:[8093,5165,12109,6037,5913,10012], hist_s4:[7686,8282,12032,3904,14788,12262],
     prodMetaMes:25000, servMetaMes:20000,
-    prodSReal:[7708,8752,7748,3661], prodSMeta:[7500,5000,6250,6250],
-    servSReal:[3500,3925,2265,2330], servSMeta:[6000,4000,5000,5000]
+    prodSReal:[5290], prodSMeta:[7500,5000,6250,6250],
+    servSReal:[1615], servSMeta:[6000,4000,5000,5000]
   },
   'Esteio Shop.': {
-    meta:35000, tm:[128.53,72.49,107.73,59.27], orc:272,
-    s_real:[9591,6809,12928,6360], s_meta:[10500,7000,8750,8750],
-    hist_s3:[5009,3949,7177,7681,9768], hist_s4:[6802,4396,7144,6178,6770],
+    meta:35000, tm:[148.97], orc:50,
+    s_real:[10513], s_meta:[10500,7000,8750,8750],
+    hist_s1:[4335,4335,7189,10900,11336,9591], hist_s2:[4084,5119,7320,5021,6114,6809],
+    hist_s3:[5009,3949,7177,7681,9768,12928], hist_s4:[6802,4396,7144,6178,6770,6360],
     prodMetaMes:31000, servMetaMes:4000,
-    prodSReal:[8976,5364,8059,3260], prodSMeta:[9300,6200,7750,7750],
-    servSReal:[615,1445,4869,1960], servSMeta:[1200,800,1000,1000]
+    prodSReal:[7449], prodSMeta:[9300,6200,7750,7750],
+    servSReal:[3065], servSMeta:[1200,800,1000,1000]
   },
   'Canoas': {
-    meta:35000, tm:[78.51,117.41,110.44,122.54], orc:331,
-    s_real:[9047,11965,11442,11887], s_meta:[10500,7000,8750,8750],
-    hist_s3:[5679,3994,9190,8823,10778], hist_s4:[12346,9012,10437,10840,11767],
+    meta:35000, tm:[68.53], orc:59,
+    s_real:[4358], s_meta:[10500,7000,8750,8750],
+    hist_s1:[10278,10278,7786,13771,18700,9047], hist_s2:[8088,3914,8922,6186,7921,11965],
+    hist_s3:[5679,3994,9190,8823,10778,11442], hist_s4:[12346,9012,10437,10840,11767,11887],
     prodMetaMes:22000, servMetaMes:13000,
-    prodSReal:[7302,10215,9387,8087], prodSMeta:[6600,4400,5500,5500],
-    servSReal:[1745,1750,2055,680], servSMeta:[3900,2600,3250,3250]
+    prodSReal:[4043], prodSMeta:[6600,4400,5500,5500],
+    servSReal:[315], servSMeta:[3900,2600,3250,3250]
   },
   'Avenida': {
-    meta:15000, tm:[144.11,102.50,165.34,124.51], orc:138,
-    s_real:[5058,5301,9156,6560], s_meta:[4500,3000,3750,3750],
-    hist_s3:[3013,3872,3404,2069,3647], hist_s4:[3294,3660,2159,2895,8512],
+    meta:15000, tm:[79.78], orc:26,
+    s_real:[3259], s_meta:[4500,3000,3750,3750],
+    hist_s1:[4441,4201,4252,5301,11281,5058], hist_s2:[3186,1720,1754,3704,10245,5301],
+    hist_s3:[3013,3872,3404,2069,3647,9156], hist_s4:[3294,3660,2159,2895,8512,6560],
     prodMetaMes:7500, servMetaMes:7500,
-    prodSReal:[4323,3177,7756,3860], prodSMeta:[2250,1500,1875,1875],
-    servSReal:[735,2124,1400,1850], servSMeta:[2250,1500,1875,1875]
+    prodSReal:[2074], prodSMeta:[2250,1500,1875,1875],
+    servSReal:[1185], servSMeta:[2250,1500,1875,1875]
   },
   'Parque': {
-    meta:45000, tm:[70.56,106.90,87.23,67.43], orc:366,
-    s_real:[6822,12429,9747,9454], s_meta:[13500,9000,11250,11250],
-    hist_s3:[10530,4147,10007,7151,10927], hist_s4:[7049,6257,7626,4449,14574],
+    meta:45000, tm:[143.9], orc:53,
+    s_real:[8677], s_meta:[13500,9000,11250,11250],
+    hist_s1:[12552,12552,10794,20080,14303,6822], hist_s2:[8687,8787,6226,12985,9318,12429],
+    hist_s3:[10530,4147,10007,7151,10927,9747], hist_s4:[7049,6257,7626,4449,14574,9454],
     prodMetaMes:33000, servMetaMes:12000,
-    prodSReal:[5222,11759,7938,6136], prodSMeta:[9900,6600,8250,8250],
-    servSReal:[1600,670,1809,780], servSMeta:[3600,2400,3000,3000]
+    prodSReal:[7627], prodSMeta:[9900,6600,8250,8250],
+    servSReal:[1050], servSMeta:[3600,2400,3000,3000]
   },
   'Gravataí': {
-    meta:35000, tm:[113.30,126.90,59.26,85.28], orc:239,
-    s_real:[11054,9115,5675,7329], s_meta:[10500,7000,8750,8750],
-    hist_s3:[6368,3771,7424,10971,5905], hist_s4:[5588,8094,10310,5936,8164],
+    meta:35000, tm:[68.12], orc:39,
+    s_real:[4752], s_meta:[10500,7000,8750,8750],
+    hist_s1:[7180,7180,7142,18145,14204,11054], hist_s2:[5385,6129,8073,11657,9671,9115],
+    hist_s3:[6368,3771,7424,10971,5905,5675], hist_s4:[5588,8094,10310,5936,8164,7329],
     prodMetaMes:20000, servMetaMes:15000,
-    prodSReal:[7624,7360,3575,4771], prodSMeta:[6000,4000,5000,5000],
-    servSReal:[3430,1755,2100,1760], servSMeta:[4500,3000,3750,3750]
+    prodSReal:[2657], prodSMeta:[6000,4000,5000,5000],
+    servSReal:[2095], servSMeta:[4500,3000,3750,3750]
   },
 };
 
 const NOMES = Object.keys(LOJAS);
 let curLoja = 'Esteio', curTab = 'anual';
 
-// Calcular projecao por loja (60% ritmo diario atual + 40% historico diario, ajustado por dias reais)
+// Projecao generalizada por loja: cada semana futura = 60% ritmo diario atual + 40% media historica diaria daquela semana
 Object.keys(LOJAS).forEach(function(n){
   var l = LOJAS[n];
-  var idxSemAtual = SEM_ATUAL - 1; // indice 0-based da semana atual
+  var histSemanas = [l.hist_s1||[], l.hist_s2||[], l.hist_s3||[], l.hist_s4||[]];
 
-  if(SEMANA_ATUAL_PARCIAL && SEM_ATUAL === 4){
-    // A S4 (ultima semana) so tem alguns dias somados ainda - projetar so os dias que faltam DENTRO dela
-    l.fat_real = l.s_real.slice(0, 3).reduce(function(a,b){return a+b;},0); // S1+S2+S3 completas
-    var fatParcialS4 = l.s_real[3] || 0; // o que ja foi somado da S4 (dias parciais)
-    l.fat_real += fatParcialS4;
+  // Real acumulado (todas as entradas de s_real; na semana parcial o ultimo valor e parcial)
+  l.fat_real = l.s_real.reduce(function(a,b){return a+(b||0);},0);
 
-    var diasRealizadosAntesS4 = 0;
-    for(var di=0; di<3; di++){ diasRealizadosAntesS4 += (DIAS_POR_SEMANA[di]||6); }
-    var diasRealizadosTotal = diasRealizadosAntesS4 + DIAS_REALIZADOS_SEM_ATUAL;
-    var ritmoDiario = diasRealizadosTotal > 0 ? l.fat_real / diasRealizadosTotal : 0;
+  // Dias realizados ate agora
+  var diasRealizados = 0;
+  for(var di=0; di<SEM_ATUAL-1; di++){ diasRealizados += (DIAS_POR_SEMANA[di]||6); }
+  diasRealizados += SEMANA_ATUAL_PARCIAL ? DIAS_REALIZADOS_SEM_ATUAL : (DIAS_POR_SEMANA[SEM_ATUAL-1]||6);
+  var ritmoDiario = diasRealizados > 0 ? l.fat_real / diasRealizados : 0;
 
-    var diasS4Total = DIAS_POR_SEMANA[3]||6;
-    var diasFaltantesS4 = diasS4Total - DIAS_REALIZADOS_SEM_ATUAL;
-    var projDiasFaltantes = Math.round(ritmoDiario * diasFaltantesS4);
-
-    l.proj_s3 = l.s_real[2]; // S3 ja fechada
-    l.proj_s4 = fatParcialS4 + projDiasFaltantes; // parcial + projecao dos dias que faltam
-    l.fat_proj = projDiasFaltantes; // só os dias que ainda faltam contam como "projetado"
-  } else {
-    l.fat_real = l.s_real.reduce(function(a,b){return a+b;},0);
-    var diasRealizados = 0;
-    for(var di=0; di<SEM_ATUAL; di++){ diasRealizados += (DIAS_POR_SEMANA[di]||6); }
-    var ritmoDiario = diasRealizados > 0 ? l.fat_real / diasRealizados : 0;
-    var avg3 = l.hist_s3.reduce(function(a,b){return a+b;},0)/l.hist_s3.length;
-    var avg4 = l.hist_s4.reduce(function(a,b){return a+b;},0)/l.hist_s4.length;
-    var avg3PorDia = avg3 / 6;
-    var avg4PorDia = avg4 / 6;
-    var diasS3 = DIAS_POR_SEMANA[2]||6;
-    var diasS4 = DIAS_POR_SEMANA[3]||6;
-    l.proj_s3 = SEM_ATUAL >= 3 ? l.s_real[2] : Math.round((ritmoDiario*0.60 + avg3PorDia*0.40) * diasS3);
-    l.proj_s4 = SEM_ATUAL >= 4 ? l.s_real[3] : Math.round((ritmoDiario*0.60 + avg4PorDia*0.40) * diasS4);
-    l.fat_proj  = (SEM_ATUAL < 3 ? l.proj_s3 : 0) + (SEM_ATUAL < 4 ? l.proj_s4 : 0);
+  // Projecao semana a semana
+  l.proj = [];
+  l.fat_proj = 0;
+  for(var w=0; w<4; w++){
+    var ehRealCompleta = (w < SEM_ATUAL) && !(SEMANA_ATUAL_PARCIAL && w === SEM_ATUAL-1);
+    if(ehRealCompleta){
+      l.proj[w] = l.s_real[w] || 0;
+    } else {
+      var h = histSemanas[w];
+      var avgSem = h.length ? h.reduce(function(a,b){return a+b;},0)/h.length : 0;
+      var avgDia = avgSem / 6; // semanas historicas tem ~6 dias uteis
+      var diasSem = DIAS_POR_SEMANA[w]||6;
+      var parcial = 0, diasProjetar = diasSem;
+      if(SEMANA_ATUAL_PARCIAL && w === SEM_ATUAL-1){
+        parcial = l.s_real[w] || 0;
+        diasProjetar = Math.max(0, diasSem - DIAS_REALIZADOS_SEM_ATUAL);
+      }
+      var projDias = Math.round((ritmoDiario*0.60 + avgDia*0.40) * diasProjetar);
+      l.proj[w] = parcial + projDias;
+      l.fat_proj += projDias;
+    }
   }
+  l.proj_s2 = l.proj[1]; l.proj_s3 = l.proj[2]; l.proj_s4 = l.proj[3];
+
   l.fat_total = l.fat_real + l.fat_proj;
   l.tm_atual  = l.tm.reduce(function(a,b){return a+b;},0)/l.tm.length;
   l.pct_meta  = Math.round(l.fat_real/l.meta*100);
@@ -213,19 +220,28 @@ Object.keys(LOJAS).forEach(function(n){
   l.servRealAcum = (l.servSReal||[]).reduce(function(a,b){return a+b;},0);
 });
 
+// GERAL: semanas projetadas e projecao total sempre derivadas da soma das lojas (evita divergencia)
+GERAL.s.forEach(function(s, i){
+  if(!s.real){
+    s.fat = NOMES.reduce(function(a,n){ return a + ((LOJAS[n].proj||[])[i]||0); }, 0);
+  }
+});
+GERAL.fat_proj = NOMES.reduce(function(a,n){ return a + LOJAS[n].fat_proj; }, 0);
+GERAL.fat_total_proj = GERAL.fat_real + GERAL.fat_proj;
+
 const REAL_MESES = [
   {m:'Janeiro',  fat:166737, meta:205000, fechado:true},
   {m:'Fevereiro',fat:145524, meta:205000, fechado:true},
   {m:'Marco',    fat:191180, meta:205000, fechado:true},
   {m:'Abril',    fat:220383, meta:210000, fechado:true},
   {m:'Maio',     fat:251613, meta:210000, fechado:true},
-  {m:'Junho', fat:223889, meta:210000, fechado:true}
+  {m:'Junho',    fat:223889, meta:210000, fechado:true},
+  {m:'Julho',    fat:0,      meta:210000, fechado:false}
 ];
 
-const JUNHO_PROJ_TOTAL = GERAL.fat_total_proj;
+const MES_ATUAL_PROJ_TOTAL = GERAL.fat_total_proj;
 
 const PROJ_2SEM = [
-  {m:'Julho', meta:250000, r:231760, o:259852},
   {m:'Agosto', meta:270000, r:243013, o:272469},
   {m:'Setembro', meta:275000, r:230801, o:258777},
   {m:'Outubro', meta:295000, r:246708, o:276612},
@@ -523,9 +539,9 @@ function buildSemLoja(l){
   });
 
   // Semanas projetadas — apenas as que ainda NAO sao reais (posicao >= SEM_ATUAL)
-  var projsTodos = [l.proj_s3, l.proj_s4];
+  var projsTodos = [l.proj_s2, l.proj_s3, l.proj_s4];
   projsTodos.forEach(function(v,i){
-    var idxSemana = i+2; // 2 = S3, 3 = S4
+    var idxSemana = i+1; // 1 = S2, 2 = S3, 3 = S4
     if(idxSemana < SEM_ATUAL) return; // essa semana ja e real, ja foi mostrada acima
     var metaO = l.s_meta[idxSemana];
     var cP = '#f39c12';
@@ -546,21 +562,14 @@ function buildSemLoja(l){
 
 /* =========== VIEWS =========== */
 // Monta a serie Jan-Dez (12 valores) de faturamento para uma loja, combinando real + projecao.
-// meses fechados (Jan-Mai) = hist S1+S2 (hist_acum_s1s2) + hist_s3 + hist_s4 daquela loja.
+// meses fechados = hist_s1+hist_s2+hist_s3+hist_s4 daquela loja (Jan ate o ultimo mes fechado).
 // mes atual = fat_real (real) + fat_proj (projetado).
 // Jul-Dez = projecao estimada proporcional a participacao historica da loja no total geral.
-const HIST_ACUM_S1S2_GLOBAL = {
-  'Esteio':       [7746+9317, 7746+8966, 13737+8967, 25276+10425, 15036+11971],
-  'Esteio Shop.': [4335+4084, 4335+5119, 7189+7320,  10900+5021,  11336+6114],
-  'Canoas':       [10278+8088,10278+3914, 7786+8922,  13771+6186,  18700+7921],
-  'Avenida':      [4441+3186, 4201+1720,  4252+1754,  5301+3704,   11281+10245],
-  'Parque':       [12552+8687,12552+8787, 10795+6226, 20080+12985, 14303+9319],
-  'Gravataí':     [7180+5385, 7180+6129,  7142+8073,  18145+11657, 14204+9671],
-};
 function montarSerieMensalLoja(l, nomeLoja){
-  const mesesFechados = HIST_ACUM_S1S2_GLOBAL[nomeLoja].map(function(s1s2,i){
-    return s1s2 + l.hist_s3[i] + l.hist_s4[i];
-  }); // Jan a Mai, 5 valores reais
+  // Meses fechados = soma das 4 semanas historicas daquela loja (Jan ate o ultimo mes fechado)
+  const mesesFechados = (l.hist_s1||[]).map(function(_,i){
+    return (l.hist_s1[i]||0) + (l.hist_s2[i]||0) + (l.hist_s3[i]||0) + (l.hist_s4[i]||0);
+  });
 
   const mesAtualReal = l.fat_real;       // parte ja realizada do mes atual
   const mesAtualProj = l.fat_proj;       // parte ainda projetada do mes atual
@@ -569,7 +578,7 @@ function montarSerieMensalLoja(l, nomeLoja){
   // Participacao historica da loja no total geral (media Jan-Mai) - usada para estimar Jul-Dez
   const totalGeralMesesFechados = NOMES.reduce(function(acc,n){
     const ld = LOJAS[n];
-    const serieGeral = HIST_ACUM_S1S2_GLOBAL[n].map(function(s1s2,i){ return s1s2 + ld.hist_s3[i] + ld.hist_s4[i]; });
+    const serieGeral = (ld.hist_s1||[]).map(function(_,i){ return (ld.hist_s1[i]||0) + (ld.hist_s2[i]||0) + (ld.hist_s3[i]||0) + (ld.hist_s4[i]||0); });
     return acc + serieGeral.reduce(function(a,b){return a+b;},0);
   },0);
   const totalLojaMesesFechados = mesesFechados.reduce(function(a,b){return a+b;},0);
@@ -581,7 +590,11 @@ function montarSerieMensalLoja(l, nomeLoja){
   const valoresReal = mesesFechados.concat([mesAtualReal]).concat(projFuturos.map(function(){return 0;}));
   const valoresProj  = mesesFechados.map(function(){return 0;}).concat([mesAtualProj]).concat(projFuturos);
   const labels = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
-  const isProjetado = [false,false,false,false,false,(mesAtualProj>0), true,true,true,true,true,true];
+  const isProjetado = valores.map(function(_,i){
+    if(i < mesesFechados.length) return false;
+    if(i === mesesFechados.length) return mesAtualProj > 0;
+    return true;
+  });
   return { valores: valores, valoresReal: valoresReal, valoresProj: valoresProj, labels: labels, isProjetado: isProjetado };
 }
 
@@ -696,7 +709,7 @@ mes(){
 
   const fat_acum = GERAL.fat_real;
   const fat_proj_total = GERAL.fat_total_proj;
-  const c_acum = cor(fat_acum, META_MES_GERAL*0.5); // 2 de 4 semanas = 50% esperado
+  const c_acum = cor(fat_acum, META_MES_GERAL*(SEM_ATUAL/4)); // proporcional as semanas ja decorridas
 
   return`
   <div class="cards">
@@ -736,11 +749,10 @@ mes(){
   <table style="min-width:760px"><thead><tr><th>Loja</th><th>S1 ${SEM_ATUAL>=1?'(real)':'(proj.)'}</th><th>S2 ${SEM_ATUAL>=2?'(real)':'(proj.)'}</th><th>S3 ${SEM_ATUAL>=3?'(real)':'(proj.)'}</th><th>S4 ${SEM_ATUAL>=4?'(real)':'(proj.)'}</th><th>Total Real</th><th>Projeção Final</th><th>Meta</th><th>% Proj.</th><th>Status</th></tr></thead>
   <tbody>${NOMES.map(n=>{
     const l=LOJAS[n];
-    const s1v = (l.s_real[0]!==undefined) ? l.s_real[0] : l.proj_s3; // fallback nunca deveria ocorrer
     return`<tr>
       <td><strong>${n}</strong></td>
       <td class="${SEM_ATUAL>=1?'g':'y'}">${fr(l.s_real[0]!==undefined?l.s_real[0]:0)}</td>
-      <td class="${SEM_ATUAL>=2?'g':'y'}">${fr(l.s_real[1]!==undefined?l.s_real[1]:0)}</td>
+      <td class="${SEM_ATUAL>=2?'g':'y'}">${fr(SEM_ATUAL>=2?(l.s_real[1]||0):l.proj_s2)}</td>
       <td class="${SEM_ATUAL>=3?'g':'y'}">${fr(SEM_ATUAL>=3?l.s_real[2]:l.proj_s3)}</td>
       <td class="${SEM_ATUAL>=4?'g':'y'}">${fr(SEM_ATUAL>=4?l.s_real[3]:l.proj_s4)}</td>
       <td style="font-weight:bold">${fr(l.fat_real)}</td>
@@ -752,7 +764,7 @@ mes(){
   <tr style="background:#111;font-weight:bold">
     <td>TOTAL GERAL</td>
     <td class="${SEM_ATUAL>=1?'g':'y'}">${fr(NOMES.reduce((a,n)=>a+(LOJAS[n].s_real[0]!==undefined?LOJAS[n].s_real[0]:0),0))}</td>
-    <td class="${SEM_ATUAL>=2?'g':'y'}">${fr(NOMES.reduce((a,n)=>a+(LOJAS[n].s_real[1]!==undefined?LOJAS[n].s_real[1]:0),0))}</td>
+    <td class="${SEM_ATUAL>=2?'g':'y'}">${fr(NOMES.reduce((a,n)=>a+(SEM_ATUAL>=2?(LOJAS[n].s_real[1]||0):LOJAS[n].proj_s2),0))}</td>
     <td class="${SEM_ATUAL>=3?'g':'y'}">${fr(NOMES.reduce((a,n)=>a+(SEM_ATUAL>=3?LOJAS[n].s_real[2]:LOJAS[n].proj_s3),0))}</td>
     <td class="${SEM_ATUAL>=4?'g':'y'}">${fr(NOMES.reduce((a,n)=>a+(SEM_ATUAL>=4?LOJAS[n].s_real[3]:LOJAS[n].proj_s4),0))}</td>
     <td>${fr(GERAL.fat_real)}</td>
@@ -769,47 +781,24 @@ loja(){
   const metaRestante = l.meta - l.fat_real;
   const s4_eh_real = SEM_ATUAL >= 4;
 
-  // Fat acumulado nos meses anteriores na MESMA posição de semanas que estamos agora
-  // (para comparar "quanto eu tinha faturado até a semana X" com meses anteriores)
-  const hist_acum_s1s2 = {
-    'Esteio':       [7746+9317, 7746+8966, 13737+8967, 25276+10425, 15036+11971],
-    'Esteio Shop.': [4335+4084, 4335+5119, 7189+7320,  10900+5021,  11336+6114],
-    'Canoas':       [10278+8088,10278+3914, 7786+8922,  13771+6186,  18700+7921],
-    'Avenida':      [4441+3186, 4201+1720,  4252+1754,  5301+3704,   11281+10245],
-    'Parque':       [12552+8687,12552+8787, 10795+6226, 20080+12985, 14303+9319],
-    'Gravataí':     [7180+5385, 7180+6129,  7142+8073,  18145+11657, 14204+9671],
-  };
-  const acumHistS1S2 = hist_acum_s1s2[curLoja]||[];
-  // Se ja estamos na semana 3 ou mais, soma o hist_s3 de cada mes tambem (mesma posicao que estamos agora)
-  const acumHist = (SEM_ATUAL >= 3)
-    ? acumHistS1S2.map((v,i)=> v + l.hist_s3[i])
-    : acumHistS1S2;
-  const labelPosicao = (SEM_ATUAL >= 3) ? 'S1+S2+S3' : 'S1+S2';
-  const mediaCum = acumHist.reduce((a,b)=>a+b,0)/acumHist.length;
+  // Fat acumulado nos meses anteriores na MESMA posicao de semanas que estamos agora
+  // (para comparar "quanto eu tinha faturado ate a semana X" com meses anteriores)
+  const histSemanasLoja = [l.hist_s1||[], l.hist_s2||[], l.hist_s3||[], l.hist_s4||[]];
+  const acumHist = (l.hist_s1||[]).map(function(_,i){
+    var s = 0;
+    for(var w=0; w<SEM_ATUAL; w++){ s += (histSemanasLoja[w][i]||0); }
+    return s;
+  });
+  const labelPosicao = ['S1','S1+S2','S1+S2+S3','S1+S2+S3+S4'][SEM_ATUAL-1] || 'S1';
+  const mediaCum = acumHist.reduce((a,b)=>a+b,0)/Math.max(1,acumHist.length);
   const vs_media = ((l.fat_real/mediaCum-1)*100).toFixed(1);
 
-  // Histórico individual por semana (S1, S2, S3, S4) para cada mês
-  const hist_s1 = {
-    'Esteio':       [7746,7746,13737,25276,15036,11208],
-    'Esteio Shop.': [4335,4335,7189, 10900,11336,9591],
-    'Canoas':       [10278,10278,7786,13771,18700,9047],
-    'Avenida':      [4441,4201,4252, 5301, 11281,5058],
-    'Parque':       [12552,12552,10795,20080,14303,6822],
-    'Gravataí':     [7180,7180,7142, 18145,14204,11054],
-  };
-  const hist_s2 = {
-    'Esteio':       [9317,8966,8967, 10425,11971,12677],
-    'Esteio Shop.': [4084,5119,7320, 5021, 6114, 6809],
-    'Canoas':       [8088,3914,8922, 6186, 7921, 11965],
-    'Avenida':      [3186,1720,1754, 3704, 10245,5301],
-    'Parque':       [8687,8787,6226, 12985,9319, 12429],
-    'Gravataí':     [5385,6129,8073, 11657,9671, 9115],
-  };
-  const mesesLabel = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho'];
+  // Historico individual por semana (S1, S2, S3, S4) para cada mes fechado
+  const mesesLabel = MESES_FECHADOS_LABELS;
   const semanas_hist = mesesLabel.map((m,i)=>({
     m: m,
-    s1: (hist_s1[curLoja]||[])[i] || 0,
-    s2: (hist_s2[curLoja]||[])[i] || 0,
+    s1: (l.hist_s1||[])[i] || 0,
+    s2: (l.hist_s2||[])[i] || 0,
     s3: l.hist_s3[i] || 0,
     s4: l.hist_s4[i] || 0,
   }));
@@ -842,7 +831,7 @@ loja(){
     </div>
   </div>
 
-  <div class="box"><div class="bt">Semanas — ${curLoja} — Junho 2026</div>
+  <div class="box"><div class="bt">Semanas — ${curLoja} — ${MES_ATUAL} 2026</div>
   ${buildSemLoja(l)}
   </div>
 
@@ -1009,7 +998,9 @@ alertas(){
   <tbody>${NOMES.map(n=>{
     const l=LOJAS[n];
     const falta=Math.max(0,l.meta-l.fat_real);
-    const hist_med = (l.hist_s3.reduce((a,b)=>a+b,0)+l.hist_s4.reduce((a,b)=>a+b,0))/(l.hist_s3.length+l.hist_s4.length)*2;
+    const histSemAlerta = [l.hist_s1||[], l.hist_s2||[], l.hist_s3||[], l.hist_s4||[]];
+    let hist_med = 0;
+    for(let w=SEM_ATUAL; w<4; w++){ const h=histSemAlerta[w]; if(h.length) hist_med += h.reduce((a,b)=>a+b,0)/h.length; }
     const viavel = falta<=hist_med*1.2;
     const folgaPct = falta>0 ? Math.round((falta/hist_med)*100) : 0;
     return`<tr>
@@ -1024,7 +1015,7 @@ alertas(){
             : `<span class="bdg br2">⚠ Seria recorde</span> <span style="font-size:9px;color:#666">(precisaria de ${folgaPct}% da média histórica — bem acima do normal)</span>`)}
       </td>
     </tr>`;}).join('')}</tbody></table>
-  <div style="font-size:10px;color:#444;margin-top:6px">Compara o quanto falta para a meta com o que essa loja já faturou, em média, nas mesmas semanas dos últimos 5 meses. "Seria recorde" não significa impossível — significa que exigiria um resultado melhor do que o histórico recente.</div>
+  <div style="font-size:10px;color:#444;margin-top:6px">Compara o quanto falta para a meta com o que essa loja já faturou, em média, nas mesmas semanas dos meses fechados do ano. "Seria recorde" não significa impossível — significa que exigiria um resultado melhor do que o histórico recente.</div>
   </div>`;
 }
 };
@@ -1033,11 +1024,12 @@ alertas(){
 const META_ANO = 3000000;
 
 V.anual = function(){
-  const fat_jan_mai = REAL_MESES.slice(0,5).reduce((a,d)=>a+d.fat,0);
-  const fat_acum_real = fat_jan_mai + GERAL.fat_real;
-  const fat_jun_proj  = JUNHO_PROJ_TOTAL;
-  const fat_1sem      = fat_jan_mai + fat_jun_proj;
-  const ritmo_mensal  = fat_jan_mai / 5;
+  const mesesFech     = REAL_MESES.filter(d=>d.fechado);
+  const fat_fechados  = mesesFech.reduce((a,d)=>a+d.fat,0);
+  const fat_acum_real = fat_fechados + GERAL.fat_real;
+  const fat_jun_proj  = MES_ATUAL_PROJ_TOTAL; // projecao de fechamento do mes atual
+  const fat_1sem      = fat_fechados + fat_jun_proj; // fechados + mes atual projetado
+  const ritmo_mensal  = fat_fechados / Math.max(1,mesesFech.length);
 
   const tot2r = PROJ_2SEM.reduce((a,d)=>a+d.r,0);
   const tot2o = PROJ_2SEM.reduce((a,d)=>a+d.o,0);
@@ -1073,10 +1065,10 @@ V.anual = function(){
 
   return`
   <div class="cards">
-    <div class="card"><div class="lb">Acumulado Real (Jan–Jun S2)</div><div class="vl" style="color:#f39c12">${fr(fat_acum_real)}</div><div class="sb">${pct(fat_acum_real,META_ANO)}% da meta anual</div></div>
-    <div class="card"><div class="lb">1º Semestre (c/ Jun proj.)</div><div class="vl" style="color:#eee">${fr(fat_1sem)}</div><div class="sb">Junho projetado: ${fr(fat_jun_proj)}</div></div>
+    <div class="card"><div class="lb">Acumulado Real (fechados + ${MES_ATUAL} S${SEM_ATUAL})</div><div class="vl" style="color:#f39c12">${fr(fat_acum_real)}</div><div class="sb">${pct(fat_acum_real,META_ANO)}% da meta anual</div></div>
+    <div class="card"><div class="lb">Fechados + ${MES_ATUAL} proj.</div><div class="vl" style="color:#eee">${fr(fat_1sem)}</div><div class="sb">${MES_ATUAL} projetado: ${fr(fat_jun_proj)}</div></div>
     <div class="card"><div class="lb">Meta Anual</div><div class="vl" style="color:#cc0000">${fr(META_ANO)}</div><div class="sb">falta ${fr(META_ANO-fat_acum_real)} realizar</div></div>
-    <div class="card"><div class="lb">Ritmo Mensal Atual</div><div class="vl" style="color:#eee">${fr(ritmo_mensal)}</div><div class="sb">média Jan–Mai fechados</div></div>
+    <div class="card"><div class="lb">Ritmo Mensal Atual</div><div class="vl" style="color:#eee">${fr(ritmo_mensal)}</div><div class="sb">média dos meses fechados</div></div>
     <div class="card"><div class="lb">🟡 Fechamento Realista</div><div class="vl" style="color:#f39c12">${fr(anoR)}</div><div class="sb">${pct(anoR,META_ANO)}% da meta R$ 3M</div></div>
     <div class="card"><div class="lb">🟢 Fechamento Otimista</div><div class="vl" style="color:#2ecc71">${fr(anoO)}</div><div class="sb">${pct(anoO,META_ANO)}% da meta R$ 3M</div></div>
   </div>
@@ -1116,7 +1108,7 @@ V.anual = function(){
         <td style="color:${cMes};font-weight:bold">${pct(fatMes,d.meta)}%</td>
         <td style="font-weight:bold">${fr(acum)}</td>
         <td style="color:${acum/META_ANO>.66?'#2ecc71':acum/META_ANO>.33?'#f39c12':'#e74c3c'}">${pct(acum,META_ANO)}%</td>
-        <td>${d.fechado?bdg(d.fat,d.meta):'<span class="bdg by">⚡ Jun proj.</span>'}</td>
+        <td>${d.fechado?bdg(d.fat,d.meta):'<span class="bdg by">⚡ '+MES_ATUAL.slice(0,3)+' proj.</span>'}</td>
       </tr>`;
     }).join('')}
     ${PROJ_2SEM.map((d,i)=>{
@@ -1155,7 +1147,7 @@ V.anual = function(){
         TM crescendo R$ 5/mês<br>
         Orçamentos +3%/mês<br>
         Serviços em R$ 52–58k<br>
-        2º semestre: ${fr(tot2r)}
+        Ago–Dez: ${fr(tot2r)}
       </div>
     </div>
     <div style="border:1px solid #1a6e3a;border-radius:7px;padding:14px;min-width:0;overflow:hidden">
@@ -1166,7 +1158,7 @@ V.anual = function(){
         TM crescendo R$ 8/mês<br>
         Orçamentos +5%/mês<br>
         Serviços voltando a R$ 60k+<br>
-        2º semestre: ${fr(tot2o)}
+        Ago–Dez: ${fr(tot2o)}
       </div>
     </div>
   </div></div>`;
