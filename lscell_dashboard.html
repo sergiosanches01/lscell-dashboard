@@ -94,80 +94,80 @@ const LOGO_B64 = 'iVBORw0KGgoAAAANSUhEUgAAAGsAAABuCAYAAAAgcu2/AAAKMWlDQ1BJQ0MgUH
 const MES_ATUAL = 'Julho';
 const SEM_ATUAL = 1;
 const META_MES_GERAL = 210000;
-const DIAS_POR_SEMANA = [4,6,6,11]; // Julho/2026: S1 = 1 a 4 (qua-sab); S4 = 20 a 31 (sem domingos)
+const DIAS_POR_SEMANA = [10,6,6,5]; // Julho/2026: S1 = 01 a 11 (semana quebrada 1-4 mesclada com 6-11); S2 = 13-18; S3 = 20-25; S4 = 27-31
 const SEMANA_ATUAL_PARCIAL = false;
-const DIAS_REALIZADOS_SEM_ATUAL = 4;
+const DIAS_REALIZADOS_SEM_ATUAL = 10;
 const MESES_FECHADOS_LABELS = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho'];
 
 const GERAL = {
   s: [
-    {n:'S1', fat:38465, meta:63000, real:true},
-    {n:'S2', fat:0, meta:42000, real:false},
-    {n:'S3', fat:0, meta:52500, real:false},
-    {n:'S4', fat:0, meta:52500, real:false},
+    {n:'S1', fat:84526.41, meta:77778, real:true},
+    {n:'S2', fat:0, meta:46667, real:false},
+    {n:'S3', fat:0, meta:46667, real:false},
+    {n:'S4', fat:0, meta:38888, real:false},
   ],
-  fat_real: 38465,
+  fat_real: 84526.41,
   fat_proj: 0,
   meta: 210000,
-  tm_real: 104.07,
-  orc_real: 280,
+  tm_real: 94.64,
+  orc_real: 685,
 };
 GERAL.fat_total_proj = GERAL.fat_real + GERAL.fat_proj;
 
 const LOJAS = {
   'Esteio': {
-    meta:45000, tm:[99.82], orc:53,
-    s_real:[6905], s_meta:[13500,9000,11250,11250],
+    meta:45000, tm:[101.75], orc:125,
+    s_real:[15854.22], s_meta:[16667,10000,10000,8333],
     hist_s1:[7746,7746,13737,25276,15036,11208], hist_s2:[9317,8966,8967,10425,11971,12677],
     hist_s3:[8093,5165,12109,6037,5913,10012], hist_s4:[7686,8282,12032,3904,14788,12262],
     prodMetaMes:25000, servMetaMes:20000,
-    prodSReal:[5290], prodSMeta:[7500,5000,6250,6250],
-    servSReal:[1615], servSMeta:[6000,4000,5000,5000]
+    prodSReal:[12719.22], prodSMeta:[9259,5556,5556,4629],
+    servSReal:[3135.0], servSMeta:[7407,4444,4444,3705]
   },
   'Esteio Shop.': {
-    meta:35000, tm:[148.97], orc:50,
-    s_real:[10513], s_meta:[10500,7000,8750,8750],
+    meta:35000, tm:[105.27], orc:110,
+    s_real:[15958.8], s_meta:[12963,7778,7778,6481],
     hist_s1:[4335,4335,7189,10900,11336,9591], hist_s2:[4084,5119,7320,5021,6114,6809],
     hist_s3:[5009,3949,7177,7681,9768,12928], hist_s4:[6802,4396,7144,6178,6770,6360],
     prodMetaMes:31000, servMetaMes:4000,
-    prodSReal:[7449], prodSMeta:[9300,6200,7750,7750],
-    servSReal:[3065], servSMeta:[1200,800,1000,1000]
+    prodSReal:[11580.2], prodSMeta:[11481,6889,6889,5741],
+    servSReal:[4378.6], servSMeta:[1481,889,889,741]
   },
   'Canoas': {
-    meta:35000, tm:[68.53], orc:59,
-    s_real:[4358], s_meta:[10500,7000,8750,8750],
+    meta:35000, tm:[67.1], orc:144,
+    s_real:[11452.5], s_meta:[12963,7778,7778,6481],
     hist_s1:[10278,10278,7786,13771,18700,9047], hist_s2:[8088,3914,8922,6186,7921,11965],
     hist_s3:[5679,3994,9190,8823,10778,11442], hist_s4:[12346,9012,10437,10840,11767,11887],
     prodMetaMes:22000, servMetaMes:13000,
-    prodSReal:[4043], prodSMeta:[6600,4400,5500,5500],
-    servSReal:[315], servSMeta:[3900,2600,3250,3250]
+    prodSReal:[9662.5], prodSMeta:[8148,4889,4889,4074],
+    servSReal:[1790.0], servSMeta:[4815,2889,2889,2407]
   },
   'Avenida': {
-    meta:15000, tm:[79.78], orc:26,
-    s_real:[3259], s_meta:[4500,3000,3750,3750],
+    meta:15000, tm:[150.34], orc:59,
+    s_real:[12768.96], s_meta:[5556,3333,3333,2778],
     hist_s1:[4441,4201,4252,5301,11281,5058], hist_s2:[3186,1720,1754,3704,10245,5301],
     hist_s3:[3013,3872,3404,2069,3647,9156], hist_s4:[3294,3660,2159,2895,8512,6560],
     prodMetaMes:7500, servMetaMes:7500,
-    prodSReal:[2074], prodSMeta:[2250,1500,1875,1875],
-    servSReal:[1185], servSMeta:[2250,1500,1875,1875]
+    prodSReal:[8870.16], prodSMeta:[2778,1667,1667,1388],
+    servSReal:[3898.8], servSMeta:[2778,1667,1667,1388]
   },
   'Parque': {
-    meta:45000, tm:[143.9], orc:53,
-    s_real:[8677], s_meta:[13500,9000,11250,11250],
+    meta:45000, tm:[105.53], orc:161,
+    s_real:[19135.53], s_meta:[16667,10000,10000,8333],
     hist_s1:[12552,12552,10794,20080,14303,6822], hist_s2:[8687,8787,6226,12985,9318,12429],
     hist_s3:[10530,4147,10007,7151,10927,9747], hist_s4:[7049,6257,7626,4449,14574,9454],
     prodMetaMes:33000, servMetaMes:12000,
-    prodSReal:[7627], prodSMeta:[9900,6600,8250,8250],
-    servSReal:[1050], servSMeta:[3600,2400,3000,3000]
+    prodSReal:[16990.53], prodSMeta:[12222,7333,7333,6112],
+    servSReal:[2145.0], servSMeta:[4444,2667,2667,2222]
   },
   'Gravataí': {
-    meta:35000, tm:[68.12], orc:39,
-    s_real:[4752], s_meta:[10500,7000,8750,8750],
+    meta:35000, tm:[58.22], orc:86,
+    s_real:[9356.4], s_meta:[12963,7778,7778,6481],
     hist_s1:[7180,7180,7142,18145,14204,11054], hist_s2:[5385,6129,8073,11657,9671,9115],
     hist_s3:[6368,3771,7424,10971,5905,5675], hist_s4:[5588,8094,10310,5936,8164,7329],
     prodMetaMes:20000, servMetaMes:15000,
-    prodSReal:[2657], prodSMeta:[6000,4000,5000,5000],
-    servSReal:[2095], servSMeta:[4500,3000,3750,3750]
+    prodSReal:[5006.5], prodSMeta:[7407,4444,4444,3705],
+    servSReal:[4349.9], servSMeta:[5556,3333,3333,2778]
   },
 };
 
