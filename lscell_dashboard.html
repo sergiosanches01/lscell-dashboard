@@ -154,6 +154,16 @@ tr:hover td{background:#161616}
   .rkv-zrng{font-size:11px}
 }
 
+
+@media(max-width:430px){
+  .h-dest-foto{width:80px!important;height:80px!important;font-size:32px!important}
+  .h-dest-nome{font-size:16px!important}
+  .h-dest-val b{font-size:13px!important}
+  .h-dest-topo{height:52px!important}
+  .h-res-nval{font-size:22px!important}
+  .h-btns{grid-template-columns:1fr!important}
+  .h-btn{padding:12px 14px!important}
+}
 </style>
 </head>
 <body>
@@ -174,80 +184,80 @@ const LOGO_B64 = 'iVBORw0KGgoAAAANSUhEUgAAAGsAAABuCAYAAAAgcu2/AAAKMWlDQ1BJQ0MgUH
 const MES_ATUAL = 'Julho';
 const SEM_ATUAL = 2;
 const META_MES_GERAL = 210000;
-const DIAS_POR_SEMANA = [11,6,6,8];
+const DIAS_POR_SEMANA = [11,6,6,5]; // S1=1-11jul, S2=13-18, S3=20-25, S4=27-31
 const SEMANA_ATUAL_PARCIAL = false;
 const DIAS_REALIZADOS_SEM_ATUAL = 6;
 const MESES_FECHADOS_LABELS = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho'];
 
 const GERAL = {
   s: [
-    {n:'S1', fat:84526, meta:56700, real:true},
-    {n:'S2', fat:50181, meta:50400, real:true},
-    {n:'S3', fat:0, meta:52500, real:false},
-    {n:'S4', fat:0, meta:50400, real:false},
+    {n:'S1', fat:84526, meta:82500, real:true},
+    {n:'S2', fat:50181, meta:45000, real:true},
+    {n:'S3', fat:0, meta:45000, real:false},
+    {n:'S4', fat:0, meta:37500, real:false},
   ],
   fat_real: 134707,
   fat_proj: 0,
   meta: 210000,
-  tm_real: 93.84,
-  orc_real: 1087,
+  tm_real: 148.91,
+  orc_real: 685,
 };
 GERAL.fat_total_proj = GERAL.fat_real + GERAL.fat_proj;
 
 const LOJAS = {
   'Esteio': {
-    meta:0, tm:[102], orc:125,
-    s_real:[15854, 14737], s_meta:[0, 0, 0, 0],
-    hist_s1:[0, 0, 0, 0, 0, 0], hist_s2:[0, 0, 0, 0, 0, 0],
-    hist_s3:[0, 0, 0, 0, 0, 0], hist_s4:[0, 0, 0, 0, 0, 0],
+    meta:45000, tm:[102], orc:125,
+    s_real:[15854, 14737], s_meta:[17679, 9643, 9643, 8036],
+    hist_s1:[7746, 7746, 13737, 25276, 15036, 11208], hist_s2:[9317, 8966, 8967, 10425, 11971, 12677],
+    hist_s3:[8093, 5165, 12109, 6037, 5913, 10013], hist_s4:[7686, 8282, 12032, 3904, 14788, 12262],
     prodMetaMes:25000, servMetaMes:20000,
-    prodSReal:[12719, 12197], prodSMeta:[0, 0, 0, 0],
-    servSReal:[3135, 2540], servSMeta:[0, 0, 0, 0]
+    prodSReal:[12719, 12197], prodSMeta:[9821, 5357, 5357, 4464],
+    servSReal:[3135, 2540], servSMeta:[7857, 4286, 4286, 3571]
   },
   'Esteio Shop.': {
-    meta:0, tm:[105], orc:110,
-    s_real:[15959, 8438], s_meta:[0, 0, 0, 0],
-    hist_s1:[0, 0, 0, 0, 0, 0], hist_s2:[0, 0, 0, 0, 0, 0],
-    hist_s3:[0, 0, 0, 0, 0, 0], hist_s4:[0, 0, 0, 0, 0, 0],
+    meta:35000, tm:[105], orc:110,
+    s_real:[15959, 8438], s_meta:[13750, 7500, 7500, 6250],
+    hist_s1:[4335, 4335, 7189, 10900, 11336, 9591], hist_s2:[4084, 5119, 7320, 5021, 6114, 6809],
+    hist_s3:[5009, 3949, 7177, 7681, 9768, 12928], hist_s4:[6802, 4396, 7144, 6178, 6770, 6360],
     prodMetaMes:31000, servMetaMes:4000,
-    prodSReal:[11580, 6993], prodSMeta:[0, 0, 0, 0],
-    servSReal:[4379, 1445], servSMeta:[0, 0, 0, 0]
+    prodSReal:[11580, 6993], prodSMeta:[12179, 6643, 6643, 5536],
+    servSReal:[4379, 1445], servSMeta:[1571, 857, 857, 714]
   },
   'Canoas': {
-    meta:0, tm:[67], orc:144,
-    s_real:[11452, 8133], s_meta:[0, 0, 0, 0],
-    hist_s1:[0, 0, 0, 0, 0, 0], hist_s2:[0, 0, 0, 0, 0, 0],
-    hist_s3:[0, 0, 0, 0, 0, 0], hist_s4:[0, 0, 0, 0, 0, 0],
+    meta:35000, tm:[67], orc:144,
+    s_real:[11452, 8133], s_meta:[13750, 7500, 7500, 6250],
+    hist_s1:[10278, 10278, 7786, 13771, 18700, 9047], hist_s2:[8088, 3914, 8922, 6186, 7921, 11965],
+    hist_s3:[5679, 3994, 9190, 8823, 10778, 11442], hist_s4:[12346, 9012, 10437, 10840, 11767, 11887],
     prodMetaMes:22000, servMetaMes:13000,
-    prodSReal:[9662, 6208], prodSMeta:[0, 0, 0, 0],
-    servSReal:[1790, 1925], servSMeta:[0, 0, 0, 0]
+    prodSReal:[9662, 6208], prodSMeta:[8643, 4714, 4714, 3929],
+    servSReal:[1790, 1925], servSMeta:[5107, 2786, 2786, 2321]
   },
   'Avenida': {
-    meta:0, tm:[150], orc:59,
-    s_real:[12769, 5532], s_meta:[0, 0, 0, 0],
-    hist_s1:[0, 0, 0, 0, 0, 0], hist_s2:[0, 0, 0, 0, 0, 0],
-    hist_s3:[0, 0, 0, 0, 0, 0], hist_s4:[0, 0, 0, 0, 0, 0],
+    meta:15000, tm:[150], orc:59,
+    s_real:[12769, 5532], s_meta:[5893, 3214, 3214, 2679],
+    hist_s1:[4441, 4201, 4252, 5301, 11281, 5058], hist_s2:[3186, 1720, 1754, 3704, 10246, 5301],
+    hist_s3:[3013, 3872, 3404, 2069, 3647, 9156], hist_s4:[3293, 3660, 2159, 2895, 8512, 6560],
     prodMetaMes:7500, servMetaMes:7500,
-    prodSReal:[8870, 2833], prodSMeta:[0, 0, 0, 0],
-    servSReal:[3899, 2699], servSMeta:[0, 0, 0, 0]
+    prodSReal:[8870, 2833], prodSMeta:[2946, 1607, 1607, 1339],
+    servSReal:[3899, 2699], servSMeta:[2946, 1607, 1607, 1339]
   },
   'Parque': {
     meta:45000, tm:[106], orc:161,
-    s_real:[19136, 7017], s_meta:[0, 0, 0, 0],
-    hist_s1:[0, 0, 0, 0, 0, 0], hist_s2:[0, 0, 0, 0, 0, 0],
-    hist_s3:[0, 0, 0, 0, 0, 0], hist_s4:[0, 0, 0, 0, 0, 0],
+    s_real:[19136, 7017], s_meta:[17679, 9643, 9643, 8036],
+    hist_s1:[12552, 12552, 10795, 20080, 14303, 6822], hist_s2:[8687, 8787, 6226, 12985, 9319, 12429],
+    hist_s3:[10531, 4147, 10007, 7151, 10927, 9747], hist_s4:[7049, 6257, 7626, 4449, 14574, 9454],
     prodMetaMes:33000, servMetaMes:12000,
-    prodSReal:[16991, 5102], prodSMeta:[0, 0, 0, 0],
-    servSReal:[2145, 1915], servSMeta:[0, 0, 0, 0]
+    prodSReal:[16991, 5102], prodSMeta:[12964, 7071, 7071, 5893],
+    servSReal:[2145, 1915], servSMeta:[4714, 2571, 2571, 2143]
   },
   'Gravataí': {
-    meta:0, tm:[58], orc:86,
-    s_real:[9356, 6324], s_meta:[0, 0, 0, 0],
-    hist_s1:[0, 0, 0, 0, 0, 0], hist_s2:[0, 0, 0, 0, 0, 0],
-    hist_s3:[0, 0, 0, 0, 0, 0], hist_s4:[0, 0, 0, 0, 0, 0],
+    meta:35000, tm:[58], orc:86,
+    s_real:[9356, 6324], s_meta:[13750, 7500, 7500, 6250],
+    hist_s1:[7180, 7180, 7142, 18146, 14204, 11054], hist_s2:[5385, 6129, 8073, 11657, 9671, 9115],
+    hist_s3:[6368, 3771, 7425, 10971, 5905, 5675], hist_s4:[5589, 8094, 10310, 5936, 8164, 7329],
     prodMetaMes:20000, servMetaMes:15000,
-    prodSReal:[5006, 3845], prodSMeta:[0, 0, 0, 0],
-    servSReal:[4350, 2479], servSMeta:[0, 0, 0, 0]
+    prodSReal:[5006, 3845], prodSMeta:[7857, 4286, 4286, 3571],
+    servSReal:[4350, 2479], servSMeta:[5893, 3214, 3214, 2679]
   },
 };
 
@@ -262,43 +272,37 @@ Object.keys(LOJAS).forEach(function(n){
   for(var di=0; di<SEM_ATUAL-1; di++){ diasRealizados += (DIAS_POR_SEMANA[di]||6); }
   diasRealizados += SEMANA_ATUAL_PARCIAL ? DIAS_REALIZADOS_SEM_ATUAL : (DIAS_POR_SEMANA[SEM_ATUAL-1]||6);
   var ritmoDiario = diasRealizados > 0 ? l.fat_real / diasRealizados : 0;
-  l.proj = [];
-  l.fat_proj = 0;
+  l.proj = []; l.fat_proj = 0;
   for(var w=0; w<4; w++){
-    var ehRealCompleta = (w < SEM_ATUAL) && !(SEMANA_ATUAL_PARCIAL && w === SEM_ATUAL-1);
-    if(ehRealCompleta){
+    if(w < SEM_ATUAL){
       l.proj[w] = l.s_real[w] || 0;
     } else {
       var h = histSemanasLoja[w];
       var avgSem = h.length ? h.reduce(function(a,b){return a+b;},0)/h.length : 0;
-      var avgDia = avgSem / 6;
+      var avgDia = avgSem / (DIAS_POR_SEMANA[w]||6);
       var diasSem = DIAS_POR_SEMANA[w]||6;
-      var parcial = 0, diasProjetar = diasSem;
-      if(SEMANA_ATUAL_PARCIAL && w === SEM_ATUAL-1){
-        parcial = l.s_real[w] || 0;
-        diasProjetar = Math.max(0, diasSem - DIAS_REALIZADOS_SEM_ATUAL);
-      }
-      var projDias = Math.round((ritmoDiario*0.60 + avgDia*0.40) * diasProjetar);
-      l.proj[w] = parcial + projDias;
+      var peso = avgSem > 0 ? 0.60 : 1.0;
+      var projDias = Math.round((ritmoDiario*peso + avgDia*(1-peso)) * diasSem);
+      l.proj[w] = projDias;
       l.fat_proj += projDias;
     }
   }
-  l.proj_s2 = l.proj[1]; l.proj_s3 = l.proj[2]; l.proj_s4 = l.proj[3];
-  l.fat_total = l.fat_real + l.fat_proj;
-  l.tm_atual  = l.tm.reduce(function(a,b){return a+b;},0)/l.tm.length;
-  l.pct_meta  = Math.round(l.fat_real/l.meta*100);
-  l.pct_proj  = Math.round(l.fat_total/l.meta*100);
-  l.prodRealAcum = (l.prodSReal||[]).reduce(function(a,b){return a+b;},0);
-  l.servRealAcum = (l.servSReal||[]).reduce(function(a,b){return a+b;},0);
+  l.proj_s2=l.proj[1]; l.proj_s3=l.proj[2]; l.proj_s4=l.proj[3];
+  l.fat_total=l.fat_real+l.fat_proj;
+  l.tm_atual=l.tm.reduce(function(a,b){return a+b;},0)/l.tm.length;
+  l.pct_meta=Math.round(l.fat_real/l.meta*100);
+  l.pct_proj=Math.round(l.fat_total/l.meta*100);
+  l.prodRealAcum=(l.prodSReal||[]).reduce(function(a,b){return a+b;},0);
+  l.servRealAcum=(l.servSReal||[]).reduce(function(a,b){return a+b;},0);
 });
 
-GERAL.s.forEach(function(s, i){
+GERAL.s.forEach(function(s,i){
   if(!s.real){
-    s.fat = NOMES.reduce(function(a,n){ return a + ((LOJAS[n].proj||[])[i]||0); }, 0);
+    s.fat=NOMES.reduce(function(a,n){return a+((LOJAS[n].proj||[])[i]||0);},0);
   }
 });
-GERAL.fat_proj = NOMES.reduce(function(a,n){ return a + LOJAS[n].fat_proj; }, 0);
-GERAL.fat_total_proj = GERAL.fat_real + GERAL.fat_proj;
+GERAL.fat_proj=NOMES.reduce(function(a,n){return a+LOJAS[n].fat_proj;},0);
+GERAL.fat_total_proj=GERAL.fat_real+GERAL.fat_proj;
 
 const REAL_MESES = [
   {m:'Janeiro',  fat:166737, meta:205000, fechado:true},
@@ -313,9 +317,9 @@ const REAL_MESES = [
 const MES_ATUAL_PROJ_TOTAL = GERAL.fat_total_proj;
 
 const PROJ_2SEM = [
-  {m:'Agosto', meta:270000, r:243013, o:272469},
+  {m:'Agosto',   meta:270000, r:243013, o:272469},
   {m:'Setembro', meta:275000, r:230801, o:258777},
-  {m:'Outubro', meta:295000, r:246708, o:276612},
+  {m:'Outubro',  meta:295000, r:246708, o:276612},
   {m:'Novembro', meta:325000, r:246716, o:276621},
   {m:'Dezembro', meta:370000, r:323458, o:362665}
 ];
