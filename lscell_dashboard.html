@@ -232,43 +232,56 @@ tr:hover td{background:#161616}
 
 
 @media(max-width:430px){
-  /* Container home sem padding lateral excessivo */
-  .h-home-wrap{padding:6px 4px 20px!important}
+  /* Container home */
+  .h-home-wrap{padding:6px 2px 20px!important}
 
-  /* Grid destaques — 3 iguais lado a lado, sem overflow */
-  .h-dest-grid{display:grid!important;grid-template-columns:repeat(3,1fr)!important;width:100%}
-  .h-dest-card{padding:0 6px 12px!important;border-right:0.5px solid #1e1e1e}
+  /* Header */
+  .h-logo{font-size:28px!important}
+
+  /* Grid destaques — 3 colunas, sem overflow */
+  .h-dest-grid{display:grid!important;grid-template-columns:repeat(3,1fr)!important;width:100%;overflow:hidden}
+  .h-dest-card{padding:0 4px 10px!important;overflow:hidden}
   .h-dest-card:last-child{border-right:none!important}
 
-  /* Foto menor mas mantendo proporção */
-  .h-dest-foto{width:72px!important;height:72px!important;font-size:26px!important;border-radius:8px!important}
+  /* Foto menor */
+  .h-dest-foto{width:68px!important;height:68px!important;font-size:24px!important;border-radius:8px!important;margin-bottom:8px!important}
 
-  /* Topo fixo mais compacto */
-  .h-dest-topo{height:52px!important;padding:4px 0!important}
+  /* Topo fixo compacto */
+  .h-dest-topo{height:48px!important;padding:3px 0!important;margin-bottom:10px!important}
 
-  /* Textos menores para caber em 3 colunas */
-  .h-dest-supertag{font-size:8px!important;letter-spacing:1px!important}
-  .h-dest-subtag{font-size:7px!important;letter-spacing:1px!important}
-  .h-dest-nome{font-family:'Bebas Neue',sans-serif!important;font-size:14px!important;line-height:1.1!important}
-  .h-dest-val{font-size:9px!important}
-  .h-dest-val b{font-family:'Bebas Neue',sans-serif!important;font-size:12px!important}
-  .h-dest-pos{font-size:10px!important;right:4px!important}
+  /* Textos compactos para caber em 3 colunas */
+  .h-dest-supertag{font-size:7px!important;letter-spacing:.5px!important}
+  .h-dest-subtag{font-size:7px!important;letter-spacing:.5px!important}
+  .h-dest-nome{font-size:13px!important;line-height:1!important}
+  .h-dest-val{font-size:8px!important}
+  .h-dest-val b{font-size:11px!important}
+  .h-dest-pos{font-size:9px!important;right:3px!important;top:8px!important}
 
-  /* Card resultados — linha única no mobile */
-  .h-res-body{flex-wrap:nowrap!important;gap:10px!important;padding:10px 12px!important;align-items:center!important}
-  .h-res-nval{font-size:18px!important;white-space:nowrap!important}
-  .h-res-nlbl{font-size:7px!important;letter-spacing:1px!important}
-  .h-res-bar-wrap{flex:1!important;min-width:0!important;width:auto!important}
-  .h-bar-leg{font-size:8px!important}
+  /* Card resultados — tudo em uma linha, sem quebra */
+  .h-res-body{
+    flex-wrap:nowrap!important;
+    flex-direction:row!important;
+    gap:6px!important;
+    padding:10px 8px!important;
+    align-items:center!important;
+    overflow:hidden!important
+  }
+  .h-res-num{flex-shrink:0!important;min-width:0!important}
+  .h-res-nval{font-size:16px!important;white-space:nowrap!important;line-height:1.1!important}
+  .h-res-nlbl{font-size:7px!important;letter-spacing:.5px!important;white-space:nowrap!important}
+  .h-res-bar-wrap{flex:1!important;min-width:0!important}
+  .h-bar-leg{font-size:7px!important;flex-wrap:nowrap!important;gap:4px!important}
+  .h-res-hdr{padding:8px 10px!important}
+  .h-res-title{font-size:14px!important}
+  .h-res-sem{font-size:8px!important}
 
-  /* Botões empilhados */
-  .h-btns{grid-template-columns:1fr!important}
-  .h-btn{padding:12px 14px!important}
-  .h-btn-title{font-size:14px!important}
-  .h-btn-sub{font-size:10px!important}
-
-  /* Header compacto */
-  .h-logo{font-size:30px!important}
+  /* Botões — lado a lado, sem quebrar */
+  .h-btns{grid-template-columns:1fr 1fr!important;gap:6px!important}
+  .h-btn{padding:10px 8px!important;gap:8px!important}
+  .h-btn-ico{font-size:20px!important}
+  .h-btn-title{font-size:12px!important;letter-spacing:0!important}
+  .h-btn-sub{font-size:9px!important;margin-top:1px!important}
+  .h-btn-arr{font-size:14px!important}
 }
 </style>
 </head>
@@ -1274,12 +1287,12 @@ home: function(){
       </div>
     </div>
     <div style="background:#141414;border:0.5px solid #2a2a2a;border-radius:12px;overflow:hidden">
-      <div style="padding:10px 18px 9px;border-bottom:0.5px solid #1e1e1e;display:flex;justify-content:space-between;align-items:baseline">
+      <div class="h-dest-hdr" style="padding:10px 18px 9px;border-bottom:0.5px solid #1e1e1e;display:flex;justify-content:space-between;align-items:baseline">
         <div style="font-family:'Bebas Neue',sans-serif;font-size:17px;color:#E8232A;letter-spacing:2px">⭐ Destaques da Semana</div>
         <div style="font-size:10px;color:#444;letter-spacing:1px;text-transform:uppercase">S${SEM_ATUAL} — ${MES_ATUAL} 2026</div>
       </div>
-      <div style="display:grid;grid-template-columns:repeat(3,1fr)">
-        <div style="display:flex;flex-direction:column;align-items:center;padding:0 16px 16px;text-align:center;border-right:0.5px solid #1e1e1e;position:relative">
+      <div class="h-dest-grid" style="display:grid;grid-template-columns:repeat(3,1fr)">
+        <div class="h-dest-card" style="display:flex;flex-direction:column;align-items:center;padding:0 16px 16px;text-align:center;border-right:0.5px solid #1e1e1e;position:relative">
           <div style="width:100%;height:62px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:3px;border-bottom:0.5px solid #1e1e1e;margin-bottom:14px">
             <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;font-weight:700;color:#E8232A">🏆 Loja do mês</div>
           </div>
@@ -1289,7 +1302,7 @@ home: function(){
           <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:#fff;line-height:1.1;margin-bottom:4px">${lojaTop.nome}</div>
           <div style="font-size:11px;color:#555"><b style="font-family:'Bebas Neue',sans-serif;font-size:15px;color:#777">${fr(lojaTop.fat)}</b> acumulado</div>
         </div>
-        <div style="display:flex;flex-direction:column;align-items:center;padding:0 16px 16px;text-align:center;border-right:0.5px solid #1e1e1e;position:relative">
+        <div class="h-dest-card" style="display:flex;flex-direction:column;align-items:center;padding:0 16px 16px;text-align:center;border-right:0.5px solid #1e1e1e;position:relative">
           <div style="width:100%;height:62px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:3px;border-bottom:0.5px solid #1e1e1e;margin-bottom:14px">
             <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;font-weight:700;color:#e8a020">⭐ Vendedor da semana</div>
             <div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:#555">📦 Mais produto</div>
@@ -1300,7 +1313,7 @@ home: function(){
           <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:#fff;line-height:1.1;margin-bottom:4px">${topProd.nome}</div>
           <div style="font-size:11px;color:#555"><b style="font-family:'Bebas Neue',sans-serif;font-size:15px;color:#777">${fr(topProd.val)}</b> na semana</div>
         </div>
-        <div style="display:flex;flex-direction:column;align-items:center;padding:0 16px 16px;text-align:center;position:relative">
+        <div class="h-dest-card" style="display:flex;flex-direction:column;align-items:center;padding:0 16px 16px;text-align:center;position:relative">
           <div style="width:100%;height:62px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:3px;border-bottom:0.5px solid #1e1e1e;margin-bottom:14px">
             <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;font-weight:700;color:#e8a020">⭐ Vendedor da semana</div>
             <div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:#555">🔧 Mais serviço</div>
@@ -1342,20 +1355,20 @@ home: function(){
         </div>
       </div>
     </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-      <div onclick="goGrupo('operacional')" style="background:#141414;border:0.5px solid #2a2a2a;border-radius:10px;padding:14px 16px;display:flex;align-items:center;gap:14px;cursor:pointer">
+    <div class="h-btns" style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div class="h-btn" onclick="goGrupo('operacional')" style="background:#141414;border:0.5px solid #2a2a2a;border-radius:10px;padding:14px 16px;display:flex;align-items:center;gap:14px;cursor:pointer">
         <div style="font-size:28px;flex-shrink:0">📱</div>
         <div style="flex:1">
-          <div style="font-size:15px;font-weight:700;color:#fff;letter-spacing:.5px">Loja / Operacional</div>
-          <div style="font-size:11px;color:#444;margin-top:2px">Assistência, calculadora Payjoy e mais</div>
+          <div class="h-btn-title" style="font-size:15px;font-weight:700;color:#fff;letter-spacing:.5px">Loja / Operacional</div>
+          <div class="h-btn-sub" style="font-size:11px;color:#444;margin-top:2px">Assistência, calculadora Payjoy e mais</div>
         </div>
         <div style="font-size:20px;color:#2a2a2a">›</div>
       </div>
-      <div onclick="goGrupo('resultados')" style="background:#141414;border:0.5px solid #2a2a2a;border-radius:10px;padding:14px 16px;display:flex;align-items:center;gap:14px;cursor:pointer">
+      <div class="h-btn" onclick="goGrupo('resultados')" style="background:#141414;border:0.5px solid #2a2a2a;border-radius:10px;padding:14px 16px;display:flex;align-items:center;gap:14px;cursor:pointer">
         <div style="font-size:28px;flex-shrink:0">📊</div>
         <div style="flex:1">
-          <div style="font-size:15px;font-weight:700;color:#fff;letter-spacing:.5px">Dashboard de Resultados</div>
-          <div style="font-size:11px;color:#444;margin-top:2px">Faturamento, metas e projeções</div>
+          <div class="h-btn-title" style="font-size:15px;font-weight:700;color:#fff;letter-spacing:.5px">Dashboard de Resultados</div>
+          <div class="h-btn-sub" style="font-size:11px;color:#444;margin-top:2px">Faturamento, metas e projeções</div>
         </div>
         <div style="font-size:20px;color:#2a2a2a">›</div>
       </div>
