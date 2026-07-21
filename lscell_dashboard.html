@@ -99,13 +99,13 @@ tr:hover td{background:#161616}
 .rkv-za{background:#1a140a;border-color:#5a3e0f}.rkv-za .rkv-zlbl{color:#a07020}.rkv-za .rkv-zrng{color:#c49030}
 .rkv-zg{background:#081309;border-color:#1a4f25}.rkv-zg .rkv-zlbl{color:#3a8c5c}.rkv-zg .rkv-zrng{color:#50b070}
 .rkv-list{display:flex;flex-direction:column;gap:7px}
-.rkv-card{border-radius:10px;border:0.5px solid;padding:12px 14px;display:flex;align-items:center;gap:12px;position:relative;overflow:hidden}
+.rkv-card{border-radius:10px;border:0.5px solid;padding:12px 14px;display:flex;align-items:center;gap:12px;position:relative}
 .rkv-card.cv{background:#1f0606;border-color:#6a1515}
 .rkv-card.cv::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:#E8232A}
 .rkv-card.ca{background:#130f05;border-color:#3a2a08}
 .rkv-card.cg{background:#07120a;border-color:#103a20}
 .rkv-pos{font-family:'Bebas Neue',sans-serif;font-size:28px;line-height:1;min-width:24px;text-align:center;flex-shrink:0;color:#444}
-.rkv-left{display:flex;flex-direction:column;gap:5px;min-width:170px;flex:0 0 170px}
+.rkv-left{display:flex;flex-direction:column;gap:5px;min-width:140px;flex:0 0 140px}
 .rkv-loja{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#E8232A}
 .rkv-nome{font-family:'Bebas Neue',sans-serif;font-size:18px;color:#fff;line-height:1.1}
 .rkv-novo{font-size:9px;color:#666;background:#222;border:0.5px solid #444;border-radius:3px;padding:1px 5px;letter-spacing:1px;text-transform:uppercase}
@@ -126,7 +126,7 @@ tr:hover td{background:#161616}
 .rkv-psr{font-family:'Bebas Neue',sans-serif;font-size:14px;line-height:1}
 .rkv-psm{font-size:10px;color:#333}
 .rkv-psd{font-size:10px}
-.rkv-right{display:flex;flex-direction:column;align-items:flex-end;gap:2px;flex-shrink:0;min-width:88px}
+.rkv-right{display:flex;flex-direction:column;align-items:flex-end;gap:2px;flex-shrink:0;min-width:80px}
 .rkv-pct{font-family:'Bebas Neue',sans-serif;font-size:34px;line-height:1}
 .rkv-psub{font-size:9px;color:#555;text-transform:uppercase;letter-spacing:1px}
 .rkv-metas{display:flex;flex-direction:column;align-items:flex-end;gap:2px;margin-top:4px}
@@ -134,90 +134,51 @@ tr:hover td{background:#161616}
 .rkv-mtag{font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#444}
 .rkv-mval{font-family:'Bebas Neue',sans-serif;font-size:13px;color:#555}
 @media(max-width:500px){
-  /* Container */
-  .rkv{padding:0}
+  .rkv{padding:0;max-width:100%}
   .rkv-nav{gap:8px;margin-bottom:10px}
-  .rkv-ml{font-size:15px;min-width:110px}
-  .rkv-btn{padding:3px 12px;font-size:14px}
-
-  /* Zonas */
-  .rkv-zonas{gap:3px;margin-bottom:8px}
-  .rkv-zona{padding:4px 3px}
-  .rkv-zlbl{font-size:6px;letter-spacing:.3px}
+  .rkv-ml{font-size:14px;min-width:100px}
+  .rkv-btn{padding:3px 10px;font-size:13px}
+  .rkv-zonas{gap:2px;margin-bottom:8px}
+  .rkv-zona{padding:4px 2px}
+  .rkv-zlbl{font-size:6px}
   .rkv-zrng{font-size:9px}
+  .rkv-list{gap:5px}
 
-  /* Card — mesmo layout do desktop (flex row), só menor */
-  .rkv-card{
-    display:flex!important;
-    flex-direction:row!important;
-    flex-wrap:nowrap!important;
-    align-items:center!important;
-    gap:6px!important;
-    padding:8px 8px!important;
-    border-radius:8px!important
-  }
+  /* Card: manter row mas compacto */
+  .rkv-card{padding:8px 6px;gap:5px}
+  .rkv-pos{font-size:16px;min-width:16px}
 
-  /* Posição */
-  .rkv-pos{font-size:18px!important;min-width:18px!important;flex-shrink:0!important}
+  /* Esquerda — largura fixa pequena */
+  .rkv-left{min-width:110px!important;flex:0 0 110px!important;gap:3px}
+  .rkv-loja{font-size:7px;letter-spacing:1px}
+  .rkv-nome{font-size:12px;line-height:1}
+  .rkv-htit{font-size:6px;margin-top:2px;margin-bottom:1px}
+  .rkv-hrow{gap:4px}
+  .rk-hi{gap:0}
+  .rk-hm{font-size:6px}
+  .rk-hv{font-size:10px}
+  .rkv-acum{gap:3px;margin-top:2px;padding-top:2px}
+  .rkv-albl{font-size:6px}
+  .rkv-aval{font-size:10px}
 
-  /* Esquerda */
-  .rkv-left{
-    display:flex!important;
-    flex-direction:column!important;
-    gap:3px!important;
-    min-width:0!important;
-    flex:0 0 120px!important;
-    width:120px!important;
-    flex-shrink:0!important
-  }
-  .rkv-loja{font-size:7px!important;letter-spacing:1px!important}
-  .rkv-nome{font-size:13px!important;line-height:1!important}
-  .rkv-htit{font-size:7px!important;margin-top:2px!important;margin-bottom:1px!important}
-  .rkv-hrow{gap:5px!important}
-  .rk-hm{font-size:7px!important}
-  .rk-hv{font-size:11px!important}
-  .rkv-acum{gap:3px!important;margin-top:2px!important;padding-top:2px!important}
-  .rkv-albl{font-size:7px!important}
-  .rkv-aval{font-size:11px!important}
+  /* Centro — flex:1 para ocupar espaço restante */
+  .rkv-center{flex:1;gap:2px}
+  .rkv-ctit{font-size:6px;letter-spacing:.3px}
+  .rkv-tot{font-size:15px}
+  .rkv-ps{gap:5px;margin-top:1px}
+  .rkv-pstag{font-size:6px;letter-spacing:.3px}
+  .rkv-psr{font-size:10px}
+  .rkv-psm{font-size:7px}
+  .rkv-psd{font-size:7px}
 
-  /* Centro */
-  .rkv-center{
-    flex:1!important;
-    display:flex!important;
-    flex-direction:column!important;
-    align-items:center!important;
-    gap:3px!important;
-    border-top:none!important;
-    padding-top:0!important;
-    margin-left:0!important
-  }
-  .rkv-ctit{font-size:7px!important;letter-spacing:.5px!important}
-  .rkv-tot{font-size:16px!important;line-height:1!important}
-  .rkv-ps{gap:5px!important;margin-top:1px!important}
-  .rkv-psi{gap:0!important}
-  .rkv-pstag{font-size:7px!important;letter-spacing:.5px!important}
-  .rkv-psr{font-size:11px!important}
-  .rkv-psm{font-size:8px!important}
-  .rkv-psd{font-size:8px!important}
-
-  /* Direita */
-  .rkv-right{
-    display:flex!important;
-    flex-direction:column!important;
-    align-items:flex-end!important;
-    border-top:none!important;
-    padding-top:0!important;
-    min-width:52px!important;
-    flex-shrink:0!important
-  }
-  .rkv-pct{font-size:22px!important;line-height:1!important}
-  .rkv-psub{font-size:7px!important}
-  .rkv-metas{gap:1px!important;margin-top:2px!important}
-  .rkv-mi{gap:3px!important}
-  .rkv-mtag{font-size:7px!important}
-  .rkv-mval{font-size:10px!important}
-
-  .rkv-list{gap:5px!important}
+  /* Direita — largura fixa pequena */
+  .rkv-right{min-width:48px!important;gap:1px}
+  .rkv-pct{font-size:20px}
+  .rkv-psub{font-size:6px}
+  .rkv-metas{gap:1px;margin-top:2px}
+  .rkv-mi{gap:2px}
+  .rkv-mtag{font-size:6px}
+  .rkv-mval{font-size:9px}
 }
 
 
