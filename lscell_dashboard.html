@@ -136,98 +136,88 @@ tr:hover td{background:#161616}
 @media(max-width:500px){
   /* Container */
   .rkv{padding:0}
-
-  /* Nav de mês */
   .rkv-nav{gap:8px;margin-bottom:10px}
-  .rkv-ml{font-size:16px;min-width:120px}
-  .rkv-btn{padding:3px 14px;font-size:15px}
+  .rkv-ml{font-size:15px;min-width:110px}
+  .rkv-btn{padding:3px 12px;font-size:14px}
 
   /* Zonas */
   .rkv-zonas{gap:3px;margin-bottom:8px}
-  .rkv-zona{padding:5px 4px}
-  .rkv-zlbl{font-size:7px;letter-spacing:.5px}
-  .rkv-zrng{font-size:10px}
+  .rkv-zona{padding:4px 3px}
+  .rkv-zlbl{font-size:6px;letter-spacing:.3px}
+  .rkv-zrng{font-size:9px}
 
-  /* Card — layout em bloco (1 coluna) */
+  /* Card — mesmo layout do desktop (flex row), só menor */
   .rkv-card{
-    display:grid;
-    grid-template-columns:28px 1fr;
-    grid-template-rows:auto auto;
-    gap:0;
-    padding:10px 10px 8px;
-    border-radius:8px
+    display:flex!important;
+    flex-direction:row!important;
+    flex-wrap:nowrap!important;
+    align-items:center!important;
+    gap:6px!important;
+    padding:8px 8px!important;
+    border-radius:8px!important
   }
 
-  /* Posição — canto esquerdo */
-  .rkv-pos{
-    font-size:20px;
-    min-width:28px;
-    grid-row:1/3;
-    align-self:center;
-    padding-top:0;
-    margin-right:0
-  }
+  /* Posição */
+  .rkv-pos{font-size:18px!important;min-width:18px!important;flex-shrink:0!important}
 
-  /* Esquerda: nome + loja + histórico */
+  /* Esquerda */
   .rkv-left{
-    grid-column:2;
-    grid-row:1;
-    flex-direction:column;
-    gap:3px;
-    min-width:0;
-    margin-bottom:6px;
-    padding-bottom:6px;
-    border-bottom:0.5px solid #1e1e1e
+    display:flex!important;
+    flex-direction:column!important;
+    gap:3px!important;
+    min-width:0!important;
+    flex:0 0 120px!important;
+    width:120px!important;
+    flex-shrink:0!important
   }
-  .rkv-loja{font-size:8px;letter-spacing:1.5px}
-  .rkv-nome{font-size:17px;line-height:1}
-  .rkv-htit{font-size:8px;margin-top:3px;margin-bottom:2px}
-  .rkv-hrow{gap:8px}
-  .rk-hm{font-size:8px}
-  .rk-hv{font-size:13px}
-  .rkv-acum{gap:4px;margin-top:3px;padding-top:3px}
-  .rkv-albl{font-size:8px}
-  .rkv-aval{font-size:13px}
+  .rkv-loja{font-size:7px!important;letter-spacing:1px!important}
+  .rkv-nome{font-size:13px!important;line-height:1!important}
+  .rkv-htit{font-size:7px!important;margin-top:2px!important;margin-bottom:1px!important}
+  .rkv-hrow{gap:5px!important}
+  .rk-hm{font-size:7px!important}
+  .rk-hv{font-size:11px!important}
+  .rkv-acum{gap:3px!important;margin-top:2px!important;padding-top:2px!important}
+  .rkv-albl{font-size:7px!important}
+  .rkv-aval{font-size:11px!important}
 
-  /* Linha 2: centro + direita lado a lado */
+  /* Centro */
   .rkv-center{
-    grid-column:2;
-    grid-row:2;
-    flex-direction:row;
-    align-items:center;
-    justify-content:space-between;
-    border-top:none;
-    padding-top:0;
-    margin-left:0
+    flex:1!important;
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:center!important;
+    gap:3px!important;
+    border-top:none!important;
+    padding-top:0!important;
+    margin-left:0!important
   }
-  .rkv-ctit{font-size:8px;letter-spacing:1px}
-  .rkv-tot{font-size:20px;line-height:1}
-  .rkv-ps{flex-direction:row;gap:8px;margin-top:2px}
-  .rkv-psi{align-items:flex-start}
-  .rkv-pstag{font-size:8px;letter-spacing:1px}
-  .rkv-psr{font-size:13px}
-  .rkv-psm{font-size:9px}
-  .rkv-psd{font-size:9px}
+  .rkv-ctit{font-size:7px!important;letter-spacing:.5px!important}
+  .rkv-tot{font-size:16px!important;line-height:1!important}
+  .rkv-ps{gap:5px!important;margin-top:1px!important}
+  .rkv-psi{gap:0!important}
+  .rkv-pstag{font-size:7px!important;letter-spacing:.5px!important}
+  .rkv-psr{font-size:11px!important}
+  .rkv-psm{font-size:8px!important}
+  .rkv-psd{font-size:8px!important}
 
-  /* Direita: % — virar para inline ao lado do total */
+  /* Direita */
   .rkv-right{
-    display:flex;
-    flex-direction:column;
-    align-items:flex-end;
-    border-top:none;
-    padding-top:0;
-    min-width:70px;
-    flex-shrink:0
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:flex-end!important;
+    border-top:none!important;
+    padding-top:0!important;
+    min-width:52px!important;
+    flex-shrink:0!important
   }
-  .rkv-pct{font-size:28px;line-height:1}
-  .rkv-psub{font-size:8px}
-  .rkv-metas{gap:1px;margin-top:3px}
-  .rkv-mi{gap:4px}
-  .rkv-mtag{font-size:8px}
-  .rkv-mval{font-size:12px}
+  .rkv-pct{font-size:22px!important;line-height:1!important}
+  .rkv-psub{font-size:7px!important}
+  .rkv-metas{gap:1px!important;margin-top:2px!important}
+  .rkv-mi{gap:3px!important}
+  .rkv-mtag{font-size:7px!important}
+  .rkv-mval{font-size:10px!important}
 
-  /* Rodapé */
-  .rkv-list{gap:6px}
+  .rkv-list{gap:5px!important}
 }
 
 
