@@ -134,35 +134,141 @@ tr:hover td{background:#161616}
 .rkv-mtag{font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#444}
 .rkv-mval{font-family:'Bebas Neue',sans-serif;font-size:13px;color:#555}
 @media(max-width:500px){
+  /* Container */
   .rkv{padding:0}
-  .rkv-card{flex-wrap:wrap;padding:10px 11px 9px;gap:0}
-  .rkv-pos{font-size:22px;min-width:20px;align-self:flex-start;padding-top:3px;margin-right:6px}
-  .rkv-left{flex:1;min-width:0;gap:4px;margin-bottom:7px;width:calc(100% - 26px)}
-  .rkv-nome{font-size:16px}
-  .rk-hv{font-size:12px}
+
+  /* Nav de mês */
+  .rkv-nav{gap:8px;margin-bottom:10px}
+  .rkv-ml{font-size:16px;min-width:120px}
+  .rkv-btn{padding:3px 14px;font-size:15px}
+
+  /* Zonas */
+  .rkv-zonas{gap:3px;margin-bottom:8px}
+  .rkv-zona{padding:5px 4px}
+  .rkv-zlbl{font-size:7px;letter-spacing:.5px}
+  .rkv-zrng{font-size:10px}
+
+  /* Card — layout em bloco (1 coluna) */
+  .rkv-card{
+    display:grid;
+    grid-template-columns:28px 1fr;
+    grid-template-rows:auto auto;
+    gap:0;
+    padding:10px 10px 8px;
+    border-radius:8px
+  }
+
+  /* Posição — canto esquerdo */
+  .rkv-pos{
+    font-size:20px;
+    min-width:28px;
+    grid-row:1/3;
+    align-self:center;
+    padding-top:0;
+    margin-right:0
+  }
+
+  /* Esquerda: nome + loja + histórico */
+  .rkv-left{
+    grid-column:2;
+    grid-row:1;
+    flex-direction:column;
+    gap:3px;
+    min-width:0;
+    margin-bottom:6px;
+    padding-bottom:6px;
+    border-bottom:0.5px solid #1e1e1e
+  }
+  .rkv-loja{font-size:8px;letter-spacing:1.5px}
+  .rkv-nome{font-size:17px;line-height:1}
+  .rkv-htit{font-size:8px;margin-top:3px;margin-bottom:2px}
+  .rkv-hrow{gap:8px}
   .rk-hm{font-size:8px}
-  .rkv-acum{margin-top:3px;padding-top:3px}
-  .rkv-center{flex:1;align-items:flex-start;border-top:0.5px solid #1e1e1e;padding-top:7px;margin-left:26px}
-  .rkv-tot{font-size:20px}
-  .rkv-ps{gap:10px}
-  .rkv-psr{font-size:12px}
-  .rkv-right{align-items:flex-end;border-top:0.5px solid #1e1e1e;padding-top:7px;min-width:75px}
-  .rkv-pct{font-size:28px}
-  .rkv-meta-val{font-size:11px}
-  .rkv-zonas{gap:4px}
-  .rkv-zlbl{font-size:8px}
-  .rkv-zrng{font-size:11px}
+  .rk-hv{font-size:13px}
+  .rkv-acum{gap:4px;margin-top:3px;padding-top:3px}
+  .rkv-albl{font-size:8px}
+  .rkv-aval{font-size:13px}
+
+  /* Linha 2: centro + direita lado a lado */
+  .rkv-center{
+    grid-column:2;
+    grid-row:2;
+    flex-direction:row;
+    align-items:center;
+    justify-content:space-between;
+    border-top:none;
+    padding-top:0;
+    margin-left:0
+  }
+  .rkv-ctit{font-size:8px;letter-spacing:1px}
+  .rkv-tot{font-size:20px;line-height:1}
+  .rkv-ps{flex-direction:row;gap:8px;margin-top:2px}
+  .rkv-psi{align-items:flex-start}
+  .rkv-pstag{font-size:8px;letter-spacing:1px}
+  .rkv-psr{font-size:13px}
+  .rkv-psm{font-size:9px}
+  .rkv-psd{font-size:9px}
+
+  /* Direita: % — virar para inline ao lado do total */
+  .rkv-right{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-end;
+    border-top:none;
+    padding-top:0;
+    min-width:70px;
+    flex-shrink:0
+  }
+  .rkv-pct{font-size:28px;line-height:1}
+  .rkv-psub{font-size:8px}
+  .rkv-metas{gap:1px;margin-top:3px}
+  .rkv-mi{gap:4px}
+  .rkv-mtag{font-size:8px}
+  .rkv-mval{font-size:12px}
+
+  /* Rodapé */
+  .rkv-list{gap:6px}
 }
 
 
 @media(max-width:430px){
-  .h-dest-foto{width:80px!important;height:80px!important;font-size:32px!important}
-  .h-dest-nome{font-size:16px!important}
-  .h-dest-val b{font-size:13px!important}
-  .h-dest-topo{height:52px!important}
-  .h-res-nval{font-size:22px!important}
+  /* Container home sem padding lateral excessivo */
+  .h-home-wrap{padding:6px 4px 20px!important}
+
+  /* Grid destaques — 3 iguais lado a lado, sem overflow */
+  .h-dest-grid{display:grid!important;grid-template-columns:repeat(3,1fr)!important;width:100%}
+  .h-dest-card{padding:0 6px 12px!important;border-right:0.5px solid #1e1e1e}
+  .h-dest-card:last-child{border-right:none!important}
+
+  /* Foto menor mas mantendo proporção */
+  .h-dest-foto{width:72px!important;height:72px!important;font-size:26px!important;border-radius:8px!important}
+
+  /* Topo fixo mais compacto */
+  .h-dest-topo{height:52px!important;padding:4px 0!important}
+
+  /* Textos menores para caber em 3 colunas */
+  .h-dest-supertag{font-size:8px!important;letter-spacing:1px!important}
+  .h-dest-subtag{font-size:7px!important;letter-spacing:1px!important}
+  .h-dest-nome{font-family:'Bebas Neue',sans-serif!important;font-size:14px!important;line-height:1.1!important}
+  .h-dest-val{font-size:9px!important}
+  .h-dest-val b{font-family:'Bebas Neue',sans-serif!important;font-size:12px!important}
+  .h-dest-pos{font-size:10px!important;right:4px!important}
+
+  /* Card resultados — linha única no mobile */
+  .h-res-body{flex-wrap:nowrap!important;gap:10px!important;padding:10px 12px!important;align-items:center!important}
+  .h-res-nval{font-size:18px!important;white-space:nowrap!important}
+  .h-res-nlbl{font-size:7px!important;letter-spacing:1px!important}
+  .h-res-bar-wrap{flex:1!important;min-width:0!important;width:auto!important}
+  .h-bar-leg{font-size:8px!important}
+
+  /* Botões empilhados */
   .h-btns{grid-template-columns:1fr!important}
   .h-btn{padding:12px 14px!important}
+  .h-btn-title{font-size:14px!important}
+  .h-btn-sub{font-size:10px!important}
+
+  /* Header compacto */
+  .h-logo{font-size:30px!important}
 }
 </style>
 </head>
@@ -421,23 +527,20 @@ function miniBarProdServ(lbl, real, meta){
   var estiloBar = estiloGradienteBarra(real, safemeta);
   var corLbl = bateu ? '#5dca6a' : '#888';
 
+  // Marcas das 4 semanas no container pai — sempre visíveis mesmo quando real > meta
   var marcas = '';
   [1,2,3].forEach(function(s){
     var metaAcumS = safemeta * (s/4);
-    var pS = Math.min(metaAcumS/maxV*100,100);
+    var pS = Math.min(metaAcumS/maxV*100, 100);
     var atingiu = real >= metaAcumS;
-    marcas += '<div style="position:absolute;top:0;left:'+pS+'%;width:1px;height:100%;background:'+(atingiu?'rgba(93,202,106,.7)':'rgba(255,255,255,.3)')+'"></div>';
+    var cor = atingiu ? 'rgba(93,202,106,.9)' : 'rgba(255,255,255,.5)';
+    marcas += '<div style="position:absolute;top:-2px;left:'+pS+'%;width:2px;height:calc(100% + 4px);background:'+cor+';z-index:5"></div>';
   });
 
-  return '<div style="margin-bottom:10px">'
-    +'<div style="display:flex;align-items:center;gap:8px">'
-    +'<div style="width:64px;font-size:11px;color:#999;text-align:right;flex-shrink:0">'+lbl+'</div>'
-    +'<div style="flex:1;background:#1a1a1a;border-radius:3px;height:18px;position:relative;overflow:hidden;border:1px solid '+(bateu?'#1a6e3a':'transparent')+'">'
-    +'<div style="position:absolute;left:0;top:0;height:100%;width:'+pr+'%;'+estiloBar+';display:flex;align-items:center;padding-left:6px;font-size:10px;font-weight:bold;color:#fff;white-space:nowrap;overflow:hidden">'+fr(real)+'</div>'
-    + marcas
-    +'<div style="position:absolute;top:0;left:'+pm+'%;height:100%;width:2px;background:rgba(255,255,255,.5)"></div>'
-    +'<div style="position:absolute;right:6px;top:50%;transform:translateY(-50%);font-size:9px;color:'+corLbl+'">'+(bateu?'🎯 ':'')+pct(real,safemeta)+'% de '+fr(safemeta)+'</div>'
-    +'</div></div></div>';
+  // Linha da meta total
+  var linhaMeta = '<div style="position:absolute;top:-4px;left:'+pm+'%;width:2px;height:calc(100% + 8px);background:#fff;opacity:.9;z-index:10;border-radius:1px"></div>';
+
+  return '<div style="margin-bottom:10px">'    +'<div style="display:flex;align-items:center;gap:8px">'    +'<div style="width:64px;font-size:11px;color:#999;text-align:right;flex-shrink:0">'+lbl+'</div>'    +'<div style="flex:1;background:#1a1a1a;border-radius:3px;height:18px;position:relative;overflow:visible;border:1px solid '+(bateu?'#1a6e3a':'transparent')+'">'    +'<div style="position:absolute;left:0;top:0;height:100%;width:'+pr+'%;border-radius:3px;'+estiloBar+';display:flex;align-items:center;padding-left:6px;font-size:10px;font-weight:bold;color:#fff;white-space:nowrap;overflow:hidden">'+fr(real)+'</div>'    + marcas    + linhaMeta    +'<div style="position:absolute;right:6px;top:50%;transform:translateY(-50%);font-size:9px;color:'+corLbl+';z-index:11">'+(bateu?'🎯 ':'')+pct(real,safemeta)+'% de '+fr(safemeta)+'</div>'    +'</div></div></div>';
 }
 
 
@@ -901,6 +1004,16 @@ loja(){
     s4: l.hist_s4[i] || 0,
   }));
 
+  // Adicionar mês atual com semanas já realizadas
+  const hist_mes_atual = {
+    m: MES_ATUAL + ' (atual)',
+    s1: (l.s_real||[])[0] || 0,
+    s2: SEM_ATUAL >= 2 ? ((l.s_real||[])[1] || 0) : null,
+    s3: SEM_ATUAL >= 3 ? ((l.s_real||[])[2] || 0) : null,
+    s4: SEM_ATUAL >= 4 ? ((l.s_real||[])[3] || 0) : null,
+  };
+  semanas_hist.push(hist_mes_atual);
+
   return`
   <div style="margin-bottom:10px">
     <div style="font-size:10px;color:#666;margin-bottom:6px;text-transform:uppercase;letter-spacing:.8px">Selecione a loja:</div>
@@ -933,18 +1046,24 @@ loja(){
   ${buildSemLoja(l)}
   </div>
 
-  <div class="box"><div class="bt">Histórico Jan–Jun — ${curLoja} (valores reais por semana)</div>
+  <div class="box"><div class="bt">Histórico Mensal — ${curLoja} (valores reais por semana)</div>
   <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
   <table style="min-width:480px"><thead><tr><th>Mês</th><th>S1</th><th>S2</th><th>S3</th><th>S4</th><th>Total</th></tr></thead>
   <tbody>${semanas_hist.map(h=>{
-    const total=h.s1+h.s2+h.s3+h.s4;
-    return`<tr>
-      <td><strong>${h.m}</strong></td>
-      <td style="color:#aaa">${fr(h.s1)}</td>
-      <td style="color:#aaa">${fr(h.s2)}</td>
-      <td style="color:#eee">${fr(h.s3)}</td>
-      <td style="color:#eee">${fr(h.s4)}</td>
-      <td style="color:#fff;font-weight:bold">${fr(total)}</td>
+    const isCurrent = h.m && h.m.includes('(atual)');
+    const s2v = h.s2 !== null ? h.s2 : 0;
+    const s3v = h.s3 !== null ? h.s3 : 0;
+    const s4v = h.s4 !== null ? h.s4 : 0;
+    const total = h.s1 + s2v + s3v + s4v;
+    const rowStyle = isCurrent ? 'background:#1a0800;border-left:2px solid #E8232A' : '';
+    const col = isCurrent ? '#fff' : '#aaa';
+    return`<tr style="${rowStyle}">
+      <td><strong style="${isCurrent?'color:#E8232A':''}">${h.m}</strong></td>
+      <td style="color:${col}">${fr(h.s1)}</td>
+      <td style="color:${col}">${h.s2 !== null ? fr(h.s2) : '<span style="color:#333">—</span>'}</td>
+      <td style="color:${isCurrent?'#666':'#eee'}">${h.s3 !== null ? fr(h.s3) : '<span style="color:#333">—</span>'}</td>
+      <td style="color:${isCurrent?'#666':'#eee'}">${h.s4 !== null ? fr(h.s4) : '<span style="color:#333">—</span>'}</td>
+      <td style="color:${isCurrent?'#E8232A':'#fff'};font-weight:bold">${fr(total)}</td>
     </tr>`;}).join('')}</tbody></table>
   </div>
   <div style="font-size:10px;color:#444;margin-top:6px">Todos os valores são reais — Jan a Jun fechados.</div>
@@ -1146,7 +1265,7 @@ home: function(){
   var pctProjExtra = Math.max(0, pctProj - pctReal);
 
   return `
-  <div style="max-width:820px;margin:0 auto;display:flex;flex-direction:column;gap:12px;padding:8px 4px 24px">
+  <div class="h-home-wrap" style="max-width:820px;margin:0 auto;display:flex;flex-direction:column;gap:12px;padding:8px 4px 24px">
     <div style="display:flex;align-items:center;justify-content:center;gap:14px;padding:10px 0 6px">
       <img src="data:image/png;base64,${LOGO_B64}" alt="LSCELL" style="height:52px;width:auto">
       <div style="display:flex;flex-direction:column;align-items:center">
@@ -1200,7 +1319,7 @@ home: function(){
         <div style="font-family:'Bebas Neue',sans-serif;font-size:17px;color:#fff;letter-spacing:2px">📊 ${MES_ATUAL} 2026</div>
         <div style="font-size:10px;color:#444;letter-spacing:1px;text-transform:uppercase">Semana ${SEM_ATUAL} de 4 · Meta ${fr(META_MES_GERAL)}</div>
       </div>
-      <div style="padding:14px 18px;display:flex;align-items:center;gap:24px;flex-wrap:wrap">
+      <div class="h-res-body" style="padding:14px 18px;display:flex;align-items:center;gap:24px;flex-wrap:wrap">
         <div style="display:flex;flex-direction:column;gap:1px;flex-shrink:0">
           <div style="font-size:9px;color:#444;letter-spacing:1.5px;text-transform:uppercase">Faturado real</div>
           <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;line-height:1.1;color:#E8232A">${fr(GERAL.fat_real)}</div>
@@ -2072,7 +2191,7 @@ function rkRender(){
         <div>
           <div class="rk-loja">${v.loja}</div>
           <div class="rk-nome">${v.nome}</div>
-          ${isNovo?'<span class="rk-novo-badge">novo</span>':''}
+          
         </div>
         <div>
           <div class="rk-hist-title">Últimos 3 meses</div>
@@ -2167,7 +2286,7 @@ V.ranking = function(){
       // esquerda: nome + hist + acum
       +'<div class="rkv-left">'
         +'<div class="rkv-loja">'+v.loja+'</div>'
-        +'<div class="rkv-nome">'+v.nome+(novo?' <span class="rkv-novo">novo</span>':'')+'</div>'
+        +'<div class="rkv-nome">'+v.nome+'</div>'
         +'<div class="rkv-htit">Últimos 3 meses</div>'
         +'<div class="rkv-hrow">'+hist.join('')+'</div>'
         +'<div class="rkv-acum"><span class="rkv-albl">'+(is2?'2º':'1º')+' sem acum.</span>'
