@@ -266,9 +266,9 @@ tr:hover td{background:#161616}
     align-items:center!important;
     overflow:hidden!important
   }
-  .h-res-num{flex-shrink:0!important;min-width:0!important;max-width:90px!important}
-  .h-res-nval{font-size:13px!important;white-space:nowrap!important;line-height:1.1!important}
-  .h-res-nlbl{font-size:6px!important;letter-spacing:.3px!important;white-space:nowrap!important}
+  .h-res-num{flex-shrink:0!important;min-width:0!important;max-width:88px!important;overflow:hidden!important}
+  .h-res-nval{font-size:14px!important;white-space:nowrap!important;line-height:1.1!important;overflow:hidden!important;text-overflow:ellipsis!important}
+  .h-res-nlbl{font-size:6px!important;letter-spacing:.3px!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
   .h-res-bar-wrap{flex:1!important;min-width:0!important}
   .h-bar-leg{font-size:6px!important;flex-wrap:nowrap!important;gap:3px!important}
   .h-bar-leg span{white-space:nowrap!important}
@@ -1334,9 +1334,9 @@ home: function(){
         <div style="font-size:10px;color:#444;letter-spacing:1px;text-transform:uppercase">Semana ${SEM_ATUAL} de 4 · Meta ${fr(META_MES_GERAL)}</div>
       </div>
       <div class="h-res-body" style="padding:14px 18px;display:flex;align-items:center;gap:24px;flex-wrap:wrap">
-        <div style="display:flex;flex-direction:column;gap:1px;flex-shrink:0">
-          <div style="font-size:9px;color:#444;letter-spacing:1.5px;text-transform:uppercase">Faturado real</div>
-          <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;line-height:1.1;color:#E8232A">${fr(GERAL.fat_real)}</div>
+        <div class="h-res-num" style="display:flex;flex-direction:column;gap:1px;flex-shrink:0">
+          <div class="h-res-nlbl" style="font-size:9px;color:#444;letter-spacing:1.5px;text-transform:uppercase">Faturado real</div>
+          <div class="h-res-nval" style="font-family:'Bebas Neue',sans-serif;font-size:28px;line-height:1.1;color:#E8232A">${fr(GERAL.fat_real)}</div>
         </div>
         <div style="flex:1;min-width:160px">
           <div style="background:#1a1a1a;border-radius:3px;height:7px;position:relative">
@@ -1351,8 +1351,8 @@ home: function(){
           </div>
         </div>
         <div style="display:flex;flex-direction:column;gap:1px;flex-shrink:0">
-          <div style="font-size:9px;color:#444;letter-spacing:1.5px;text-transform:uppercase">Projeção fechamento</div>
-          <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;line-height:1.1;color:#f39c12">${fr(GERAL.fat_total_proj)}</div>
+          <div class="h-res-nlbl" style="font-size:9px;color:#444;letter-spacing:1.5px;text-transform:uppercase">Projeção</div>
+          <div class="h-res-nval" style="font-family:'Bebas Neue',sans-serif;font-size:28px;line-height:1.1;color:#f39c12">${fr(GERAL.fat_total_proj)}</div>
         </div>
       </div>
     </div>
