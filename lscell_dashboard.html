@@ -17,9 +17,9 @@ h1{color:#cc0000;text-align:center;font-size:18px;letter-spacing:2px;margin-bott
 .sub{text-align:center;color:#555;font-size:11px;margin-bottom:4px}
 .semana-badge{text-align:center;margin-bottom:14px}
 .sbadge{display:inline-block;background:#1a0000;border:1px solid #cc0000;color:#cc0000;padding:4px 16px;border-radius:99px;font-size:12px;font-weight:bold;letter-spacing:1px}
-#tabs{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:14px;justify-content:center}
-.tab{padding:6px 13px;border-radius:4px;border:1px solid #2a2a2a;background:#141414;cursor:pointer;color:#777;font-size:12px;transition:.15s;white-space:nowrap;text-align:center}
-.main-nav{display:flex;align-items:stretch;justify-content:center;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+#tabs{display:flex;gap:4px;flex-wrap:nowrap;margin-bottom:14px;justify-content:center;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.tab{padding:6px 10px;border-radius:4px;border:1px solid #2a2a2a;background:#141414;cursor:pointer;color:#777;font-size:11px;transition:.15s;white-space:nowrap;text-align:center;flex-shrink:0}
+.main-nav{display:flex;align-items:stretch;justify-content:center;gap:6px;margin-bottom:10px;flex-wrap:nowrap}
 .main-btn{padding:10px 22px;border-radius:8px;border:1px solid #333;background:#1a1a1a;cursor:pointer;color:#999;font-size:13px;font-weight:bold;transition:.15s;letter-spacing:.3px;white-space:nowrap;display:flex;align-items:center;justify-content:center}
 .main-btn.on{background:#cc0000;border-color:#cc0000;color:#fff;box-shadow:0 2px 8px rgba(204,0,0,.35)}
 .main-btn:hover:not(.on){border-color:#cc0000;color:#cc0000}
@@ -44,7 +44,7 @@ h1{color:#cc0000;text-align:center;font-size:18px;letter-spacing:2px;margin-bott
   .main-btn{padding:9px 10px;font-size:11px;letter-spacing:0;flex:1;text-align:center;white-space:normal;line-height:1.2}
   .home-btn-mini{padding:9px 10px;font-size:13px}
   #tabs{gap:5px}
-  .tab{flex:1;padding:7px 4px;font-size:10.5px;text-align:center;white-space:normal;line-height:1.2;min-width:0}
+  .tab{flex:0 0 auto;padding:7px 8px;font-size:10px;text-align:center;white-space:nowrap;line-height:1.2;min-width:0}
   .loja-btns{gap:5px}
   .lbtn{flex:1 1 30%;padding:7px 4px;font-size:11.5px;font-weight:bold;white-space:normal;line-height:1.2;min-width:0}
   .cenarios-grid{grid-template-columns:1fr!important}
@@ -234,6 +234,18 @@ tr:hover td{background:#161616}
   .h-btn-title{font-size:12px!important;letter-spacing:0!important}
   .h-btn-sub{font-size:9px!important;margin-top:1px!important}
   .h-btn-arr{font-size:14px!important}
+}
+
+@media(min-width:431px) and (max-width:520px){
+  .h-res-body{flex-wrap:nowrap!important;gap:6px!important;padding:10px 10px!important}
+  .h-res-nval{font-size:16px!important;white-space:nowrap!important}
+  .h-res-nlbl{font-size:7px!important;white-space:nowrap!important}
+  .h-res-bar-wrap{flex:1!important;min-width:0!important}
+  .h-bar-leg{font-size:7px!important;flex-wrap:nowrap!important}
+  .h-dest-grid{display:grid!important;grid-template-columns:repeat(3,1fr)!important;width:100%}
+  .h-dest-card{padding:0 10px 14px!important}
+  .h-dest-foto{width:90px!important;height:90px!important}
+  .h-btns{grid-template-columns:1fr 1fr!important}
 }
 </style>
 </head>
