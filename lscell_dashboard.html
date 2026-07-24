@@ -1645,7 +1645,7 @@ function pjCalcularPasso2(){
   if(isNaN(aparelho) || isNaN(entrada)){ alert('Preencha todos os campos.'); return; }
 
   if(payjoyState.mode === 'sem'){
-    if(entrada > 300){ pjRenderBloqueado('A entrada original é '+pjFmt(entrada)+', acima do limite de '+pjFmt(300)+' para venda sem entrada.'); return; }
+    if(entrada > 500){ pjRenderBloqueado('A entrada original é '+pjFmt(entrada)+', acima do limite de '+pjFmt(500)+' para venda sem entrada.'); return; }
     if(entrada <= 100){
       pjRenderResultado({
         payjoy_valor: aparelho, payjoy_nova_entrada: entrada,
@@ -1654,7 +1654,7 @@ function pjCalcularPasso2(){
       });
       return;
     }
-    const embutido = pjEscolherEmbutido(entrada, [100,150,200,250]);
+    const embutido = pjEscolherEmbutido(entrada, [100,150,200,250,300,350,400,450,500]);
     payjoyState.valorAparelho = aparelho;
     payjoyState.entradaOriginal = entrada;
     payjoyState.valorEmbutido = embutido;
@@ -1673,8 +1673,8 @@ function pjCalcularPasso2(){
       });
       return;
     }
-    if(diferenca > 300){ pjRenderBloqueado('A diferença a embutir seria '+pjFmt(diferenca)+', acima do limite de '+pjFmt(300)+'.'); return; }
-    const embutido = pjEscolherEmbutido(diferenca, [100,150,200,250,300]);
+    if(diferenca > 500){ pjRenderBloqueado('A diferença a embutir seria '+pjFmt(diferenca)+', acima do limite de '+pjFmt(500)+'.'); return; }
+    const embutido = pjEscolherEmbutido(diferenca, [100,150,200,250,300,350,400,450,500]);
     payjoyState.valorAparelho = aparelho;
     payjoyState.entradaOriginal = entrada;
     payjoyState.entradaCliente = cliente;
@@ -1798,7 +1798,7 @@ V.payjoy = function(){
 // Para atualizar: Sérgio envia a planilha nova e os preços são reprocessados aqui.
 const PRECOS_DATA = [
   {modelo:'Note 60x 64GB', vista:899.0, credito:999.0, boleto:999.0, obs:''},
-  {modelo:'Note 60x 128GB', vista:1149.0, credito:1290.0, boleto:1290.0, obs:''},
+  {modelo:'Note 60x 128GB', vista:1399.0, credito:1499.0, boleto:1499.0, obs:''},
   {modelo:'Itel A90 128GB', vista:1099.0, credito:1299.0, boleto:1299.0, obs:''},
   {modelo:'Poco C71 128GB', vista:1149.0, credito:1299.0, boleto:1299.0, obs:''},
   {modelo:'Poco C71 64GB', vista:999.0, credito:1099.0, boleto:1099.0, obs:''},
@@ -1809,11 +1809,11 @@ const PRECOS_DATA = [
   {modelo:'Realme C71 128GB', vista:1599.0, credito:1699.0, boleto:1699.0, obs:''},
   {modelo:'Realme C71 256GB', vista:1799.0, credito:1899.0, boleto:1899.0, obs:''},
   {modelo:'Realme Note 60 128GB', vista:1199.0, credito:1299.0, boleto:1299.0, obs:''},
-  {modelo:'Realme Note 70 128GB', vista:1399.0, credito:1499.0, boleto:1499.0, obs:''},
-  {modelo:'Realme Note 70 256GB', vista:1499.0, credito:1599.0, boleto:1599.0, obs:''},
+  {modelo:'Realme Note 70 128GB', vista:1599.0, credito:1699.0, boleto:1699.0, obs:''},
+  {modelo:'Realme Note 70 256GB', vista:1799.0, credito:1999.0, boleto:1999.0, obs:''},
   {modelo:'Redmi 14C 256GB', vista:1299.0, credito:1499.0, boleto:1499.0, obs:''},
   {modelo:'Redmi 15C 128GB', vista:1399.0, credito:1499.0, boleto:1499.0, obs:''},
-  {modelo:'Redmi 15C 256GB', vista:1599.0, credito:1699.0, boleto:1699.0, obs:''},
+  {modelo:'Redmi 15C 256GB', vista:1799.0, credito:1999.0, boleto:1999.0, obs:''},
   {modelo:'Redmi A5 128GB', vista:999.0, credito:1099.0, boleto:1099.0, obs:''}
 ];
 let precoBuscaQ = '';
