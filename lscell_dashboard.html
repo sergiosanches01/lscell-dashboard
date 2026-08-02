@@ -252,7 +252,7 @@ tr:hover td{background:#161616}
 <body>
 <div id="app-header">
 <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:4px"><img id="logo-header-img" alt="LSCELL" style="height:32px;width:auto"><h1 style="margin:0">LSCELL — DASHBOARD SEMANAL</h1></div>
-<p class="sub">Gerado em: Quarta, 23 de Julho de 2026</p>
+<p class="sub">Gerado em: Quarta, 30 de Julho de 2026</p>
 <div class="semana-badge"><span class="sbadge" id="semana-badge-txt">📅 ...</span></div>
 <div id="main-nav-container"></div>
 <div id="tabs"></div>
@@ -265,21 +265,21 @@ const LOGO_B64 = 'iVBORw0KGgoAAAANSUhEUgAAAGsAAABuCAYAAAAgcu2/AAAKMWlDQ1BJQ0MgUH
 
 /* ===== DADOS_START ===== */
 const MES_ATUAL = 'Julho';
-const SEM_ATUAL = 3;
+const SEM_ATUAL = 4;
 const META_MES_GERAL = 210000;
-const DIAS_POR_SEMANA = [11,6,6,5]; // S1=1-11jul, S2=13-18, S3=20-25, S4=27-31
+const DIAS_POR_SEMANA = [11,6,6,5];
 const SEMANA_ATUAL_PARCIAL = false;
-const DIAS_REALIZADOS_SEM_ATUAL = 6;
+const DIAS_REALIZADOS_SEM_ATUAL = 5;
 const MESES_FECHADOS_LABELS = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho'];
 
 const GERAL = {
   s: [
     {n:'S1', fat:84526, meta:82500, real:true},
     {n:'S2', fat:50181, meta:45000, real:true},
-    {n:'S3', fat:51163, meta:45000, real:true},
-    {n:'S4', fat:0, meta:37500, real:false},
+    {n:'S3', fat:51144, meta:45000, real:true},
+    {n:'S4', fat:40053, meta:37500, real:true},
   ],
-  fat_real: 185870,
+  fat_real: 225904,
   fat_proj: 0,
   meta: 210000,
   tm_real: 0,
@@ -290,52 +290,52 @@ GERAL.fat_total_proj = GERAL.fat_real + GERAL.fat_proj;
 const LOJAS = {
   'Esteio': {
     meta:45000, tm:[102], orc:125,
-    s_real:[15854, 14737, 9686], s_meta:[17679, 9643, 9643, 8036],
+    s_real:[15644, 14737, 9686, 7537], s_meta:[17679, 9643, 9643, 8036],
     hist_s1:[7746, 7746, 13737, 25276, 15036, 11208], hist_s2:[9317, 8966, 8967, 10425, 11971, 12677],
     hist_s3:[8093, 5165, 12109, 6037, 5913, 10013], hist_s4:[7686, 8282, 12032, 3904, 14788, 12262],
     prodMetaMes:25000, servMetaMes:20000,
-    prodSReal:[12719, 12197, 6941], prodSMeta:[9821, 5357, 5357, 4464],
-    servSReal:[3135, 2540, 2745], servSMeta:[7857, 4286, 4286, 3571]
+    prodSReal:[12719, 12197, 6941, 4747], prodSMeta:[9821, 5357, 5357, 4464],
+    servSReal:[2925, 2540, 2745, 2790], servSMeta:[7857, 4286, 4286, 3571]
   },  'Esteio Shop.': {
     meta:35000, tm:[105], orc:110,
-    s_real:[15959, 8438, 3723], s_meta:[13750, 7500, 7500, 6250],
+    s_real:[16169, 8438, 3723, 5138], s_meta:[13750, 7500, 7500, 6250],
     hist_s1:[4335, 4335, 7189, 10900, 11336, 9591], hist_s2:[4084, 5119, 7320, 5021, 6114, 6809],
     hist_s3:[5009, 3949, 7177, 7681, 9768, 12928], hist_s4:[6802, 4396, 7144, 6178, 6770, 6360],
     prodMetaMes:31000, servMetaMes:4000,
-    prodSReal:[11580, 6993, 2753], prodSMeta:[12179, 6643, 6643, 5536],
-    servSReal:[4379, 1445, 970], servSMeta:[1571, 857, 857, 714]
+    prodSReal:[11580, 6993, 2753, 4738], prodSMeta:[12179, 6643, 6643, 5536],
+    servSReal:[4589, 1445, 970, 400], servSMeta:[1571, 857, 857, 714]
   },  'Canoas': {
     meta:35000, tm:[67], orc:144,
-    s_real:[11452, 8133, 7576], s_meta:[13750, 7500, 7500, 6250],
+    s_real:[11372, 8133, 7576, 7559], s_meta:[13750, 7500, 7500, 6250],
     hist_s1:[10278, 10278, 7786, 13771, 18700, 9047], hist_s2:[8088, 3914, 8922, 6186, 7921, 11965],
     hist_s3:[5679, 3994, 9190, 8823, 10778, 11442], hist_s4:[12346, 9012, 10437, 10840, 11767, 11887],
     prodMetaMes:22000, servMetaMes:13000,
-    prodSReal:[9662, 6208, 6876], prodSMeta:[8643, 4714, 4714, 3929],
-    servSReal:[1790, 1925, 700], servSMeta:[5107, 2786, 2786, 2321]
+    prodSReal:[9582, 6208, 6876, 2754], prodSMeta:[8643, 4714, 4714, 3929],
+    servSReal:[1790, 1925, 700, 4805], servSMeta:[5107, 2786, 2786, 2321]
   },  'Avenida': {
     meta:15000, tm:[150], orc:59,
-    s_real:[12769, 5532, 14219], s_meta:[5893, 3214, 3214, 2679],
+    s_real:[12769, 5532, 14219, 7176], s_meta:[5893, 3214, 3214, 2679],
     hist_s1:[4441, 4201, 4252, 5301, 11281, 5058], hist_s2:[3186, 1720, 1754, 3704, 10246, 5301],
     hist_s3:[3013, 3872, 3404, 2069, 3647, 9156], hist_s4:[3293, 3660, 2159, 2895, 8512, 6560],
     prodMetaMes:7500, servMetaMes:7500,
-    prodSReal:[8870, 2833, 13934], prodSMeta:[2946, 1607, 1607, 1339],
-    servSReal:[3899, 2699, 285], servSMeta:[2946, 1607, 1607, 1339]
+    prodSReal:[8870, 2833, 13934, 6536], prodSMeta:[2946, 1607, 1607, 1339],
+    servSReal:[3899, 2699, 285, 640], servSMeta:[2946, 1607, 1607, 1339]
   },  'Parque': {
     meta:45000, tm:[106], orc:161,
-    s_real:[19136, 7017, 9616], s_meta:[17679, 9643, 9643, 8036],
+    s_real:[19136, 7017, 7622, 5869], s_meta:[17679, 9643, 9643, 8036],
     hist_s1:[12552, 12552, 10795, 20080, 14303, 6822], hist_s2:[8687, 8787, 6226, 12985, 9319, 12429],
     hist_s3:[10531, 4147, 10007, 7151, 10927, 9747], hist_s4:[7049, 6257, 7626, 4449, 14574, 9454],
     prodMetaMes:33000, servMetaMes:12000,
-    prodSReal:[16991, 5102, 8326], prodSMeta:[12964, 7071, 7071, 5893],
-    servSReal:[2145, 1915, 1290], servSMeta:[4714, 2571, 2571, 2143]
+    prodSReal:[16991, 5102, 6712, 3749], prodSMeta:[12964, 7071, 7071, 5893],
+    servSReal:[2145, 1915, 910, 2120], servSMeta:[4714, 2571, 2571, 2143]
   },  'Gravataí': {
-    meta:35000, tm:[58], orc:86,
-    s_real:[9356, 6324, 6343], s_meta:[13750, 7500, 7500, 6250],
+    meta:35000, tm:[59], orc:86,
+    s_real:[9436, 6324, 8318, 6774], s_meta:[13750, 7500, 7500, 6250],
     hist_s1:[7180, 7180, 7142, 18146, 14204, 11054], hist_s2:[5385, 6129, 8073, 11657, 9671, 9115],
     hist_s3:[6368, 3771, 7425, 10971, 5905, 5675], hist_s4:[5589, 8094, 10310, 5936, 8164, 7329],
     prodMetaMes:20000, servMetaMes:15000,
-    prodSReal:[5006, 3845, 3573], prodSMeta:[7857, 4286, 4286, 3571],
-    servSReal:[4350, 2479, 2770], servSMeta:[5893, 3214, 3214, 2679]
+    prodSReal:[5086, 3845, 5168, 1609], prodSMeta:[7857, 4286, 4286, 3571],
+    servSReal:[4350, 2479, 3150, 5165], servSMeta:[5893, 3214, 3214, 2679]
   },
 };
 
@@ -344,43 +344,19 @@ let curLoja = 'Esteio', curTab = 'home';
 
 Object.keys(LOJAS).forEach(function(n){
   var l = LOJAS[n];
-  var histSemanasLoja = [l.hist_s1||[], l.hist_s2||[], l.hist_s3||[], l.hist_s4||[]];
   l.fat_real = l.s_real.reduce(function(a,b){return a+(b||0);},0);
-  var diasRealizados = 0;
-  for(var di=0; di<SEM_ATUAL-1; di++){ diasRealizados += (DIAS_POR_SEMANA[di]||6); }
-  diasRealizados += SEMANA_ATUAL_PARCIAL ? DIAS_REALIZADOS_SEM_ATUAL : (DIAS_POR_SEMANA[SEM_ATUAL-1]||6);
-  var ritmoDiario = diasRealizados > 0 ? l.fat_real / diasRealizados : 0;
-  l.proj = []; l.fat_proj = 0;
-  for(var w=0; w<4; w++){
-    if(w < SEM_ATUAL){
-      l.proj[w] = l.s_real[w] || 0;
-    } else {
-      var h = histSemanasLoja[w];
-      var avgSem = h.length ? h.reduce(function(a,b){return a+b;},0)/h.length : 0;
-      var avgDia = avgSem / (DIAS_POR_SEMANA[w]||5);
-      var diasSem = DIAS_POR_SEMANA[w]||5;
-      var peso = avgSem > 0 ? 0.60 : 1.0;
-      var projDias = Math.round((ritmoDiario*peso + avgDia*(1-peso)) * diasSem);
-      l.proj[w] = projDias;
-      l.fat_proj += projDias;
-    }
-  }
-  l.proj_s2=l.proj[1]; l.proj_s3=l.proj[2]; l.proj_s4=l.proj[3];
-  l.fat_total=l.fat_real+l.fat_proj;
-  l.tm_atual=l.tm.reduce(function(a,b){return a+b;},0)/l.tm.length;
-  l.pct_meta=Math.round(l.fat_real/l.meta*100);
-  l.pct_proj=Math.round(l.fat_total/l.meta*100);
-  l.prodRealAcum=(l.prodSReal||[]).reduce(function(a,b){return a+b;},0);
-  l.servRealAcum=(l.servSReal||[]).reduce(function(a,b){return a+b;},0);
+  l.fat_proj = 0;
+  l.proj = l.s_real.slice();
+  l.fat_total = l.fat_real;
+  l.tm_atual = l.tm[0];
+  l.pct_meta = Math.round(l.fat_real/l.meta*100);
+  l.pct_proj = l.pct_meta;
+  l.prodRealAcum = (l.prodSReal||[]).reduce(function(a,b){return a+b;},0);
+  l.servRealAcum = (l.servSReal||[]).reduce(function(a,b){return a+b;},0);
 });
 
-GERAL.s.forEach(function(s,i){
-  if(!s.real){
-    s.fat=NOMES.reduce(function(a,n){return a+((LOJAS[n].proj||[])[i]||0);},0);
-  }
-});
-GERAL.fat_proj=NOMES.reduce(function(a,n){return a+LOJAS[n].fat_proj;},0);
-GERAL.fat_total_proj=GERAL.fat_real+GERAL.fat_proj;
+GERAL.fat_proj = 0;
+GERAL.fat_total_proj = GERAL.fat_real;
 
 const REAL_MESES = [
   {m:'Janeiro',  fat:166737, meta:205000, fechado:true},
@@ -389,7 +365,22 @@ const REAL_MESES = [
   {m:'Abril',    fat:220383, meta:210000, fechado:true},
   {m:'Maio',     fat:251613, meta:210000, fechado:true},
   {m:'Junho',    fat:223889, meta:210000, fechado:true},
-  {m:'Julho',    fat:0,      meta:210000, fechado:false}
+  {m:'Julho',    fat:225904, meta:210000, fechado:true}
+];
+
+const REAL_MESES_2025 = [
+  {m:'Janeiro',  fat:192792},
+  {m:'Fevereiro',fat:178970},
+  {m:'Marco',    fat:177730},
+  {m:'Abril',    fat:181877},
+  {m:'Maio',     fat:212664},
+  {m:'Junho',    fat:175333},
+  {m:'Julho',    fat:175576},
+  {m:'Agosto',   fat:184101},
+  {m:'Setembro', fat:174849},
+  {m:'Outubro',  fat:186900},
+  {m:'Novembro', fat:186906},
+  {m:'Dezembro', fat:245044}
 ];
 
 const MES_ATUAL_PROJ_TOTAL = GERAL.fat_total_proj;
@@ -548,16 +539,20 @@ function buildMetasMensais(faturamentoAcumulado){
       + '<div style="font-size:13px;color:#ccc;margin-bottom:8px">'+fr(metaNivel)+'</div>'
       + (jaBatida
           ? '<div style="font-size:15px;font-weight:bold;color:#2ecc71">🎯 Meta batida</div><div style="font-size:10px;color:#5dca6a;margin-top:2px">+'+fr(faturamentoAcumulado-metaNivel)+' acima</div>'
-          : '<div style="font-size:9px;color:#666;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px">Falta no total</div>'
-            + '<div style="font-size:17px;font-weight:bold;color:'+corNivel+'">'+fr(falta)+'</div>'
-            + '<div style="font-size:9px;color:#555;margin-top:6px;border-top:1px solid '+bdNivel+';padding-top:6px">Por dia útil restante (÷ '+diasRestantes+')</div>'
-            + '<div style="font-size:14px;font-weight:bold;color:'+corNivel+';margin-top:2px">'+fr(porDia)+'/dia</div>')
+          : (diasRestantes <= 0
+              ? '<div style="font-size:15px;font-weight:bold;color:'+corNivel+'">Não atingida</div>'
+                + '<div style="font-size:11px;color:#555;margin-top:4px">Faltou '+fr(falta)+'</div>'
+              : '<div style="font-size:9px;color:#666;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px">Falta no total</div>'
+                + '<div style="font-size:17px;font-weight:bold;color:'+corNivel+'">'+fr(falta)+'</div>'
+                + '<div style="font-size:9px;color:#555;margin-top:6px;border-top:1px solid '+bdNivel+';padding-top:6px">Por dia útil restante (÷ '+diasRestantes+')</div>'
+                + '<div style="font-size:14px;font-weight:bold;color:'+corNivel+';margin-top:2px">'+fr(porDia)+'/dia</div>'
+            ))
       + '</div>';
   }).join('');
 
   return '<div class="box"><div class="bt">Metas Mensais — quanto falta para cada nível</div>'
-    + '<div style="display:flex;gap:10px;flex-wrap:wrap">'+blocos+'</div>'
-    + '<div style="font-size:10px;color:#444;margin-top:10px">Considera '+diasRestantes+' dia(s) útil(eis) restantes no mês (segunda a sábado, a partir de hoje).</div>'
+    + '<div style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin:-4px"><div style="display:flex;gap:10px;flex-wrap:nowrap;min-width:max-content;padding:4px">'+blocos+'</div></div>'
+    + (diasRestantes <= 0 ? '<div style="font-size:10px;color:#2ecc71;margin-top:10px">✓ Mês encerrado — resultado final.</div>' : '<div style="font-size:10px;color:#444;margin-top:10px">Considera '+diasRestantes+' dia(s) útil(eis) restantes no mês (segunda a sábado, a partir de hoje).</div>')
     + '</div>';
 }
 
@@ -672,7 +667,7 @@ function buildSemLoja(l){
   }
 
   // Montar HTML de cada semana
-  var html = '<div class="semrow" style="flex-wrap:wrap;gap:10px">';
+  var html = '<div style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin:-4px"><div class="semrow" style="flex-wrap:nowrap;gap:10px;min-width:max-content;padding:4px">';
 
   // Semanas reais (S1, S2)
   l.s_real.forEach(function(v,i){
@@ -906,7 +901,7 @@ mes(){
   </div>
 
   <div class="box"><div class="bt">Semanas — Real vs Projeção vs Meta</div>
-    <div class="semrow" style="flex-wrap:wrap;gap:10px">${semsHTML}</div>
+    <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin:-4px"><div class="semrow" style="flex-wrap:nowrap;gap:10px;min-width:max-content;padding:4px">${semsHTML}</div></div>
   </div>
 
   ${buildMetasMensais(fat_acum)}
@@ -1414,7 +1409,7 @@ V.anual = function(){
 
   <div class="box"><div class="bt">Projeção Mês a Mês — Cenário Otimista 2026</div>
   <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
-  <table style="min-width:680px"><thead><tr><th>Mês</th><th>Faturamento</th><th>Meta Mês</th><th>% Meta</th><th>Acumulado Ano</th><th>% Meta R$ 3M</th><th>Status</th></tr></thead>
+  <table style="min-width:780px"><thead><tr><th>Mês</th><th style="color:#E8232A">2025</th><th>Faturamento</th><th>Meta Mês</th><th>% Meta</th><th>Acumulado Ano</th><th>% Meta R$ 3M</th><th>Status</th></tr></thead>
   <tbody>
     ${REAL_MESES.map((d,i)=>{
       const fatMes = d.fechado ? d.fat : fat_jun_proj;
@@ -1423,6 +1418,7 @@ V.anual = function(){
       const isProj = !d.fechado;
       return`<tr style="${isProj?'background:#1a1200':''}">
         <td><strong>${d.m}</strong>${isProj?' <span style="font-size:9px;color:#f39c12">(proj.)</span>':''}</td>
+        <td style="color:#555;font-size:11px">${(REAL_MESES_2025&&REAL_MESES_2025[i])?fr(REAL_MESES_2025[i].fat):'—'}</td>
         <td style="color:${cMes};font-weight:bold">${fr(fatMes)}</td>
         <td class="d">${fr(d.meta)}</td>
         <td style="color:${cMes};font-weight:bold">${pct(fatMes,d.meta)}%</td>
@@ -1436,6 +1432,7 @@ V.anual = function(){
       const cMes = cor(d.o,d.meta);
       return`<tr style="background:#001a08">
         <td><strong>${d.m}</strong> <span style="font-size:9px;color:#2ecc71">🟢 otimista</span></td>
+        <td style="color:#555;font-size:11px">${(REAL_MESES_2025&&REAL_MESES_2025[7+i])?fr(REAL_MESES_2025[7+i].fat):'—'}</td>
         <td style="color:#2ecc71;font-weight:bold">${fr(d.o)}</td>
         <td class="d">${fr(d.meta)}</td>
         <td style="color:${cMes};font-weight:bold">${pct(d.o,d.meta)}%</td>
@@ -1448,6 +1445,7 @@ V.anual = function(){
   <tfoot>
     <tr style="background:#001a08;font-weight:bold;border-top:1px solid #1a6e3a">
       <td>TOTAL ANO 🟢</td>
+      <td style="color:#555;font-size:11px">R$ 2.272.742</td>
       <td colspan="3" style="color:#555;font-size:11px">Cenário Otimista</td>
       <td style="color:#2ecc71;font-size:16px">${fr(anoO)}</td>
       <td style="color:#2ecc71;font-size:16px">${pct(anoO,META_ANO)}%</td>
@@ -2076,44 +2074,44 @@ curTab = 'home';
 
 // ── RANKING VENDEDORES ──
 
-window.RKM=["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho (S1+S2+S3)"];
+window.RKM=["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho"];
 window.RKMA=["Jan","Fev","Mar","Abr","Mai","Jun","Jul"];
-window.RKP=[false,false,false,false,false,false,true];
+window.RKP=[false,false,false,false,false,false,false];
 
 window.RKD=[
   {loja:'Esteio',nome:'Caio Elias',ideal:22500,piso:16000,pm:12500,sm:10000,
-   prod:[16325, 9196, 9723, 17989, 27947, 22900, 12570],serv:[6615, 5755, 8220, 7680, 5715, 9595, 5455],
-   prodSem:[7908, 1554, 3108],servSem:[1930, 1870, 1655]},
+   prod:[16325, 9196, 9723, 17989, 27947, 22900, 13908],serv:[6615, 5755, 8220, 7680, 5715, 9595, 7185],
+   prodSem:[7908, 1554, 2662, 1784],servSem:[1930, 1870, 1655, 1730]},
   {loja:'Gravataí',nome:'Henrique Arruda',ideal:10000,piso:5000,pm:5500,sm:4500,
-   prod:[7173, 8200, 80, 2931, 495, 2575, 3898],serv:[12436, 5715, 3750, 2055, 2690, 700, 2965],
-   prodSem:[370, 0, 3528],servSem:[705, 0, 2260]},
+   prod:[7173, 8200, 80, 2931, 495, 2575, 3948],serv:[12436, 5715, 3750, 2055, 2690, 700, 5700],
+   prodSem:[370, 0, 1969, 1609],servSem:[705, 0, 1200, 3795]},
   {loja:'Avenida',nome:'Brenda Morais',ideal:25000,piso:16000,pm:7500,sm:7500,
-   prod:[8757, 2401, 6518, 7428, 25136, 19301, 25637],serv:[6839, 1920, 6250, 6540, 8849, 6359, 6883],
-   prodSem:[8870, 2833, 13934],servSem:[3899, 2699, 285]},
+   prod:[8757, 2401, 6518, 7428, 25136, 19301, 32173],serv:[6839, 1920, 6250, 6540, 8849, 6359, 7523],
+   prodSem:[8870, 2833, 13934, 6536],servSem:[3899, 2699, 285, 640]},
   {loja:'Esteio Shop.',nome:'Calebe Luike',ideal:17500,piso:16000,pm:15500,sm:2000,
    prod:[16614, 11965, 22461, 21232, 19556, 16189, 12486],serv:[6359, 4570, 5569, 5434, 2015, 5224, 3664],
-   prodSem:[7672, 4814, 0],servSem:[3044, 470, 150]},
+   prodSem:[7672, 4814, 0, 0],servSem:[3044, 470, 150, 0]},
   {loja:'Gravataí',nome:'Elieser Garcia',ideal:25000,piso:16000,pm:14500,sm:10500,
-   prod:[1119, 7818, 17182, 33498, 26128, 21624, 10202],serv:[1965, 8509, 12830, 8260, 6645, 8765, 6044],
-   prodSem:[4717, 3845, 1640],servSem:[3035, 2119, 890]},
+   prod:[1119, 7818, 17182, 33498, 26128, 21624, 11661],serv:[1965, 8509, 12830, 8260, 6645, 8765, 6924],
+   prodSem:[4717, 3845, 1640, 1459],servSem:[3035, 2119, 890, 880]},
   {loja:'Parque',nome:'Davi Vargas',ideal:22500,piso:16000,pm:16500,sm:6000,
    prod:[18504, 10794, 15075, 19302, 18712, 19628, 12087],serv:[8075, 4260, 7760, 4500, 6930, 3545, 1920],
-   prodSem:[9784, 2303, 0],servSem:[1160, 760, 0]},
+   prodSem:[9784, 2303, 0, 0],servSem:[1160, 760, 0, 0]},
   {loja:'Canoas',nome:'Gabrieli Rossano',ideal:17500,piso:16000,pm:11000,sm:6500,
-   prod:[13426, 12009, 16232, 4903, 24469, 23189, 13529],serv:[5265, 4000, 6225, 4695, 4542, 3010, 1975],
-   prodSem:[4608, 4455, 4466],servSem:[835, 440, 700]},
+   prod:[13426, 12009, 16232, 4903, 24469, 23189, 14564],serv:[5265, 4000, 6225, 4695, 4542, 3010, 3890],
+   prodSem:[4608, 4455, 4366, 1135],servSem:[835, 440, 700, 1915]},
   {loja:'Esteio Shop.',nome:'Filipe Boneto',ideal:17500,piso:16000,pm:15500,sm:2000,
-   prod:[7322, 11457, 28059, 18437, 13659, 9918, 8840],serv:[5865, 4285, 4614, 3395, 2160, 3665, 3340],
-   prodSem:[3908, 2179, 2753],servSem:[1545, 975, 820]},
+   prod:[7322, 11457, 28059, 18437, 13659, 9918, 15578],serv:[5865, 4285, 4614, 3395, 2160, 3665, 3740],
+   prodSem:[3908, 2179, 4753, 4738],servSem:[1545, 975, 820, 400]},
   {loja:'Parque',nome:'Gabriel Soares',ideal:22500,piso:16000,pm:16500,sm:6000,
-   prod:[14035, 13554, 10721, 17142, 21342, 13425, 16718],serv:[1950, 3135, 2595, 3720, 1964, 2704, 3050],
-   prodSem:[7207, 2799, 6712],servSem:[985, 1155, 910]},
+   prod:[14035, 13554, 10721, 17142, 21342, 13425, 18998],serv:[1950, 3135, 2595, 3720, 1964, 2704, 4290],
+   prodSem:[7207, 2799, 6702, 2290],servSem:[985, 1155, 910, 1240]},
   {loja:'Esteio',nome:'Levy Vargas',ideal:22500,piso:16000,pm:12500,sm:10000,
-   prod:[0, 0, 0, 0, 7745, 10664, 19286],serv:[0, 0, 0, 0, 1935, 2930, 2755],
-   prodSem:[4811, 10643, 3832],servSem:[995, 670, 1090]},
+   prod:[0, 0, 0, 0, 7745, 10664, 22250],serv:[0, 0, 0, 0, 1935, 2930, 3815],
+   prodSem:[4811, 10643, 3832, 2964],servSem:[995, 670, 1090, 1060]},
   {loja:'Canoas',nome:'Débora Pereira',ideal:17500,piso:16000,pm:11000,sm:6500,
-   prod:[0, 0, 0, 0, 6399, 13452, 9137],serv:[0, 0, 0, 0, 2065, 5190, 2440],
-   prodSem:[4974, 1753, 2410],servSem:[955, 1485, 0]}
+   prod:[0, 0, 0, 0, 6399, 13452, 10756],serv:[0, 0, 0, 0, 2065, 5190, 5880],
+   prodSem:[4974, 1753, 2410, 1619],servSem:[955, 1485, 550, 2890]}
 ];
 window.rkIdx=6;
 
