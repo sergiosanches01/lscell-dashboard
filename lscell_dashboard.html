@@ -1472,17 +1472,24 @@ V.anual = function(){
       </tr>`;
     }).join('')}
     ${PROJ_2SEM.map((d,i)=>{
-      const acum_ate = fat_1sem + PROJ_2SEM.slice(0,i+1).reduce((a,x)=>a+x.o,0);
-      const cMes = cor(d.o,d.meta);
-      return`<tr style="background:#001a08">
-        <td><strong>${d.m}</strong> <span style="font-size:9px;color:#2ecc71">🟢 otimista</span></td>
+      // Otimista = meta mensal; se o mês já fechou usa o real
+      const mesReal = REAL_MESES.find(m => m.m === d.m && m.fechado);
+      const fatMesO = mesReal ? mesReal.fat : d.meta;
+      const acum_ate = fat_1sem + PROJ_2SEM.slice(0,i+1).reduce((a,x)=>{
+        const mr = REAL_MESES.find(m=>m.m===x.m&&m.fechado);
+        return a + (mr ? mr.fat : x.meta);
+      },0);
+      const cMes = cor(fatMesO, d.meta);
+      const isReal = !!mesReal;
+      return`<tr style="background:${isReal?'':'#001a08'}">
+        <td><strong>${d.m}</strong> <span style="font-size:9px;color:${isReal?'#aaa':'#2ecc71'}">${isReal?'✓ real':'🟢 otimista'}</span></td>
         <td style="color:#555;font-size:11px">${(REAL_MESES_2025&&REAL_MESES_2025[7+i])?fr(REAL_MESES_2025[7+i].fat):'—'}</td>
-        <td style="color:#2ecc71;font-weight:bold">${fr(d.o)}</td>
+        <td style="color:${isReal?cor(fatMesO,d.meta):'#2ecc71'};font-weight:bold">${fr(fatMesO)}</td>
         <td class="d">${fr(d.meta)}</td>
-        <td style="color:${cMes};font-weight:bold">${pct(d.o,d.meta)}%</td>
+        <td style="color:${cMes};font-weight:bold">${pct(fatMesO,d.meta)}%</td>
         <td style="color:#2ecc71;font-weight:bold">${fr(acum_ate)}</td>
         <td style="color:${cor(acum_ate,META_ANO)};font-weight:bold">${pct(acum_ate,META_ANO)}%</td>
-        <td><span class="bdg bg">🟢 Proj.</span></td>
+        <td>${isReal?bdg(fatMesO,d.meta):'<span class="bdg bg">🟢 Meta</span>'}</td>
       </tr>`;
     }).join('')}
   </tbody>
