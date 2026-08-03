@@ -282,8 +282,8 @@ const GERAL = {
   fat_real: 225904,
   fat_proj: 0,
   meta: 210000,
-  tm_real: 0,
-  orc_real: 0,
+  tm_real: 246.02,
+  orc_real: 685,
 };
 GERAL.fat_total_proj = GERAL.fat_real + GERAL.fat_proj;
 
@@ -885,7 +885,7 @@ mes(){
   <div class="cards">
     <div class="card"><div class="lb">Acumulado Real</div><div class="vl" style="color:${c_acum}">${fr(fat_acum)}</div><div class="sb">${pct(fat_acum,META_MES_GERAL)}% da meta do mês</div></div>
     <div class="card"><div class="lb">Projeção Fechamento</div><div class="vl" style="color:${cor(fat_proj_total,META_MES_GERAL)}">${fr(fat_proj_total)}</div><div class="sb">${pct(fat_proj_total,META_MES_GERAL)}% da meta ${fr(META_MES_GERAL)}</div></div>
-    <div class="card"><div class="lb">Falta Realizar</div><div class="vl" style="color:#f39c12">${fr(META_MES_GERAL - fat_acum)}</div><div class="sb">para bater a meta</div></div>
+    <div class="card"><div class="lb">Falta Realizar</div><div class="vl" style="color:${(META_MES_GERAL-fat_acum)<=0?'#2ecc71':'#f39c12'}">${(META_MES_GERAL-fat_acum)<=0?'🎯 Meta batida!':fr(META_MES_GERAL-fat_acum)}</div><div class="sb">${(META_MES_GERAL-fat_acum)<=0?'+'+fr(fat_acum-META_MES_GERAL)+' acima':'para bater a meta'}</div></div>
     <div class="card"><div class="lb">TM Médio Acumulado</div><div class="vl" style="color:${GERAL.tm_real>100?'#2ecc71':'#f39c12'}">R$ ${GERAL.tm_real.toFixed(0)}</div><div class="sb">orçamentos: ${f(GERAL.orc_real)}</div></div>
     <div class="card"><div class="lb">Semanas Restantes</div><div class="vl" style="color:#7799ff">${4-SEM_ATUAL} de 4</div><div class="sb">${4-SEM_ATUAL>0 ? (4-SEM_ATUAL===1?'1 semana projetada':(4-SEM_ATUAL)+' semanas projetadas') : 'mês completo'}</div></div>
     <div class="card"><div class="lb">Ritmo Semanal Atual</div><div class="vl" style="color:#eee">${fr(fat_acum/SEM_ATUAL)}</div><div class="sb">média das semanas reais</div></div>
@@ -992,7 +992,7 @@ loja(){
   <div class="cards">
     <div class="card"><div class="lb">Acumulado no mês</div><div class="vl" style="color:${cor(l.fat_real,l.meta*0.5)}">${fr(l.fat_real)}</div><div class="sb">${pct(l.fat_real,l.meta)}% da meta</div></div>
     <div class="card"><div class="lb">Projeção fechamento</div><div class="vl" style="color:${cor(l.fat_total,l.meta)}">${fr(l.fat_total)}</div><div class="sb">${pct(l.fat_total,l.meta)}% da meta ${fr(l.meta)}</div></div>
-    <div class="card"><div class="lb">Falta para meta</div><div class="vl" style="color:#f39c12">${fr(Math.max(0,metaRestante))}</div><div class="sb">nas semanas restantes</div></div>
+    <div class="card"><div class="lb">Falta para meta</div><div class="vl" style="color:${metaRestante<=0?'#2ecc71':'#f39c12'}">${metaRestante<=0?'🎯 Meta batida!':fr(metaRestante)}</div><div class="sb">${metaRestante<=0?'+'+fr(-metaRestante)+' acima':'nas semanas restantes'}</div></div>
     <div class="card"><div class="lb">TM Médio atual</div><div class="vl" style="color:${l.tm_atual>100?'#2ecc71':'#f39c12'}">R$ ${l.tm_atual.toFixed(0)}</div><div class="sb">${l.tm.map((t,i)=>'S'+(i+1)+': R$ '+t.toFixed(0)).join(' | ')}</div></div>
     <div class="card"><div class="lb">vs histórico ${labelPosicao}</div><div class="vl" style="color:${vs_media>=0?'#2ecc71':'#e74c3c'}">${vs_media>=0?'+':''}${vs_media}%</div><div class="sb">média histórica: ${fr(mediaCum)}</div></div>
     <div class="card"><div class="lb">Status projeção</div><div class="vl" style="font-size:14px">${bdgProj(l.fat_total,l.meta)}</div><div class="sb">${pct(l.fat_total,l.meta)}% da meta projetado</div></div>
@@ -1090,71 +1090,84 @@ alertas(){
   }
 
   /* ============================================================
-     CAMADA 2 — MENSAL: ritmo do mês atual, comparado a meses fechados
+ /* ============================================================
+     CAMADA 2 — MENSAL: mês em curso ou fechado
   ============================================================ */
+  const mesFechado = SEM_ATUAL >= 4;
+  const pctMesReal = pct(GERAL.fat_real, META_MES_GERAL);
   const pctMesProj = pct(GERAL.fat_total_proj, META_MES_GERAL);
   const semanasRestantes = 4 - SEM_ATUAL;
-  const tmMedioMesesFechados = mesesFechados.length>0
-    ? mesesFechados.reduce((a,m)=>a+(m.fat/4),0)/mesesFechados.length / 1000 // proxy grosseiro, so para tendencia
-    : 0;
 
-  if(pctMesProj >= 100){
-    alertasMensal.push({tipo:'gr', msg:`<strong>📅 ${MES_ATUAL}:</strong> projeção de ${fr(GERAL.fat_total_proj)} (${pctMesProj}% da meta), com ${semanasRestantes} semana${semanasRestantes===1?'':'s'} restante${semanasRestantes===1?'':'s'}. Mês praticamente garantido — manter o ritmo.`});
-  } else if(pctMesProj >= 90){
-    alertasMensal.push({tipo:'ye', msg:`<strong>📅 ${MES_ATUAL}:</strong> projeção em ${pctMesProj}% da meta. Falta ${fr(META_MES_GERAL-GERAL.fat_total_proj)} para bater — totalmente recuperável em ${semanasRestantes===0?'nenhuma semana (mês já encerrado)':semanasRestantes+' semana(s) restante(s)'}.`});
+  if(mesFechado){
+    // Mês fechado — diagnóstico final neutro
+    const fatFinal = GERAL.fat_real;
+    const pctFinal = pct(fatFinal, META_MES_GERAL);
+    const diff = fatFinal - META_MES_GERAL;
+    if(pctFinal >= 100){
+      alertasMensal.push({tipo:'gr', msg:`<strong>📅 ${MES_ATUAL} encerrado:</strong> faturamento de ${fr(fatFinal)} — ${pctFinal}% da meta, com ${fr(diff)} acima do planejado.`});
+    } else if(pctFinal >= 90){
+      alertasMensal.push({tipo:'ye', msg:`<strong>📅 ${MES_ATUAL} encerrado:</strong> faturamento de ${fr(fatFinal)} — ${pctFinal}% da meta. Ficou ${fr(-diff)} abaixo do objetivo.`});
+    } else {
+      alertasMensal.push({tipo:'re', msg:`<strong>📅 ${MES_ATUAL} encerrado:</strong> faturamento de ${fr(fatFinal)} — ${pctFinal}% da meta. Resultado abaixo do esperado.`});
+    }
+    // Comparar com mês anterior
+    if(mesesFechados.length >= 2){
+      const ant = mesesFechados[mesesFechados.length-2];
+      const diffAnt = fatFinal - ant.fat;
+      if(diffAnt > 0){
+        alertasMensal.push({tipo:'gr', msg:`Em relação a ${ant.m} (${fr(ant.fat)}), o resultado de ${MES_ATUAL} ficou ${fr(diffAnt)} acima.`});
+      } else {
+        alertasMensal.push({tipo:'ye', msg:`Em relação a ${ant.m} (${fr(ant.fat)}), o resultado de ${MES_ATUAL} ficou ${fr(-diffAnt)} abaixo.`});
+      }
+    }
   } else {
-    alertasMensal.push({tipo:'re', msg:`<strong>📅 ${MES_ATUAL}:</strong> projeção em apenas ${pctMesProj}% da meta (${fr(GERAL.fat_total_proj)} de ${fr(META_MES_GERAL)}). Com ${semanasRestantes} semana(s) restante(s), recuperar isso exige reforço real, não só manter o ritmo atual.`});
-  }
-
-  // Comparar ticket médio do mês com a tendência dos últimos meses fechados (se houver dado suficiente)
-  if(mesesFechados.length >= 2){
-    const ultimoFechado = mesesFechados[mesesFechados.length-1];
-    const penultimoFechado = mesesFechados[mesesFechados.length-2];
-    if(ultimoFechado.fat > penultimoFechado.fat * 1.05){
-      alertasMensal.push({tipo:'gr', msg:`Faturamento vem em trajetória de alta: ${penultimoFechado.m} (${fr(penultimoFechado.fat)}) → ${ultimoFechado.m} (${fr(ultimoFechado.fat)}). Se ${MES_ATUAL} mantiver isso, o trimestre fecha forte.`});
-    } else if(ultimoFechado.fat < penultimoFechado.fat * 0.92){
-      alertasMensal.push({tipo:'ye', msg:`Atenção: ${ultimoFechado.m} caiu em relação a ${penultimoFechado.m} (${fr(penultimoFechado.fat)} → ${fr(ultimoFechado.fat)}). Vale entender se ${MES_ATUAL} está revertendo essa queda ou confirmando uma tendência.`});
+    if(pctMesProj >= 100){
+      alertasMensal.push({tipo:'gr', msg:`<strong>📅 ${MES_ATUAL}:</strong> projeção de ${fr(GERAL.fat_total_proj)} (${pctMesProj}% da meta). Mês encaminhado positivamente.`});
+    } else if(pctMesProj >= 90){
+      alertasMensal.push({tipo:'ye', msg:`<strong>📅 ${MES_ATUAL}:</strong> projeção em ${pctMesProj}% da meta. Falta ${fr(META_MES_GERAL - GERAL.fat_total_proj)} para bater.`});
+    } else {
+      alertasMensal.push({tipo:'re', msg:`<strong>📅 ${MES_ATUAL}:</strong> projeção em ${pctMesProj}% da meta (${fr(GERAL.fat_total_proj)}). Requer aceleração.`});
+    }
+    if(mesesFechados.length >= 2){
+      const ultimoFechado = mesesFechados[mesesFechados.length-1];
+      const penultimoFechado = mesesFechados[mesesFechados.length-2];
+      if(ultimoFechado.fat > penultimoFechado.fat * 1.05){
+        alertasMensal.push({tipo:'gr', msg:`Tendência positiva: ${penultimoFechado.m} (${fr(penultimoFechado.fat)}) → ${ultimoFechado.m} (${fr(ultimoFechado.fat)}).`});
+      } else if(ultimoFechado.fat < penultimoFechado.fat * 0.92){
+        alertasMensal.push({tipo:'ye', msg:`${ultimoFechado.m} ficou abaixo de ${penultimoFechado.m} (${fr(penultimoFechado.fat)} → ${fr(ultimoFechado.fat)}).`});
+      }
     }
   }
 
   /* ============================================================
-     CAMADA 3 — POR LOJA: meta do mês, TM, e padrão de risco
+     CAMADA 3 — POR LOJA: diagnóstico individual
   ============================================================ */
-  // Ordenar lojas por % de projeção (das piores para as melhores) para priorizar atenção
-  const lojasOrdenadas = [...NOMES].sort((a,b)=>pct(LOJAS[a].fat_total,LOJAS[a].meta)-pct(LOJAS[b].fat_total,LOJAS[b].meta));
+  const lojasOrdenadas = [...NOMES].sort((a,b)=>pct(LOJAS[a].fat_real,LOJAS[a].meta)-pct(LOJAS[b].fat_real,LOJAS[b].meta));
 
   lojasOrdenadas.forEach(n=>{
     const l=LOJAS[n];
-    const pctProj = pct(l.fat_total,l.meta);
-    const faltaReal = Math.max(0,l.meta-l.fat_real);
+    const pL = mesFechado ? pct(l.fat_real,l.meta) : pct(l.fat_total,l.meta);
+    const fatL = mesFechado ? l.fat_real : l.fat_total;
+    const diffL = fatL - l.meta;
 
-    if(pctProj < 70){
-      alertasLojas.push({tipo:'re', msg:`<strong>${n}</strong> é a maior preocupação agora: projeção de apenas ${pctProj}% da meta (${fr(l.fat_total)} de ${fr(l.meta)}). Faltam ${fr(faltaReal)} no real acumulado — vale entender se é problema de fluxo de clientes, equipe, ou alguma campanha que não engatou.`});
-    } else if(pctProj < 90){
-      alertasLojas.push({tipo:'ye', msg:`<strong>${n}</strong> projeta ${pctProj}% da meta. Recuperável nas semanas restantes, mas precisa de empurrão — não vai se resolver só com o ritmo atual.`});
-    } else if(pctProj < 100){
-      alertasLojas.push({tipo:'ye', msg:`<strong>${n}</strong> está quase lá: projeção de ${pctProj}% da meta (faltam só ${fr(l.meta-l.fat_total)}). Um pequeno esforço extra nas semanas restantes garante a meta.`});
+    if(mesFechado){
+      if(pL >= 100){
+        alertasLojas.push({tipo:'gr', msg:`<strong>${n}:</strong> encerrou com ${fr(l.fat_real)} — ${pL}% da meta, superando em ${fr(diffL)}.`});
+      } else if(pL >= 85){
+        alertasLojas.push({tipo:'ye', msg:`<strong>${n}:</strong> encerrou com ${fr(l.fat_real)} — ${pL}% da meta. Ficou ${fr(-diffL)} abaixo do objetivo.`});
+      } else {
+        alertasLojas.push({tipo:'re', msg:`<strong>${n}:</strong> encerrou com ${fr(l.fat_real)} — ${pL}% da meta (${fr(-diffL)} abaixo do objetivo).`});
+      }
     } else {
-      alertasLojas.push({tipo:'gr', msg:`<strong>${n}</strong> está tranquila: projeção de ${pctProj}% da meta (${fr(l.fat_total)}). ${pctProj>=115?'Vale entender o que está funcionando aqui para replicar nas demais lojas.':''}`});
-    }
-
-    // Produto vs Servico - identificar QUAL dos dois está puxando a loja pra baixo
-    const pctProd = pct(l.prodRealAcum, l.prodMetaMes);
-    const pctServ = pct(l.servRealAcum, l.servMetaMes);
-    if(pctProj < 95 && Math.abs(pctProd-pctServ) > 25){
-      const fraco = pctProd < pctServ ? 'Produto' : 'Serviço';
-      const fracoVal = pctProd < pctServ ? pctProd : pctServ;
-      alertasLojas.push({tipo:'ye', msg:`Em <strong>${n}</strong>, o gargalo é específico: ${fraco} está em ${fracoVal}% da meta enquanto o outro lado está bem melhor. Cobrar a equipe focado nesse ponto específico, não no faturamento total.`});
-    }
-
-    // TM em queda ao longo das semanas reais (sinal de perda de força de venda, nao so de volume)
-    if(l.tm.length >= 2){
-      const tmPrimeira = l.tm[0];
-      const tmUltima = l.tm[l.tm.length-1];
-      if(tmUltima < tmPrimeira * 0.85){
-        alertasLojas.push({tipo:'ye', msg:`Ticket médio de <strong>${n}</strong> caiu de R$ ${tmPrimeira.toFixed(0)} (S1) para R$ ${tmUltima.toFixed(0)} (última semana). Pode ser sazonalidade, mas vale checar se a equipe está empurrando produtos de menor valor.`});
-      } else if(tmUltima > tmPrimeira * 1.20){
-        alertasLojas.push({tipo:'gr', msg:`Ticket médio de <strong>${n}</strong> subiu de R$ ${tmPrimeira.toFixed(0)} para R$ ${tmUltima.toFixed(0)} ao longo do mês — sinal de que a equipe está vendendo melhor, não só mais.`});
+      const faltaReal = Math.max(0, l.meta-l.fat_real);
+      if(pL < 70){
+        alertasLojas.push({tipo:'re', msg:`<strong>${n}:</strong> projeção de ${pL}% da meta (${fr(fatL)}). Requer atenção prioritária.`});
+      } else if(pL < 90){
+        alertasLojas.push({tipo:'ye', msg:`<strong>${n}:</strong> projeta ${pL}% da meta. Falta ${fr(faltaReal)} para atingir o objetivo.`});
+      } else if(pL < 100){
+        alertasLojas.push({tipo:'ye', msg:`<strong>${n}:</strong> projeção de ${pL}% da meta. Faltam ${fr(faltaReal)} para fechar.`});
+      } else {
+        alertasLojas.push({tipo:'gr', msg:`<strong>${n}:</strong> projeção de ${pL}% da meta (${fr(fatL)}).`});
       }
     }
   });
@@ -1342,14 +1355,45 @@ V.anual = function(){
   const mesesFech     = REAL_MESES.filter(d=>d.fechado);
   const fat_fechados  = mesesFech.reduce((a,d)=>a+d.fat,0);
   const fat_acum_real = fat_fechados + GERAL.fat_real;
-  const fat_jun_proj  = MES_ATUAL_PROJ_TOTAL; // projecao de fechamento do mes atual
+  // Se o mês atual já fechou (SEM_ATUAL=4), não soma duas vezes
+  const fat_jun_proj  = SEM_ATUAL >= 4 ? 0 : MES_ATUAL_PROJ_TOTAL;
   const fat_1sem      = fat_fechados + fat_jun_proj; // fechados + mes atual projetado
   const ritmo_mensal  = fat_fechados / Math.max(1,mesesFech.length);
 
-  const tot2r = PROJ_2SEM.reduce((a,d)=>a+d.r,0);
-  const tot2o = PROJ_2SEM.reduce((a,d)=>a+d.o,0);
+  // REALISTA: média do crescimento % de Abril em diante vs 2025, aplicada nos meses restantes
+  const mesesComCrescimento = REAL_MESES.filter(m => m.fechado && m.m !== 'Janeiro' && m.m !== 'Fevereiro' && m.m !== 'Marco');
+  const crescimentos = mesesComCrescimento.map(m => {
+    const fat25 = (REAL_MESES_2025.find(x => x.m === m.m) || {fat:0}).fat;
+    return fat25 > 0 ? (m.fat / fat25) : 1;
+  });
+  const fatorRealista = crescimentos.length > 0
+    ? crescimentos.reduce((a,b)=>a+b,0) / crescimentos.length
+    : 1.21; // fallback +21%
+
+  // Meses futuros = PROJ_2SEM (Ago-Dez), exceto os que já fecharam em REAL_MESES
+  const mesesFuturos = PROJ_2SEM.filter(s => !REAL_MESES.find(m => m.m === s.m && m.fechado));
+
+  // REALISTA: aplica fator médio sobre 2025 em cada mês futuro
+  const proj2026r = mesesFuturos.map(s => {
+    const fat25 = (REAL_MESES_2025.find(x => x.m === s.m) || {fat:0}).fat;
+    return Math.round(fat25 * fatorRealista);
+  });
+
+  // OTIMISTA: usa meta mensal de cada mês futuro
+  const proj2026o = mesesFuturos.map(s => s.meta);
+
+  // Meses do 2º sem já fechados somam o real
+  const fatMesesFechados2sem = REAL_MESES.filter(m => m.fechado && PROJ_2SEM.find(s => s.m === m.m))
+    .reduce((a,m) => a + m.fat, 0);
+
+  const tot2r = proj2026r.reduce((a,b)=>a+b,0) + fatMesesFechados2sem;
+  const tot2o = proj2026o.reduce((a,b)=>a+b,0) + fatMesesFechados2sem;
   const anoR  = fat_1sem + tot2r;
   const anoO  = fat_1sem + tot2o;
+
+  // Labels para o card
+  const fatorPct = Math.round((fatorRealista-1)*100);
+  const nomesMesesFuturos = mesesFuturos.map(s=>s.m).join(', ');
 
   function barAno(real, proj, meta, corProj){
     const maxV = Math.max(real+proj, meta)*1.02;
@@ -1462,10 +1506,9 @@ V.anual = function(){
       <div style="font-size:26px;font-weight:bold;color:#f39c12;margin-bottom:4px">${fr(anoR)}</div>
       <div style="font-size:12px;color:#888;margin-bottom:10px">${pct(anoR,META_ANO)}% da meta · ${anoR>=META_ANO?'<span style="color:#2ecc71">META BATIDA 🎯</span>':'falta <b>'+fr(META_ANO-anoR)+'</b>'}</div>
       <div style="font-size:11px;color:#555;line-height:1.9;border-top:1px solid #333;padding-top:8px">
-        TM crescendo R$ 5/mês<br>
-        Orçamentos +3%/mês<br>
-        Serviços em R$ 52–58k<br>
-        Ago–Dez: ${fr(tot2r)}
+        Base: crescimento médio de +${fatorPct}% vs 2025<br>
+        (média de Abril a ${REAL_MESES.filter(m=>m.fechado).slice(-1)[0].m})<br>
+        Ago–Dez projetado: ${fr(tot2r)}
       </div>
     </div>
     <div style="border:1px solid #1a6e3a;border-radius:7px;padding:14px;min-width:0;overflow:hidden">
@@ -1473,10 +1516,9 @@ V.anual = function(){
       <div style="font-size:26px;font-weight:bold;color:#2ecc71;margin-bottom:4px">${fr(anoO)}</div>
       <div style="font-size:12px;color:#888;margin-bottom:10px">${pct(anoO,META_ANO)}% da meta · supera em <b style="color:#2ecc71">${fr(anoO-META_ANO)}</b></div>
       <div style="font-size:11px;color:#555;line-height:1.9;border-top:1px solid #333;padding-top:8px">
-        TM crescendo R$ 8/mês<br>
-        Orçamentos +5%/mês<br>
-        Serviços voltando a R$ 60k+<br>
-        Ago–Dez: ${fr(tot2o)}
+        Base: metas mensais estabelecidas<br>
+        (${nomesMesesFuturos})<br>
+        Ago–Dez projetado: ${fr(tot2o)}
       </div>
     </div>
   </div></div>`;
