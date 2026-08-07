@@ -295,7 +295,8 @@ const LOJAS = {
     hist_s3:[8093, 5165, 12109, 6037, 5913, 10013], hist_s4:[7686, 8282, 12032, 3904, 14788, 12262],
     prodMetaMes:25000, servMetaMes:20000,
     prodSReal:[12719, 12197, 6941, 4747], prodSMeta:[9821, 5357, 5357, 4464],
-    servSReal:[2925, 2540, 2745, 2790], servSMeta:[7857, 4286, 4286, 3571]
+    servSReal:[2925, 2540, 2745, 2790], servSMeta:[7857, 4286, 4286, 3571],
+    fat2025:[32491, 39284, 33147, 38118, 44593, 34250, 31719, 45454, 37629, 41218, 46211, 55123]
   },  'Esteio Shop.': {
     meta:35000, tm:[105], orc:110,
     s_real:[16169, 8438, 3723, 5138], s_meta:[13750, 7500, 7500, 6250],
@@ -303,7 +304,8 @@ const LOJAS = {
     hist_s3:[5009, 3949, 7177, 7681, 9768, 12928], hist_s4:[6802, 4396, 7144, 6178, 6770, 6360],
     prodMetaMes:31000, servMetaMes:4000,
     prodSReal:[11580, 6993, 2753, 4738], prodSMeta:[12179, 6643, 6643, 5536],
-    servSReal:[4589, 1445, 970, 400], servSMeta:[1571, 857, 857, 714]
+    servSReal:[4589, 1445, 970, 400], servSMeta:[1571, 857, 857, 714],
+    fat2025:[30715, 25724, 29990, 23927, 38002, 26488, 25549, 30020, 27225, 29370, 23435, 44958]
   },  'Canoas': {
     meta:35000, tm:[67], orc:144,
     s_real:[11372, 8133, 7576, 7559], s_meta:[13750, 7500, 7500, 6250],
@@ -311,7 +313,8 @@ const LOJAS = {
     hist_s3:[5679, 3994, 9190, 8823, 10778, 11442], hist_s4:[12346, 9012, 10437, 10840, 11767, 11887],
     prodMetaMes:22000, servMetaMes:13000,
     prodSReal:[9582, 6208, 6876, 2754], prodSMeta:[8643, 4714, 4714, 3929],
-    servSReal:[1790, 1925, 700, 4805], servSMeta:[5107, 2786, 2786, 2321]
+    servSReal:[1790, 1925, 700, 4805], servSMeta:[5107, 2786, 2786, 2321],
+    fat2025:[36937, 27521, 30928, 31359, 38043, 33162, 31242, 29623, 29928, 35887, 32598, 43698]
   },  'Avenida': {
     meta:15000, tm:[150], orc:59,
     s_real:[12769, 5532, 14219, 7176], s_meta:[5893, 3214, 3214, 2679],
@@ -319,7 +322,8 @@ const LOJAS = {
     hist_s3:[3013, 3872, 3404, 2069, 3647, 9156], hist_s4:[3293, 3660, 2159, 2895, 8512, 6560],
     prodMetaMes:7500, servMetaMes:7500,
     prodSReal:[8870, 2833, 13934, 6536], prodSMeta:[2946, 1607, 1607, 1339],
-    servSReal:[3899, 2699, 285, 640], servSMeta:[2946, 1607, 1607, 1339]
+    servSReal:[3899, 2699, 285, 640], servSMeta:[2946, 1607, 1607, 1339],
+    fat2025:[17271, 11977, 17021, 15576, 19922, 14944, 17723, 14688, 15724, 17609, 15065, 18887]
   },  'Parque': {
     meta:45000, tm:[106], orc:161,
     s_real:[19136, 7017, 7622, 5869], s_meta:[17679, 9643, 9643, 8036],
@@ -327,7 +331,8 @@ const LOJAS = {
     hist_s3:[10531, 4147, 10007, 7151, 10927, 9747], hist_s4:[7049, 6257, 7626, 4449, 14574, 9454],
     prodMetaMes:33000, servMetaMes:12000,
     prodSReal:[16991, 5102, 6712, 3749], prodSMeta:[12964, 7071, 7071, 5893],
-    servSReal:[2145, 1915, 910, 2120], servSMeta:[4714, 2571, 2571, 2143]
+    servSReal:[2145, 1915, 910, 2120], servSMeta:[4714, 2571, 2571, 2143],
+    fat2025:[48392, 44975, 40134, 41025, 47019, 37364, 41215, 39820, 40057, 37033, 42603, 51598]
   },  'Gravataí': {
     meta:35000, tm:[59], orc:86,
     s_real:[9436, 6324, 8318, 6774], s_meta:[13750, 7500, 7500, 6250],
@@ -335,7 +340,8 @@ const LOJAS = {
     hist_s3:[6368, 3771, 7425, 10971, 5905, 5675], hist_s4:[5589, 8094, 10310, 5936, 8164, 7329],
     prodMetaMes:20000, servMetaMes:15000,
     prodSReal:[5086, 3845, 5168, 1609], prodSMeta:[7857, 4286, 4286, 3571],
-    servSReal:[4350, 2479, 3150, 5165], servSMeta:[5893, 3214, 3214, 2679]
+    servSReal:[4350, 2479, 3150, 5165], servSMeta:[5893, 3214, 3214, 2679],
+    fat2025:[26986, 29489, 26509, 31871, 25085, 29126, 28128, 24497, 24287, 25782, 26994, 30779]
   },
 };
 
@@ -983,6 +989,18 @@ loja(){
   };
   semanas_hist.push(hist_mes_atual);
 
+  // Adicionar meses futuros (após o mês atual) para mostrar referência 2025
+  const mesesFuturosLabels = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho',
+    'Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+  const idxMesAtual = mesesFuturosLabels.indexOf(MES_ATUAL);
+  for(var mf = idxMesAtual+1; mf < 12; mf++){
+    const nomeMf = mesesFuturosLabels[mf];
+    const fat25mf = (l.fat2025 && l.fat2025[mf]) ? l.fat2025[mf] : 0;
+    if(fat25mf > 0){
+      semanas_hist.push({m: nomeMf + ' (ref.)', s1:null, s2:null, s3:null, s4:null, fat2025ref: fat25mf});
+    }
+  }
+
   return`
   <div style="margin-bottom:10px">
     <div style="font-size:10px;color:#666;margin-bottom:6px;text-transform:uppercase;letter-spacing:.8px">Selecione a loja:</div>
@@ -1017,22 +1035,39 @@ loja(){
 
   <div class="box"><div class="bt">Histórico Mensal — ${curLoja} (valores reais por semana)</div>
   <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
-  <table style="min-width:480px"><thead><tr><th>Mês</th><th>S1</th><th>S2</th><th>S3</th><th>S4</th><th>Total</th></tr></thead>
+  <table style="min-width:560px"><thead><tr><th>Mês</th><th>S1</th><th>S2</th><th>S3</th><th>S4</th><th>Total</th><th style="color:#E8232A">2025</th></tr></thead>
   <tbody>${semanas_hist.map(h=>{
     const isCurrent = h.m && h.m.includes('(atual)');
+    const isFuture = h.m && h.m.includes('(ref.)');
     const s2v = h.s2 !== null ? h.s2 : 0;
     const s3v = h.s3 !== null ? h.s3 : 0;
     const s4v = h.s4 !== null ? h.s4 : 0;
     const total = h.s1 + s2v + s3v + s4v;
-    const rowStyle = isCurrent ? 'background:#1a0800;border-left:2px solid #E8232A' : '';
+    const rowStyle = isCurrent ? 'background:#1a0800;border-left:2px solid #E8232A' : (isFuture ? 'background:#0a0a0a;border-left:2px solid #333;opacity:0.7' : '');
     const col = isCurrent ? '#fff' : '#aaa';
+    const mesesNomes2025 = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+    const nomeMes = h.m.replace(' (atual)','');
+    const idx2025 = mesesNomes2025.indexOf(nomeMes);
+    const fat2025mes = (l.fat2025 && idx2025 >= 0) ? (l.fat2025[idx2025] || 0) : 0;
+    const varVs2025 = fat2025mes > 0 && !isFuture ? Math.round((total/fat2025mes-1)*100) : null;
+    const fat2025show = isFuture ? (h.fat2025ref||0) : fat2025mes;
+    if(isFuture){
+      return`<tr style="${rowStyle}">
+        <td style="color:#444"><em>${h.m.replace(' (ref.)','')}</em></td>
+        <td style="color:#333">—</td><td style="color:#333">—</td>
+        <td style="color:#333">—</td><td style="color:#333">—</td>
+        <td style="color:#333">—</td>
+        <td style="color:#555;font-size:11px">${fat2025show > 0 ? fr(fat2025show) : '—'}</td>
+      </tr>`;
+    }
     return`<tr style="${rowStyle}">
       <td><strong style="${isCurrent?'color:#E8232A':''}">${h.m}</strong></td>
-      <td style="color:${col}">${fr(h.s1)}</td>
+      <td style="color:${col}">${h.s1 !== null ? fr(h.s1) : '<span style="color:#333">—</span>'}</td>
       <td style="color:${col}">${h.s2 !== null ? fr(h.s2) : '<span style="color:#333">—</span>'}</td>
       <td style="color:${isCurrent?'#666':'#eee'}">${h.s3 !== null ? fr(h.s3) : '<span style="color:#333">—</span>'}</td>
       <td style="color:${isCurrent?'#666':'#eee'}">${h.s4 !== null ? fr(h.s4) : '<span style="color:#333">—</span>'}</td>
       <td style="color:${isCurrent?'#E8232A':'#fff'};font-weight:bold">${fr(total)}</td>
+      <td style="color:#555;font-size:11px">${fat2025mes > 0 ? fr(fat2025mes)+(varVs2025!==null?'<br><span style="font-size:9px;color:'+(varVs2025>=0?'#2ecc71':'#E8232A')+'">'+(varVs2025>=0?'+':'')+varVs2025+'%</span>':'') : '—'}</td>
     </tr>`;}).join('')}</tbody></table>
   </div>
   <div style="font-size:10px;color:#444;margin-top:6px">Todos os valores são reais — Jan a Jun fechados.</div>
@@ -1462,7 +1497,11 @@ V.anual = function(){
       const isProj = !d.fechado;
       return`<tr style="${isProj?'background:#1a1200':''}">
         <td><strong>${d.m}</strong>${isProj?' <span style="font-size:9px;color:#f39c12">(proj.)</span>':''}</td>
-        <td style="color:#555;font-size:11px">${(REAL_MESES_2025&&REAL_MESES_2025[i])?fr(REAL_MESES_2025[i].fat):'—'}</td>
+        ${(()=>{
+          const fat25a = (REAL_MESES_2025&&REAL_MESES_2025[i]) ? REAL_MESES_2025[i].fat : 0;
+          const var25a = (fat25a > 0 && d.fechado) ? Math.round((fatMes/fat25a-1)*100) : null;
+          return `<td style="color:#555;font-size:11px">${fat25a > 0 ? fr(fat25a)+(var25a!==null?'<br><span style="font-size:9px;color:'+(var25a>=0?'#2ecc71':'#E8232A')+'">'+(var25a>=0?'+':'')+var25a+'%</span>':'') : '—'}</td>`;
+        })()}
         <td style="color:${cMes};font-weight:bold">${fr(fatMes)}</td>
         <td class="d">${fr(d.meta)}</td>
         <td style="color:${cMes};font-weight:bold">${pct(fatMes,d.meta)}%</td>
@@ -1515,7 +1554,8 @@ V.anual = function(){
       <div style="font-size:11px;color:#555;line-height:1.9;border-top:1px solid #333;padding-top:8px">
         Base: crescimento médio de +${fatorPct}% vs 2025<br>
         (média de Abril a ${REAL_MESES.filter(m=>m.fechado).slice(-1)[0].m})<br>
-        Ago–Dez projetado: ${fr(tot2r)}
+        Ago–Dez projetado: ${fr(tot2r)}<br>
+        <span style="color:#f39c12">Projeção ano: +${Math.round((anoR/2272742-1)*100)}% vs 2025 (${fr(2272742)})</span>
       </div>
     </div>
     <div style="border:1px solid #1a6e3a;border-radius:7px;padding:14px;min-width:0;overflow:hidden">
@@ -1525,7 +1565,8 @@ V.anual = function(){
       <div style="font-size:11px;color:#555;line-height:1.9;border-top:1px solid #333;padding-top:8px">
         Base: metas mensais estabelecidas<br>
         (${nomesMesesFuturos})<br>
-        Ago–Dez projetado: ${fr(tot2o)}
+        Ago–Dez projetado: ${fr(tot2o)}<br>
+        <span style="color:#2ecc71">Projeção ano: +${Math.round((anoO/2272742-1)*100)}% vs 2025 (${fr(2272742)})</span>
       </div>
     </div>
   </div></div>`;
