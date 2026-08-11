@@ -463,15 +463,18 @@ function semBar(fat_real, fat_proj, meta){
   var estiloBar = estiloGradienteBarra(fat_real, meta);
   var cTotal = cor(total, meta);
 
-  // Marcacoes de checkpoint: acumulado esperado ao fim de S1, S2 e S3 (1/4, 2/4, 3/4 da meta)
+  // Marcacoes de checkpoint proporcionais aos dias de cada semana
+  var totalDiasSem = DIAS_POR_SEMANA.reduce(function(a,b){return a+b;},0);
   var marcas = '';
-  [1,2,3].forEach(function(s){
-    var metaAcumS = meta * (s/4);
+  var diasAcumSem = 0;
+  for(var s=0; s<3; s++){
+    diasAcumSem += DIAS_POR_SEMANA[s];
+    var metaAcumS = meta * (diasAcumSem / totalDiasSem);
     var pS = Math.min(metaAcumS/maxV*100,100);
     var atingiu = fat_real >= metaAcumS;
     marcas += '<div style="position:absolute;top:-3px;left:'+pS+'%;width:1px;height:28px;background:'+(atingiu?'#5dca6a':'rgba(255,255,255,.45)')+'"></div>'
-            + '<div style="position:absolute;top:-13px;left:'+pS+'%;transform:translateX(-50%);font-size:8px;color:'+(atingiu?'#5dca6a':'#999')+'">S'+s+'</div>';
-  });
+            + '<div style="position:absolute;top:-13px;left:'+pS+'%;transform:translateX(-50%);font-size:8px;color:'+(atingiu?'#5dca6a':'#999')+'">S'+(s+1)+'</div>';
+  }
 
   return '<div class="prog-wrap" style="overflow:visible;margin-top:14px">'
     +'<div class="prog-real" style="width:'+pr+'%;'+estiloBar+'">'+(fat_real>0?fr(fat_real):'')+'</div>'
@@ -509,15 +512,18 @@ function miniBarProdServ(lbl, real, meta){
   var estiloBar = estiloGradienteBarra(real, safemeta);
   var corLbl = bateu ? '#5dca6a' : '#888';
 
-  // Marcas das 4 semanas no container pai — sempre visíveis mesmo quando real > meta
+  // Marcas proporcionais aos dias de cada semana (não divisão igual em 4)
+  var totalDias = DIAS_POR_SEMANA.reduce(function(a,b){return a+b;},0);
   var marcas = '';
-  [1,2,3].forEach(function(s){
-    var metaAcumS = safemeta * (s/4);
+  var diasAcum = 0;
+  for(var s=0; s<3; s++){
+    diasAcum += DIAS_POR_SEMANA[s];
+    var metaAcumS = safemeta * (diasAcum / totalDias);
     var pS = Math.min(metaAcumS/maxV*100, 100);
     var atingiu = real >= metaAcumS;
     var cor = atingiu ? 'rgba(93,202,106,.9)' : 'rgba(255,255,255,.5)';
     marcas += '<div style="position:absolute;top:-2px;left:'+pS+'%;width:2px;height:calc(100% + 4px);background:'+cor+';z-index:5"></div>';
-  });
+  }
 
   // Linha da meta total
   var linhaMeta = '<div style="position:absolute;top:-4px;left:'+pm+'%;width:2px;height:calc(100% + 8px);background:#fff;opacity:.9;z-index:10;border-radius:1px"></div>';
