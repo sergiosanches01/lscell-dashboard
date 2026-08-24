@@ -252,7 +252,7 @@ tr:hover td{background:#161616}
 <body>
 <div id="app-header">
 <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:4px"><img id="logo-header-img" alt="LSCELL" style="height:32px;width:auto"><h1 style="margin:0">LSCELL — DASHBOARD SEMANAL</h1></div>
-<p class="sub">Gerado em: Segunda, 11 de Agosto de 2026</p>
+<p class="sub">Gerado em: Segunda, 24 de Agosto de 2026</p>
 <div class="semana-badge"><span class="sbadge" id="semana-badge-txt">📅 ...</span></div>
 <div id="main-nav-container"></div>
 <div id="tabs"></div>
@@ -265,83 +265,83 @@ const LOGO_B64 = 'iVBORw0KGgoAAAANSUhEUgAAAGsAAABuCAYAAAAgcu2/AAAKMWlDQ1BJQ0MgUH
 
 /* ===== DADOS_START ===== */
 const MES_ATUAL = 'Agosto';
-const SEM_ATUAL = 2;
+const SEM_ATUAL = 3;
 const META_MES_GERAL = 210000;
 const DIAS_POR_SEMANA = [7,6,6,7]; // S1=1-8ago, S2=10-15, S3=17-22(feriado 22/ago Esteio=5dias), S4=24-31(+31/seg)
 const DIAS_HIST_S = [7,6,6,4]; // dias históricos base do S4 (antes eram 4 dias)
 const SEMANA_ATUAL_PARCIAL = false;
-const DIAS_REALIZADOS_SEM_ATUAL = 7;
+const DIAS_REALIZADOS_SEM_ATUAL = 6;
 const MESES_FECHADOS_LABELS = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho'];
 
 const GERAL = {
   s: [
     {n:'S1', fat:71679, meta:56538, real:true},
     {n:'S2', fat:40543, meta:48462, real:true},
-    {n:'S3', fat:0, meta:48462, real:false},
+    {n:'S3', fat:45242, meta:48462, real:true},
     {n:'S4', fat:0, meta:56538, real:false},
   ],
-  fat_real: 112224,
+  fat_real: 157464,
   fat_proj: 0,
   meta: 210000,
-  tm_real: 90,
-  orc_real: 884,
+  tm_real: 97,
+  orc_real: 1172,
 };
 GERAL.fat_total_proj = GERAL.fat_real + GERAL.fat_proj;
 
 const LOJAS = {
   'Esteio': {
-    meta:45000, tm:[134, 100], orc:148, feriadoS3:1,
-    s_real:[12030, 9649], s_meta:[12115, 10385, 10385, 12115],
+    meta:45000, tm:[134, 100, 114], orc:205, feriadoS3:1,
+    s_real:[12030, 9649, 7718], s_meta:[12115, 10385, 10385, 12115],
     hist_s1:[7746, 7746, 13737, 25276, 15036, 11208, 15644], hist_s2:[9317, 8966, 8967, 10425, 11971, 12677, 14737],
     hist_s3:[8093, 5165, 12109, 6037, 5913, 10013, 9686], hist_s4:[7686, 8282, 12032, 3904, 14788, 12262, 7537],
     prodMetaMes:25000, servMetaMes:20000,
-    prodSReal:[10700, 6819], prodSMeta:[6731, 5769, 5769, 6731],
-    servSReal:[1330, 2830], servSMeta:[5385, 4615, 4615, 5385],
+    prodSReal:[10700, 6819, 4928], prodSMeta:[6731, 5769, 5769, 6731],
+    servSReal:[1330, 2830, 2790], servSMeta:[5385, 4615, 4615, 5385],
     fat2025:[32491, 39284, 33147, 38118, 44593, 34250, 31719, 45454, 37629, 41218, 46211, 55123]
   },  'Esteio Shop.': {
-    meta:35000, tm:[132, 108], orc:135, feriadoS3:1,
-    s_real:[13506, 8656], s_meta:[9423, 8077, 8077, 9423],
+    meta:35000, tm:[132, 108, 125], orc:192, feriadoS3:1,
+    s_real:[13506, 8656, 9518], s_meta:[9423, 8077, 8077, 9423],
     hist_s1:[4335, 4335, 7189, 10900, 11336, 9591, 16169], hist_s2:[4084, 5119, 7320, 5021, 6114, 6809, 8438],
     hist_s3:[5009, 3949, 7177, 7681, 9768, 12928, 3723], hist_s4:[6802, 4396, 7144, 6178, 6770, 6360, 5138],
     prodMetaMes:31000, servMetaMes:4000,
-    prodSReal:[9621, 6691], prodSMeta:[8346, 7154, 7154, 8346],
-    servSReal:[3885, 1965], servSMeta:[1077, 923, 923, 1077],
+    prodSReal:[9621, 6691, 7100], prodSMeta:[8346, 7154, 7154, 8346],
+    servSReal:[3885, 1965, 2419], servSMeta:[1077, 923, 923, 1077],
     fat2025:[30715, 25724, 29990, 23927, 38002, 26488, 25549, 30020, 27225, 29370, 23435, 44958]
   },  'Canoas': {
-    meta:35000, tm:[96, 71], orc:179,
-    s_real:[13651, 6559], s_meta:[9423, 8077, 8077, 9423],
+    meta:35000, tm:[96, 71, 75], orc:260,
+    s_real:[13651, 6559, 7663], s_meta:[9423, 8077, 8077, 9423],
     hist_s1:[10278, 10278, 7786, 13771, 18700, 9047, 11372], hist_s2:[8088, 3914, 8922, 6186, 7921, 11965, 8133],
     hist_s3:[5679, 3994, 9190, 8823, 10778, 11442, 7576], hist_s4:[12346, 9012, 10437, 10840, 11767, 11887, 7559],
     prodMetaMes:22000, servMetaMes:13000,
-    prodSReal:[10316, 5034], prodSMeta:[5923, 5077, 5077, 5923],
-    servSReal:[3335, 1525], servSMeta:[3500, 3000, 3000, 3500],
+    prodSReal:[10316, 5034, 6078], prodSMeta:[5923, 5077, 5077, 5923],
+    servSReal:[3335, 1525, 1585], servSMeta:[3500, 3000, 3000, 3500],
     fat2025:[36937, 27521, 30928, 31359, 38043, 33162, 31242, 29623, 29928, 35887, 32598, 43698]
   },  'Avenida': {
-    meta:15000, tm:[167, 44], orc:70,
-    s_real:[9610, 2206], s_meta:[4038, 3462, 3462, 4038],
+    meta:15000, tm:[167, 44, 167], orc:99,
+    s_real:[9610, 2206, 7027], s_meta:[4038, 3462, 3462, 4038],
     hist_s1:[4441, 4201, 4252, 5301, 11281, 5058, 12769], hist_s2:[3186, 1720, 1754, 3704, 10246, 5301, 5532],
     hist_s3:[3013, 3872, 3404, 2069, 3647, 9156, 14219], hist_s4:[3293, 3660, 2159, 2895, 8512, 6560, 7176],
     prodMetaMes:7500, servMetaMes:7500,
-    prodSReal:[7690, 1056], prodSMeta:[2019, 1731, 1731, 2019],
-    servSReal:[1920, 1150], servSMeta:[2019, 1731, 1731, 2019],
+    prodSReal:[7690, 1056, 4840], prodSMeta:[2019, 1731, 1731, 2019],
+    servSReal:[1920, 1150, 2187], servSMeta:[2019, 1731, 1731, 2019],
     fat2025:[17271, 11977, 17021, 15576, 19922, 14944, 17723, 14688, 15724, 17609, 15065, 18887]
   },  'Parque': {
-    meta:45000, tm:[71, 44], orc:237,
-    s_real:[12637, 4985], s_meta:[12115, 10385, 10385, 12115],
+    meta:45000, tm:[71, 44, 67], orc:330,
+    s_real:[12637, 4985, 7188], s_meta:[12115, 10385, 10385, 12115],
     hist_s1:[12552, 12552, 10795, 20080, 14303, 6822, 19136], hist_s2:[8687, 8787, 6226, 12985, 9319, 12429, 7017],
     hist_s3:[10531, 4147, 10007, 7151, 10927, 9747, 7622], hist_s4:[7049, 6257, 7626, 4449, 14574, 9454, 5869],
     prodMetaMes:33000, servMetaMes:12000,
-    prodSReal:[10427, 4000], prodSMeta:[8885, 7615, 7615, 8885],
-    servSReal:[2210, 985], servSMeta:[3231, 2769, 2769, 3231],
+    prodSReal:[10427, 4000, 6098], prodSMeta:[8885, 7615, 7615, 8885],
+    servSReal:[2210, 985, 1090], servSMeta:[3231, 2769, 2769, 3231],
     fat2025:[48392, 44975, 40134, 41025, 47019, 37364, 41215, 39820, 40057, 37033, 42603, 51598]
   },  'Gravataí': {
-    meta:35000, tm:[61, 72], orc:115,
-    s_real:[10245, 8489], s_meta:[9423, 8077, 8077, 9423],
+    meta:35000, tm:[61, 72, 105], orc:165,
+    s_real:[10245, 8489, 6128], s_meta:[9423, 8077, 8077, 9423],
     hist_s1:[7180, 7180, 7142, 18146, 14204, 11054, 9436], hist_s2:[5385, 6129, 8073, 11657, 9671, 9115, 6324],
     hist_s3:[6368, 3771, 7425, 10971, 5905, 5675, 8318], hist_s4:[5589, 8094, 10310, 5936, 8164, 7329, 6774],
     prodMetaMes:20000, servMetaMes:15000,
-    prodSReal:[4201, 3289], prodSMeta:[5385, 4615, 4615, 5385],
-    servSReal:[6044, 5200], servSMeta:[4038, 3462, 3462, 4038],
+    prodSReal:[4201, 3289, 5298], prodSMeta:[5385, 4615, 4615, 5385],
+    servSReal:[6044, 5200, 830], servSMeta:[4038, 3462, 3462, 4038],
     fat2025:[26986, 29489, 26509, 31871, 25085, 29126, 28128, 24497, 24287, 25782, 26994, 30779]
   },
 };
@@ -2230,44 +2230,44 @@ curTab = 'home';
 
 // ── RANKING VENDEDORES ──
 
-window.RKM=["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto (S2)"];
+window.RKM=["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto (S3)"];
 window.RKMA=["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago"];
 window.RKP=[false,false,false,false,false,false,false,true];
 
 window.RKD=[
   {loja:'Esteio',nome:'Caio Elias',ideal:22500,piso:16000,pm:12500,sm:10000,
-   prod:[16325, 9196, 9723, 17989, 27947, 22900, 14354, 14287],serv:[6615, 5755, 8220, 7680, 5715, 9595, 7185, 3075],
-   prodSem:[9631.56,4655.4],servSem:[1070.0,2005.0]},
+   prod:[16325, 9196, 9723, 17989, 27947, 22900, 14354, 16202],serv:[6615, 5755, 8220, 7680, 5715, 9595, 7185, 5065],
+   prodSem:[9631.56,4655.4,1915.5],servSem:[1070.0,2005.0,1990.0]},
   {loja:'Esteio',nome:'Levy Vargas',ideal:22500,piso:16000,pm:12500,sm:10000,
-   prod:[0, 0, 0, 0, 7745, 10664, 22250, 2963],serv:[0, 0, 0, 0, 1935, 2930, 3815, 900],
-   prodSem:[1108.6,1853.65],servSem:[260.0,640.0]},
+   prod:[0, 0, 0, 0, 7745, 10664, 22250, 5950],serv:[0, 0, 0, 0, 1935, 2930, 3815, 1460],
+   prodSem:[1108.6,1853.65,2987.3],servSem:[260.0,640.0,560.0]},
   {loja:'Esteio Shop.',nome:'Calebe Luike',ideal:17500,piso:16000,pm:15500,sm:2000,
-   prod:[16614, 11965, 22461, 21232, 19556, 16189, 12486, 10468],serv:[6359, 4570, 5569, 5434, 2015, 5224, 3664, 1490],
-   prodSem:[5731.14,4737.3],servSem:[375.0,1114.9]},
+   prod:[16614, 11965, 22461, 21232, 19556, 16189, 12486, 13875],serv:[6359, 4570, 5569, 5434, 2015, 5224, 3664, 2534],
+   prodSem:[5731.14,4737.3,3406.4],servSem:[375.0,1114.9,1043.8]},
   {loja:'Esteio Shop.',nome:'Filipe Boneto',ideal:17500,piso:16000,pm:15500,sm:2000,
-   prod:[7322, 11457, 28059, 18437, 13659, 9918, 13578, 5804],serv:[5865, 4285, 4614, 3395, 2160, 3665, 3740, 4360],
-   prodSem:[3850.2,1953.76],servSem:[3510.0,849.9]},
+   prod:[7322, 11457, 28059, 18437, 13659, 9918, 13578, 9497],serv:[5865, 4285, 4614, 3395, 2160, 3665, 3740, 5735],
+   prodSem:[3850.2,1953.76,3693.1],servSem:[3510.0,849.9,1375.0]},
   {loja:'Canoas',nome:'Gabrieli Rossano',ideal:17500,piso:16000,pm:11000,sm:6500,
-   prod:[13426, 12009, 16232, 4903, 24469, 23189, 14664, 7493],serv:[5265, 4000, 6225, 4695, 4542, 3010, 3890, 1685],
-   prodSem:[5072.0,2421.4],servSem:[1035.0,650.0]},
+   prod:[13426, 12009, 16232, 4903, 24469, 23189, 14664, 10780],serv:[5265, 4000, 6225, 4695, 4542, 3010, 3890, 2125],
+   prodSem:[5072.0,2421.4,3286.8],servSem:[1035.0,650.0,440.0]},
   {loja:'Canoas',nome:'Débora Pereira',ideal:17500,piso:16000,pm:11000,sm:6500,
-   prod:[0, 0, 0, 0, 6399, 13452, 10756, 7826],serv:[0, 0, 0, 0, 2065, 5190, 5330, 3175],
-   prodSem:[5244.2,2582.3],servSem:[2300.0,875.0]},
+   prod:[0, 0, 0, 0, 6399, 13452, 10756, 10617],serv:[0, 0, 0, 0, 2065, 5190, 5330, 4320],
+   prodSem:[5244.2,2582.3,2790.7],servSem:[2300.0,875.0,1145.0]},
   {loja:'Avenida',nome:'Brenda Morais',ideal:25000,piso:16000,pm:7500,sm:7500,
-   prod:[8757, 2401, 6518, 7428, 25136, 19301, 32173, 6792],serv:[6839, 1920, 6250, 6540, 8849, 6359, 7523, 3070],
-   prodSem:[5735.8,1055.5],servSem:[1920.0,1150.0]},
+   prod:[8757, 2401, 6518, 7428, 25136, 19301, 32173, 11631],serv:[6839, 1920, 6250, 6540, 8849, 6359, 7523, 5257],
+   prodSem:[5735.8,1055.5,4840.0],servSem:[1920.0,1150.0,2187.0]},
   {loja:'Gravataí',nome:'Elieser Garcia',ideal:25000,piso:16000,pm:14500,sm:10500,
-   prod:[1119, 7818, 17182, 33498, 26128, 21624, 11661, 9279],serv:[1965, 8509, 12830, 8260, 6645, 8765, 6924, 6440],
-   prodSem:[5989.6,3289.3],servSem:[900.0,5540.0]},
+   prod:[1119, 7818, 17182, 33498, 26128, 21624, 11661, 14577],serv:[1965, 8509, 12830, 8260, 6645, 8765, 6924, 7270],
+   prodSem:[5989.6,3289.3,5297.6],servSem:[900.0,5540.0,830.0]},
   {loja:'Gravataí',nome:'Henrique Arruda',ideal:10000,piso:5000,pm:5500,sm:4500,
    prod:[7173, 8200, 80, 2931, 495, 2575, 5507, 3921],serv:[12436, 5715, 3750, 2055, 2690, 700, 6760, 6019],
-   prodSem:[3921.3,0.0],servSem:[5798.8,220.0]},
+   prodSem:[3921.3,0.0,0.0],servSem:[5798.8,220.0,0.0]},
   {loja:'Parque',nome:'Davi Vargas',ideal:22500,piso:16000,pm:16500,sm:6000,
-   prod:[18504, 10794, 15075, 19302, 18712, 19628, 12087, 2154],serv:[8075, 4260, 7760, 4500, 6930, 3545, 1920, 205],
-   prodSem:[0.0,2153.6],servSem:[0.0,205.0]},
+   prod:[18504, 10794, 15075, 19302, 18712, 19628, 12087, 5306],serv:[8075, 4260, 7760, 4500, 6930, 3545, 1920, 205],
+   prodSem:[0.0,2153.6,3152.5],servSem:[0.0,205.0,0.0]},
   {loja:'Parque',nome:'Gabriel Soares',ideal:22500,piso:16000,pm:16500,sm:6000,
-   prod:[14035, 13554, 10721, 17142, 21342, 13425, 19008, 8054],serv:[1950, 3135, 2595, 3720, 1964, 2704, 4290, 1380],
-   prodSem:[6207.5,1846.1],servSem:[1160.0,220.0]}
+   prod:[14035, 13554, 10721, 17142, 21342, 13425, 19008, 11000],serv:[1950, 3135, 2595, 3720, 1964, 2704, 4290, 2470],
+   prodSem:[6207.5,1846.1,2945.95],servSem:[1160.0,220.0,1090.0]}
 ];
 window.rkIdx=7;
 
@@ -2339,7 +2339,7 @@ function rkRender(){
       </div>
 
       <div class="rk-center">
-        <div class="rk-center-title">Faturado${parcial?' (S1)':' no mês'}</div>
+        <div class="rk-center-title">Faturado${parcial?' (acum. S'+SEM_ATUAL+')':' no mês'}</div>
         <div class="rk-total-val" style="color:${v.z.cor}">${rkFmt(v.total)}</div>
         <div class="rk-ps">
           <div class="rk-ps-item">
