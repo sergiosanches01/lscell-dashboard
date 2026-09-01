@@ -269,8 +269,8 @@ const SEM_ATUAL = 4;
 const META_MES_GERAL = 210000;
 const DIAS_POR_SEMANA = [7,6,6,7]; // S1=1-8ago, S2=10-15, S3=17-22(feriado 22/ago Esteio=5dias), S4=24-31(+31/seg)
 const DIAS_HIST_S = [7,6,6,4]; // dias históricos base do S4 (antes eram 4 dias)
-const SEMANA_ATUAL_PARCIAL = true;
-const DIAS_REALIZADOS_SEM_ATUAL = 6;
+const SEMANA_ATUAL_PARCIAL = false;
+const DIAS_REALIZADOS_SEM_ATUAL = 7;
 const MESES_FECHADOS_LABELS = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho'];
 
 const GERAL = {
@@ -278,70 +278,70 @@ const GERAL = {
     {n:'S1', fat:71681, meta:56538, real:true},
     {n:'S2', fat:40543, meta:48462, real:true},
     {n:'S3', fat:45242, meta:48462, real:true},
-    {n:'S4', fat:48974, meta:56538, real:true},
+    {n:'S4', fat:61281, meta:56538, real:true},
   ],
-  fat_real: 206440,
+  fat_real: 218746,
   fat_proj: 0,
   meta: 210000,
-  tm_real: 98,
-  orc_real: 1523,
+  tm_real: 94,
+  orc_real: 1680,
 };
 GERAL.fat_total_proj = GERAL.fat_real + GERAL.fat_proj;
 
 const LOJAS = {
   'Esteio': {
-    meta:45000, tm:[132.53, 100.28, 114.27, 212.29], orc:270, feriadoS3:1,
-    s_real:[12030.16, 9648.95, 7717.8, 15234.47], s_meta:[12115, 10385, 10385, 12115],
+    meta:45000, tm:[132.53,100.28,114.27,170.86], orc:286, feriadoS3:1,
+    s_real:[12030.2,9648.95,7717.8,17379.4], s_meta:[12115, 10385, 10385, 12115],
     hist_s1:[7746, 7746, 13737, 25276, 15036, 11208, 15644], hist_s2:[9317, 8966, 8967, 10425, 11971, 12677, 14737],
     hist_s3:[8093, 5165, 12109, 6037, 5913, 10013, 9686], hist_s4:[7686, 8282, 12032, 3904, 14788, 12262, 7537],
     prodMetaMes:25000, servMetaMes:20000,
-    prodSReal:[10700.16, 6819.05, 4927.8, 12674.47], prodSMeta:[6731, 5769, 5769, 6731],
-    servSReal:[1330, 2829.9, 2790, 2560], servSMeta:[5385, 4615, 4615, 5385],
+    prodSReal:[10700.2,6819.05,4927.8,13839.4], prodSMeta:[6731, 5769, 5769, 6731],
+    servSReal:[1330,2829.9,2790,3540], servSMeta:[5385, 4615, 4615, 5385],
     fat2025:[32491, 39284, 33147, 38118, 44593, 34250, 31719, 45454, 37629, 41218, 46211, 55123]
   },  'Esteio Shop.': {
-    meta:35000, tm:[131.8, 107.92, 124.55, 130.96], orc:228, feriadoS3:1,
-    s_real:[13506.34, 8655.86, 9518.3, 5669.4], s_meta:[9423, 8077, 8077, 9423],
+    meta:35000, tm:[131.8,107.92,124.55,117.25], orc:236, feriadoS3:1,
+    s_real:[13506.3,8655.86,9518.3,6114.2], s_meta:[9423, 8077, 8077, 9423],
     hist_s1:[4335, 4335, 7189, 10900, 11336, 9591, 16169], hist_s2:[4084, 5119, 7320, 5021, 6114, 6809, 8438],
     hist_s3:[5009, 3949, 7177, 7681, 9768, 12928, 3723], hist_s4:[6802, 4396, 7144, 6178, 6770, 6360, 5138],
     prodMetaMes:31000, servMetaMes:4000,
-    prodSReal:[9621.34, 6691.06, 7099.5, 4714.4], prodSMeta:[8346, 7154, 7154, 8346],
-    servSReal:[3885, 1964.8, 2418.8, 955], servSMeta:[1077, 923, 923, 1077],
+    prodSReal:[9621.34,6691.06,7099.5,5159.2], prodSMeta:[8346, 7154, 7154, 8346],
+    servSReal:[3885,1964.8,2418.8,955], servSMeta:[1077, 923, 923, 1077],
     fat2025:[30715, 25724, 29990, 23927, 38002, 26488, 25549, 30020, 27225, 29370, 23435, 44958]
   },  'Canoas': {
-    meta:35000, tm:[94.69, 70.9, 75.03, 73.44], orc:346,
-    s_real:[13651.2, 6558.7, 7662.5, 9503.9], s_meta:[9423, 8077, 8077, 9423],
+    meta:35000, tm:[94.69,70.9,75.03,78.07], orc:359,
+    s_real:[13651.2,6558.7,7662.5,11498.7], s_meta:[9423, 8077, 8077, 9423],
     hist_s1:[10278, 10278, 7786, 13771, 18700, 9047, 11372], hist_s2:[8088, 3914, 8922, 6186, 7921, 11965, 8133],
     hist_s3:[5679, 3994, 9190, 8823, 10778, 11442, 7576], hist_s4:[12346, 9012, 10437, 10840, 11767, 11887, 7559],
     prodMetaMes:22000, servMetaMes:13000,
-    prodSReal:[10316.2, 5033.7, 6077.5, 6358.9], prodSMeta:[5923, 5077, 5077, 5923],
-    servSReal:[3335, 1525, 1585, 3145], servSMeta:[3500, 3000, 3000, 3500],
+    prodSReal:[10316.2,5033.7,6077.5,7728.7], prodSMeta:[5923, 5077, 5077, 5923],
+    servSReal:[3335,1525,1585,3770], servSMeta:[3500, 3000, 3000, 3500],
     fat2025:[36937, 27521, 30928, 31359, 38043, 33162, 31242, 29623, 29928, 35887, 32598, 43698]
   },  'Avenida': {
-    meta:15000, tm:[167.18, 43.98, 166.9, 160.65], orc:126,
-    s_real:[9610.5, 2205.5, 7027, 5732.4], s_meta:[4038, 3462, 3462, 4038],
+    meta:15000, tm:[167.18,43.98,166.9,198.22], orc:132,
+    s_real:[9610.5,2205.5,7027,8326.2], s_meta:[4038, 3462, 3462, 4038],
     hist_s1:[4441, 4201, 4252, 5301, 11281, 5058, 12769], hist_s2:[3186, 1720, 1754, 3704, 10246, 5301, 5532],
     hist_s3:[3013, 3872, 3404, 2069, 3647, 9156, 14219], hist_s4:[3293, 3660, 2159, 2895, 8512, 6560, 7176],
     prodMetaMes:7500, servMetaMes:7500,
-    prodSReal:[7690.5, 1055.5, 4840, 4337.5], prodSMeta:[2019, 1731, 1731, 2019],
-    servSReal:[1920, 1150, 2187, 1394.9], servSMeta:[2019, 1731, 1731, 2019],
+    prodSReal:[7690.5,1055.5,4840,6541.3], prodSMeta:[2019, 1731, 1731, 2019],
+    servSReal:[1920,1150,2187,1784.9], servSMeta:[2019, 1731, 1731, 2019],
     fat2025:[17271, 11977, 17021, 15576, 19922, 14944, 17723, 14688, 15724, 17609, 15065, 18887]
   },  'Parque': {
-    meta:45000, tm:[70.52, 44.44, 66.86, 51.26], orc:423,
-    s_real:[12637.3, 4984.7, 7188.45, 7743.8], s_meta:[12115, 10385, 10385, 12115],
+    meta:45000, tm:[70.52,44.44,66.86,65.62], orc:446,
+    s_real:[12637.3,4984.7,7188.45,10627.2], s_meta:[12115, 10385, 10385, 12115],
     hist_s1:[12552, 12552, 10795, 20080, 14303, 6822, 19136], hist_s2:[8687, 8787, 6226, 12985, 9319, 12429, 7017],
     hist_s3:[10531, 4147, 10007, 7151, 10927, 9747, 7622], hist_s4:[7049, 6257, 7626, 4449, 14574, 9454, 5869],
     prodMetaMes:33000, servMetaMes:12000,
-    prodSReal:[10427.3, 3999.7, 6098.45, 4728.8], prodSMeta:[8885, 7615, 7615, 8885],
-    servSReal:[2210, 985, 1090, 3015], servSMeta:[3231, 2769, 2769, 3231],
+    prodSReal:[10427.3,3999.7,6098.45,7612.2], prodSMeta:[8885, 7615, 7615, 8885],
+    servSReal:[2210,985,1090,3015], servSMeta:[3231, 2769, 2769, 3231],
     fat2025:[48392, 44975, 40134, 41025, 47019, 37364, 41215, 39820, 40057, 37033, 42603, 51598]
   },  'Gravataí': {
-    meta:35000, tm:[65.09, 71.51, 105.25, 52.96], orc:209,
-    s_real:[10245.1, 8489.3, 6127.6, 5090.4], s_meta:[9423, 8077, 8077, 9423],
+    meta:35000, tm:[65.09,71.51,105.25,53.31], orc:221,
+    s_real:[10245.1,8489.3,6127.6,7335.2], s_meta:[9423, 8077, 8077, 9423],
     hist_s1:[7180, 7180, 7142, 18146, 14204, 11054, 9436], hist_s2:[5385, 6129, 8073, 11657, 9671, 9115, 6324],
     hist_s3:[6368, 3771, 7425, 10971, 5905, 5675, 8318], hist_s4:[5589, 8094, 10310, 5936, 8164, 7329, 6774],
     prodMetaMes:20000, servMetaMes:15000,
-    prodSReal:[4201.3, 3289.3, 5297.6, 2330.4], prodSMeta:[5385, 4615, 4615, 5385],
-    servSReal:[6043.8, 5200, 830, 2760], servSMeta:[4038, 3462, 3462, 4038],
+    prodSReal:[4201.3,3289.3,5297.6,2985.3], prodSMeta:[5385, 4615, 4615, 5385],
+    servSReal:[6043.8,5200,830,4349.9], servSMeta:[4038, 3462, 3462, 4038],
     fat2025:[26986, 29489, 26509, 31871, 25085, 29126, 28128, 24497, 24287, 25782, 26994, 30779]
   },
 };
@@ -405,7 +405,7 @@ const REAL_MESES = [
   {m:'Maio',     fat:251613, meta:210000, fechado:true},
   {m:'Junho',    fat:223889, meta:210000, fechado:true},
   {m:'Julho',    fat:225904, meta:210000, fechado:true},
-  {m:'Agosto',   fat:206440,      meta:250000, fechado:false}
+  {m:'Agosto',   fat:218746,      meta:250000, fechado:false}
 ];
 
 const REAL_MESES_2025 = [
@@ -418,7 +418,6 @@ const REAL_MESES_2025 = [
 const MES_ATUAL_PROJ_TOTAL = GERAL.fat_total_proj;
 
 const PROJ_2SEM = [
-  {m:'Agosto',   meta:250000, r:222178, o:248536},
   {m:'Setembro', meta:275000, r:230801, o:258777},
   {m:'Outubro',  meta:295000, r:246708, o:276612},
   {m:'Novembro', meta:325000, r:246716, o:276621},
@@ -1179,8 +1178,8 @@ alertas(){
       alertasMensal.push({tipo:'re', msg:`<strong>📅 ${MES_ATUAL} encerrado:</strong> faturamento de ${fr(fatFinal)} — ${pctFinal}% da meta. Resultado abaixo do esperado.`});
     }
     // Comparar com mês anterior
-    if(mesesFechados.length >= 2){
-      const ant = mesesFechados[mesesFechados.length-2];
+    if(mesesFechados.length >= 1){
+      const ant = mesesFechados[mesesFechados.length-1];
       const diffAnt = fatFinal - ant.fat;
       if(diffAnt > 0){
         alertasMensal.push({tipo:'gr', msg:`Em relação a ${ant.m} (${fr(ant.fat)}), o resultado de ${MES_ATUAL} ficou ${fr(diffAnt)} acima.`});
@@ -1254,6 +1253,28 @@ alertas(){
 
   <div class="box"><div class="bt">📅 Diagnóstico Mensal — ${MES_ATUAL}</div>
     ${alertasMensal.map(a=>`<div class="ins ${a.tipo}">${a.msg}</div>`).join('')}
+  </div>
+
+
+  <div class="box"><div class="bt">🔍 Leitura do Fechamento de Agosto</div>
+    <div class="ins gr"><strong>Meta batida, mas por pouco e com uma perna só.</strong> Agosto fechou em R$ 218.746 (104% da meta de R$ 210 mil). O que segurou o mês foi <strong>produto: R$ 158.052 contra meta de R$ 138.500 (114%)</strong>. Serviço fechou em R$ 60.694 contra R$ 71.500 (85%) — R$ 10.806 abaixo.</div>
+    <div class="ins ye"><strong>Contra julho, recuo de 3,2%.</strong> Julho fez R$ 225.904 com 26 dias; agosto fez R$ 218.746 também com 26 dias. Ou seja: não foi calendário, foi ritmo. Contra agosto de 2025 (R$ 184.101) o crescimento é de <strong>+18,8%</strong>, e no acumulado do ano estamos <strong>+11,2%</strong> sobre 2025.</div>
+    <div class="ins re"><strong>O buraco do serviço tem nome: Esteio.</strong> A loja fez R$ 10.490 de serviço contra meta de R$ 20.000 — apenas 52%. Sozinha responde por R$ 9.510 do déficit de R$ 10.806 do grupo. Parque também ficou em 61% (R$ 7.300 de R$ 12.000). Do outro lado, Gravataí (110%) e Esteio Shopping (231%) puxaram para cima.</div>
+    <div class="ins re"><strong>Parque foi a única loja abaixo de 80%.</strong> R$ 35.438 contra meta de R$ 45.000 (79%), faltando R$ 9.562. Se a Parque tivesse apenas batido a meta, o mês teria fechado em R$ 228.308. Detalhe importante: a Parque tem o <strong>maior volume de orçamentos do grupo (446)</strong> e o <strong>menor ticket médio (R$ 63)</strong>. O problema não é movimento — é valor por atendimento.</div>
+    <div class="ins ye"><strong>A semana 2 foi o ponto fraco.</strong> S1 R$ 71.681 (127% da meta semanal), S2 R$ 40.543 (84%), S3 R$ 45.242 (93%), S4 R$ 61.281 (108%). A S2 de agosto foi a segunda pior semana 2 do ano — só fevereiro foi pior. Mês começou forte, afundou no meio e recuperou no fim.</div>
+    <div class="ins ye"><strong>Avenida: meta desatualizada.</strong> R$ 27.169 contra meta de R$ 15.000 = 181%. É o quinto mês seguido acima da meta com folga. Manter essa meta distorce o painel e tira a força do indicador — vale recalibrar para setembro.</div>
+    <div class="ins re"><strong>Davi Vargas em queda há três meses.</strong> Junho R$ 23.173 → julho R$ 14.007 → agosto R$ 11.010, contra piso de R$ 16.000. É o único vendedor abaixo do piso e está na loja que não bateu a meta. Não é coincidência — precisa de conversa antes de setembro andar.</div>
+    <div class="ins gr"><strong>Destaques do mês.</strong> Elieser Garcia (R$ 28.525) e Caio Elias (R$ 27.934) acima do ideal. Brenda Morais bateu o ideal de R$ 25.000 por R$ 15. Levy Vargas fez R$ 9.063 só de produto na S4 — a melhor semana individual de produto do mês.</div>
+  </div>
+
+  <div class="box"><div class="bt">🎯 Pontos para Cuidar em Setembro</div>
+    <div class="ins re"><strong>1. Setembro tem menos dia útil.</strong> São 26 dias de segunda a sábado, menos o feriado de 7 de setembro (segunda) = <strong>25 dias</strong> para as lojas de rua, contra 26 em agosto. O ritmo diário de agosto foi R$ 8.413. Repetir esse mesmo ritmo em 25 dias dá R$ 210.325 — exatamente em cima da meta, sem margem. Para sobrar, o ritmo diário precisa subir.</div>
+    <div class="ins re"><strong>2. Serviço é a prioridade número 1.</strong> Foram dois meses seguidos de produto carregando o resultado. Serviço tem margem maior e é o que diferencia a LSCELL de loja de acessório. Meta prática: Esteio sair de R$ 10,5 mil para pelo menos R$ 15 mil, e Parque de R$ 7,3 mil para R$ 10 mil. Isso sozinho já recupera os R$ 10,8 mil perdidos em agosto.</div>
+    <div class="ins ye"><strong>3. Parque precisa de plano de ticket, não de movimento.</strong> 446 orçamentos e R$ 63 de ticket médio. Subir o ticket para R$ 75 com o mesmo volume adiciona cerca de R$ 5,4 mil no mês. Caminhos: combo de película + capa, oferta de serviço no ato do atendimento de produto, e revisão do mix exposto.</div>
+    <div class="ins ye"><strong>4. Não deixar a semana 2 afundar de novo.</strong> O padrão de agosto (começa forte, cai no meio, recupera no fim) já apareceu antes. Vale acompanhar o acumulado na sexta da S1 e definir a ação da S2 ali, não depois que a semana fechou fraca.</div>
+    <div class="ins ye"><strong>5. Recalibrar metas de Avenida e revisar as de serviço.</strong> Avenida em R$ 15 mil já não mede nada. E as metas de serviço de Esteio (R$ 20 mil) e Parque (R$ 12 mil) nunca foram atingidas este ano — ou o time não está sendo cobrado nisso, ou a meta está fora da realidade da loja. As duas hipóteses exigem decisão.</div>
+    <div class="ins re"><strong>6. Realidade da meta anual.</strong> Acumulado Jan–Ago: R$ 1.643.976. Para chegar em R$ 3 milhões faltam <strong>R$ 1.356.024 em 4 meses — R$ 339 mil por mês</strong>. Nunca faturamos isso. O mês mais forte de 2026 foi maio, com R$ 251,6 mil. Dezembro historicamente puxa forte (R$ 245 mil em 2025), mas setembro é tradicionalmente fraco (R$ 174,8 mil em 2025). A leitura honesta: R$ 3M exige um salto de patamar, não continuidade. Vale decidir agora se a meta se mantém como norte ou se é revisada para algo entre R$ 2,7M e R$ 2,8M.</div>
+    <div class="ins gr"><strong>7. Base para setembro.</strong> Bater setembro de 2025 (R$ 174.849) com folga é o piso. Repetir agosto (R$ 218.746) já significaria <strong>+25% ano contra ano</strong>. Esse é o alvo realista para comunicar ao time — número grande demais desmotiva, número pequeno demais acomoda.</div>
   </div>
 
   <div class="box"><div class="bt">🏪 Diagnóstico por Loja — Semana ${SEM_ATUAL}</div>
@@ -2241,44 +2262,44 @@ curTab = 'home';
 
 // ── RANKING VENDEDORES ──
 
-window.RKM=["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto (S4 parcial)"];
+window.RKM=["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto"];
 window.RKMA=["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago"];
-window.RKP=[false,false,false,false,false,false,false,true];
+window.RKP=[false,false,false,false,false,false,false,false];
 
 window.RKD=[
   {loja:'Esteio',nome:'Caio Elias',ideal:22500,piso:16000,pm:12500,sm:10000,
-   prod:[16325, 9196, 9723, 17989, 27947, 22900, 14354, 20699],serv:[6615, 5755, 8220, 7680, 5715, 9595, 7185, 6995],
-   prodSem:[9631.56,4655.4,1915.5,4496.57],servSem:[1070,2005,1990,1930]},
+   prod:[16325, 9196, 9723, 17989, 27947, 22900, 14354, 20699],serv:[6615, 5755, 8220, 7680, 5715, 9595, 7185, 7235],
+   prodSem:[9631.56,4655.4,1915.5,4496.57],servSem:[1070,2005,1990,2170]},
   {loja:'Esteio',nome:'Levy Vargas',ideal:22500,piso:16000,pm:12500,sm:10000,
-   prod:[0, 0, 0, 0, 7745, 10664, 22250, 14067],serv:[0, 0, 0, 0, 1935, 2930, 3815, 2090],
-   prodSem:[1108.6,1853.65,2987.3,8117.9],servSem:[260,640,560,630]},
+   prod:[0, 0, 0, 0, 7745, 10664, 22250, 15012],serv:[0, 0, 0, 0, 1935, 2930, 3815, 2680],
+   prodSem:[1108.6,1853.65,2987.3,9062.8],servSem:[260,640,560,1220]},
   {loja:'Esteio Shop.',nome:'Calebe Luike',ideal:17500,piso:16000,pm:15500,sm:2000,
-   prod:[16614, 11965, 22461, 21232, 19556, 16189, 12486, 15526],serv:[6359, 4570, 5569, 5434, 2015, 5224, 3664, 2774],
-   prodSem:[5731.14,4737.3,3406.4,1651],servSem:[375,1114.9,1043.8,240]},
+   prod:[16614, 11965, 22461, 21232, 19556, 16189, 12486, 15851],serv:[6359, 4570, 5569, 5434, 2015, 5224, 3664, 2924],
+   prodSem:[5731.14,4737.3,3406.4,1975.9],servSem:[375,1114.9,1043.8,390]},
   {loja:'Esteio Shop.',nome:'Filipe Boneto',ideal:17500,piso:16000,pm:15500,sm:2000,
-   prod:[7322, 11457, 28059, 18437, 13659, 9918, 13578, 12560],serv:[5865, 4285, 4614, 3395, 2160, 3665, 3740, 6450],
-   prodSem:[3850.2,1953.76,3693.1,3063.4],servSem:[3510,849.9,1375,715]},
+   prod:[7322, 11457, 28059, 18437, 13659, 9918, 13578, 12800],serv:[5865, 4285, 4614, 3395, 2160, 3665, 3740, 6450],
+   prodSem:[3850.2,1953.76,3693.1,3303.3],servSem:[3510,849.9,1375,715]},
   {loja:'Canoas',nome:'Gabrieli Rossano',ideal:17500,piso:16000,pm:11000,sm:6500,
-   prod:[13426, 12009, 16232, 4903, 24469, 23189, 14664, 12835],serv:[5265, 4000, 6225, 4695, 4542, 3010, 3890, 3480],
-   prodSem:[5072,2421.4,3286.8,2054.7],servSem:[1035,650,440,1355]},
+   prod:[13426, 12009, 16232, 4903, 24469, 23189, 14664, 13150],serv:[5265, 4000, 6225, 4695, 4542, 3010, 3890, 3905],
+   prodSem:[5072,2421.4,3286.8,2369.6],servSem:[1035,650,440,1780]},
   {loja:'Canoas',nome:'Débora Pereira',ideal:17500,piso:16000,pm:11000,sm:6500,
-   prod:[0, 0, 0, 0, 6399, 13452, 10756, 14841],serv:[0, 0, 0, 0, 2065, 5190, 5330, 6110],
-   prodSem:[5244.2,2582.3,2790.7,4224.2],servSem:[2300,875,1145,1790]},
+   prod:[0, 0, 0, 0, 6399, 13452, 10756, 15896],serv:[0, 0, 0, 0, 2065, 5190, 5330, 6310],
+   prodSem:[5244.2,2582.3,2790.7,5279.1],servSem:[2300,875,1145,1990]},
   {loja:'Avenida',nome:'Brenda Morais',ideal:25000,piso:16000,pm:7500,sm:7500,
-   prod:[8757, 2401, 6518, 7428, 25136, 19301, 32173, 15769],serv:[6839, 1920, 6250, 6540, 8849, 6359, 7523, 6652],
-   prodSem:[5735.8,1055.5,4840,4137.6],servSem:[1920,1150,2187,1394.9]},
+   prod:[8757, 2401, 6518, 7428, 25136, 19301, 32173, 17973],serv:[6839, 1920, 6250, 6540, 8849, 6359, 7523, 7042],
+   prodSem:[5735.8,1055.5,4840,6341.4],servSem:[1920,1150,2187,1784.9]},
   {loja:'Gravataí',nome:'Elieser Garcia',ideal:25000,piso:16000,pm:14500,sm:10500,
-   prod:[1119, 7818, 17182, 33498, 26128, 21624, 11661, 16745],serv:[1965, 8509, 12830, 8260, 6645, 8765, 6924, 9535],
-   prodSem:[5989.6,3289.3,5297.6,2168.4],servSem:[900,5540,830,2265]},
+   prod:[1119, 7818, 17182, 33498, 26128, 21624, 11661, 17400],serv:[1965, 8509, 12830, 8260, 6645, 8765, 6924, 11125],
+   prodSem:[5989.6,3289.3,5297.6,2823.3],servSem:[900,5540,830,3854.9]},
   {loja:'Gravataí',nome:'Henrique Arruda',ideal:10000,piso:5000,pm:5500,sm:4500,
    prod:[7173, 8200, 80, 2931, 495, 2575, 5507, 4363],serv:[12436, 5715, 3750, 2055, 2690, 700, 6760, 6514],
    prodSem:[3921.3,0,0,441.9],servSem:[5798.8,220,0,495]},
   {loja:'Parque',nome:'Davi Vargas',ideal:22500,piso:16000,pm:16500,sm:6000,
-   prod:[18504, 10794, 15075, 19302, 18712, 19628, 12087, 7780],serv:[8075, 4260, 7760, 4500, 6930, 3545, 1920, 2540],
-   prodSem:[0,2153.6,3152.5,2474.2],servSem:[0,205,0,2335]},
+   prod:[18504, 10794, 15075, 19302, 18712, 19628, 12087, 8470],serv:[8075, 4260, 7760, 4500, 6930, 3545, 1920, 2540],
+   prodSem:[0,2153.6,3152.5,3163.8],servSem:[0,205,0,2335]},
   {loja:'Parque',nome:'Gabriel Soares',ideal:22500,piso:16000,pm:16500,sm:6000,
-   prod:[14035, 13554, 10721, 17142, 21342, 13425, 19008, 13254],serv:[1950, 3135, 2595, 3720, 1964, 2704, 4290, 3150],
-   prodSem:[6207.5,1846.1,2945.95,2254.6],servSem:[1160,220,1090,680]}
+   prod:[14035, 13554, 10721, 17142, 21342, 13425, 19008, 15448],serv:[1950, 3135, 2595, 3720, 1964, 2704, 4290, 3150],
+   prodSem:[6207.5,1846.1,2945.95,4448.4],servSem:[1160,220,1090,680]}
 ];
 window.rkIdx=7;
 
