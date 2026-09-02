@@ -405,7 +405,7 @@ const REAL_MESES = [
   {m:'Maio',     fat:251613, meta:210000, fechado:true},
   {m:'Junho',    fat:223889, meta:210000, fechado:true},
   {m:'Julho',    fat:225904, meta:210000, fechado:true},
-  {m:'Agosto',   fat:218746,      meta:250000, fechado:false}
+  {m:'Agosto',   fat:218746, meta:210000, fechado:true}
 ];
 
 const REAL_MESES_2025 = [
@@ -766,7 +766,7 @@ function montarSerieMensalLoja(l, nomeLoja){
   const totalLojaMesesFechados = mesesFechados.reduce(function(a,b){return a+b;},0);
   const participacao = totalGeralMesesFechados>0 ? (totalLojaMesesFechados/totalGeralMesesFechados) : (1/NOMES.length);
 
-  const projFuturos = PROJ_2SEM.map(function(p){ return Math.round(p.o * participacao); });
+  const projFuturos = PROJ_2SEM.map(function(p){ return Math.round(p.meta * participacao); });
 
   const valores = mesesFechados.concat([mesAtual]).concat(projFuturos); // 12 valores
   const valoresReal = mesesFechados.concat([mesAtualReal]).concat(projFuturos.map(function(){return 0;}));
@@ -792,7 +792,7 @@ function montarSerieMensalGeral(){
   const valores = fechados.slice();
   const valoresReal = fechados.slice();
   const valoresProj = fechados.map(function(){return 0;});
-  const indiceMesAtual = mesAtual!==null ? valores.length : -1; // posicao do mes corrente, antes de inserir
+  const indiceMesAtual = mesAtual!==null ? valores.length : fechados.length-1; // posicao do mes corrente
 
   if(mesAtual!==null){
     valores.push(mesAtual);
@@ -800,9 +800,9 @@ function montarSerieMensalGeral(){
     valoresProj.push(mesAtualProj);
   }
   PROJ_2SEM.forEach(function(p){
-    valores.push(p.o);
+    valores.push(p.meta);
     valoresReal.push(0);
-    valoresProj.push(p.o);
+    valoresProj.push(p.meta);
   });
 
   const labels = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
@@ -1136,9 +1136,22 @@ alertas(){
   const META_ANO_LOCAL = 3000000;
   const mesesFechados = REAL_MESES.filter(m=>m.fechado);
   const fatAnoFechados = mesesFechados.reduce((a,m)=>a+m.fat,0);
-  const fatAnoComMesAtual = fatAnoFechados + GERAL.fat_total_proj;
-  const tot2semR = PROJ_2SEM.reduce((a,m)=>a+m.r,0);
-  const tot2semO = PROJ_2SEM.reduce((a,m)=>a+m.o,0);
+  const mesEmCursoAl = REAL_MESES.find(m=>!m.fechado);
+  const fatAnoComMesAtual = fatAnoFechados + (mesEmCursoAl ? GERAL.fat_total_proj : 0);
+  // Mesma base da aba "Resultado Anual": realista = crescimento medio vs 2025; otimista = metas mensais
+  const futurosAl = PROJ_2SEM.filter(s => !REAL_MESES.find(m => m.m === s.m));
+  const cresc = REAL_MESES
+    .filter(m => m.fechado && m.m !== 'Janeiro' && m.m !== 'Fevereiro' && m.m !== 'Marco')
+    .map(m => {
+      const f25 = (REAL_MESES_2025.find(x => x.m === m.m) || {fat:0}).fat;
+      return f25 > 0 ? (m.fat / f25) : 1;
+    });
+  const fatorAl = cresc.length ? cresc.reduce((a,b)=>a+b,0)/cresc.length : 1.21;
+  const tot2semR = futurosAl.reduce((a,s)=>{
+    const f25 = (REAL_MESES_2025.find(x => x.m === s.m) || {fat:0}).fat;
+    return a + Math.round(f25 * fatorAl);
+  },0);
+  const tot2semO = futurosAl.reduce((a,s)=>a+s.meta,0);
   const anoRealista = fatAnoComMesAtual + tot2semR;
   const anoOtimista = fatAnoComMesAtual + tot2semO;
   const pctAnoReal = Math.round(fatAnoComMesAtual/META_ANO_LOCAL*100);
@@ -1178,8 +1191,8 @@ alertas(){
       alertasMensal.push({tipo:'re', msg:`<strong>📅 ${MES_ATUAL} encerrado:</strong> faturamento de ${fr(fatFinal)} — ${pctFinal}% da meta. Resultado abaixo do esperado.`});
     }
     // Comparar com mês anterior
-    if(mesesFechados.length >= 1){
-      const ant = mesesFechados[mesesFechados.length-1];
+    if(mesesFechados.length >= 2){
+      const ant = mesesFechados[mesesFechados.length-2];
       const diffAnt = fatFinal - ant.fat;
       if(diffAnt > 0){
         alertasMensal.push({tipo:'gr', msg:`Em relação a ${ant.m} (${fr(ant.fat)}), o resultado de ${MES_ATUAL} ficou ${fr(diffAnt)} acima.`});
@@ -1439,15 +1452,19 @@ home: function(){
 
 /* =========== DADOS ANUAIS =========== */
 const META_ANO = 3000000;
+const DIAS_UTEIS_MES_ATUAL = 26; // agosto/2026: 1 a 31, sem domingos
+const DIAS_UTEIS_PROX_MES  = 25; // setembro/2026: 26 dias seg-sab menos feriado 07/09
 
 V.anual = function(){
   const mesesFech     = REAL_MESES.filter(d=>d.fechado);
+  const mesEmCurso    = REAL_MESES.find(d=>!d.fechado); // undefined quando todos fecharam
   const fat_fechados  = mesesFech.reduce((a,d)=>a+d.fat,0);
-  const fat_acum_real = fat_fechados + GERAL.fat_real;
-  // Se o mês atual já fechou (SEM_ATUAL=4), não soma duas vezes
-  const fat_jun_proj  = SEM_ATUAL >= 4 ? 0 : MES_ATUAL_PROJ_TOTAL;
-  const fat_1sem      = fat_fechados + fat_jun_proj; // fechados + mes atual projetado
+  // Se o mes atual ja fechou ele ja esta em fat_fechados - nao soma de novo
+  const fat_acum_real = fat_fechados + (mesEmCurso ? GERAL.fat_real : 0);
+  const fat_jun_proj  = mesEmCurso ? MES_ATUAL_PROJ_TOTAL : 0;
+  const fat_1sem      = fat_fechados + fat_jun_proj;
   const ritmo_mensal  = fat_fechados / Math.max(1,mesesFech.length);
+  const ultimoFech    = mesesFech[mesesFech.length-1];
 
   // REALISTA: média do crescimento % de Abril em diante vs 2025, aplicada nos meses restantes
   const mesesComCrescimento = REAL_MESES.filter(m => m.fechado && m.m !== 'Janeiro' && m.m !== 'Fevereiro' && m.m !== 'Marco');
@@ -1514,10 +1531,10 @@ V.anual = function(){
 
   return`
   <div class="cards">
-    <div class="card"><div class="lb">Acumulado Real (fechados + ${MES_ATUAL} S${SEM_ATUAL})</div><div class="vl" style="color:#f39c12">${fr(fat_acum_real)}</div><div class="sb">${pct(fat_acum_real,META_ANO)}% da meta anual</div></div>
-    <div class="card"><div class="lb">Fechados + ${MES_ATUAL} proj.</div><div class="vl" style="color:#eee">${fr(fat_1sem)}</div><div class="sb">${MES_ATUAL} projetado: ${fr(fat_jun_proj)}</div></div>
+    <div class="card"><div class="lb">Acumulado Real (Jan–${ultimoFech.m.slice(0,3)})</div><div class="vl" style="color:#f39c12">${fr(fat_acum_real)}</div><div class="sb">${pct(fat_acum_real,META_ANO)}% da meta anual · ${mesesFech.length} meses fechados</div></div>
+    <div class="card"><div class="lb">Ritmo Mensal Atual</div><div class="vl" style="color:#eee">${fr(ritmo_mensal)}</div><div class="sb">média real dos ${mesesFech.length} meses</div></div>
     <div class="card"><div class="lb">Meta Anual</div><div class="vl" style="color:#cc0000">${fr(META_ANO)}</div><div class="sb">falta ${fr(META_ANO-fat_acum_real)} realizar</div></div>
-    <div class="card"><div class="lb">Ritmo Mensal Atual</div><div class="vl" style="color:#eee">${fr(ritmo_mensal)}</div><div class="sb">média dos meses fechados</div></div>
+    <div class="card"><div class="lb">Necessário/mês (${mesesFuturos.length} meses)</div><div class="vl" style="color:${(META_ANO-fat_acum_real)/Math.max(1,mesesFuturos.length) > ritmo_mensal*1.25 ? '#e74c3c':'#f39c12'}">${fr((META_ANO-fat_acum_real)/Math.max(1,mesesFuturos.length))}</div><div class="sb">${Math.round(((META_ANO-fat_acum_real)/Math.max(1,mesesFuturos.length))/ritmo_mensal*100)}% do ritmo atual</div></div>
     <div class="card"><div class="lb">🟡 Fechamento Realista</div><div class="vl" style="color:#f39c12">${fr(anoR)}</div><div class="sb">${pct(anoR,META_ANO)}% da meta R$ 3M</div></div>
     <div class="card"><div class="lb">🟢 Fechamento Otimista</div><div class="vl" style="color:#2ecc71">${fr(anoO)}</div><div class="sb">${pct(anoO,META_ANO)}% da meta R$ 3M</div></div>
   </div>
@@ -1577,7 +1594,7 @@ V.anual = function(){
       const isReal = !!mesReal;
       return`<tr style="background:${isReal?'':'#001a08'}">
         <td><strong>${d.m}</strong> <span style="font-size:9px;color:${isReal?'#aaa':'#2ecc71'}">${isReal?'✓ real':'🟢 otimista'}</span></td>
-        <td style="color:#555;font-size:11px">${(REAL_MESES_2025&&REAL_MESES_2025[7+i])?fr(REAL_MESES_2025[7+i].fat):'—'}</td>
+        <td style="color:#555;font-size:11px">${(()=>{const x=(REAL_MESES_2025||[]).find(y=>y.m===d.m);return x?fr(x.fat):'—';})()}</td>
         <td style="color:${isReal?cor(fatMesO,d.meta):'#2ecc71'};font-weight:bold">${fr(fatMesO)}</td>
         <td class="d">${fr(d.meta)}</td>
         <td style="color:${cMes};font-weight:bold">${pct(fatMesO,d.meta)}%</td>
@@ -1600,6 +1617,42 @@ V.anual = function(){
   </table>
   </div></div>
 
+
+  ${(()=>{
+    const prox = mesesFuturos[0];
+    if(!prox) return '';
+    const prox25   = ((REAL_MESES_2025||[]).find(x=>x.m===prox.m)||{fat:0}).fat;
+    const projReal = Math.round(prox25 * fatorRealista);
+    const projOtim = prox.meta;
+    const metaOp   = META_MES_GERAL;
+    const diasProx = DIAS_UTEIS_PROX_MES;
+    const ritmoUlt = ultimoFech.fat / DIAS_UTEIS_MES_ATUAL;
+    const seMantem = Math.round(ritmoUlt * diasProx);
+    const linha = (lbl, val, corV, obs) => `<tr>
+      <td><strong>${lbl}</strong></td>
+      <td style="color:${corV};font-weight:bold">${fr(val)}</td>
+      <td style="color:${corV}">${pct(val,metaOp)}%</td>
+      <td style="color:#666">${prox25>0?(val>=prox25?'<span style="color:#2ecc71">+'+Math.round((val/prox25-1)*100)+'%</span>':'<span style="color:#e74c3c">'+Math.round((val/prox25-1)*100)+'%</span>'):'—'}</td>
+      <td style="font-size:11px;color:#666">${obs}</td>
+    </tr>`;
+    return `<div class="box"><div class="bt">🔮 Projeção de ${prox.m} — Cenários</div>
+    <div style="font-size:11px;color:#666;margin-bottom:10px">Base de comparação: ${prox.m} de 2025 fechou em <b style="color:#888">${fr(prox25)}</b> · ${ultimoFech.m} de 2026 fechou em <b style="color:#888">${fr(ultimoFech.fat)}</b> (${DIAS_UTEIS_MES_ATUAL} dias) · ${prox.m} tem <b style="color:#888">${diasProx} dias</b> de operação.</div>
+    <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+    <table style="min-width:620px"><thead><tr><th>Cenário</th><th>Faturamento</th><th>% Meta ${fr(metaOp)}</th><th>vs 2025</th><th>O que significa</th></tr></thead>
+    <tbody>
+      ${linha('🔴 Piso — repetir 2025', prox25, '#e74c3c', 'Estagnação. Perde todo o ganho do ano.')}
+      ${linha('⚪ Manter ritmo diário', seMantem, '#aaa', 'Mesmo ritmo de '+ultimoFech.m+' em '+diasProx+' dias.')}
+      ${linha('🟡 Realista (+'+fatorPct+'% vs 2025)', projReal, '#f39c12', 'Mantém o crescimento médio do ano.')}
+      ${linha('🟢 Otimista — meta do mês', projOtim, '#2ecc71', 'Exige salto de patamar, não continuidade.')}
+    </tbody>
+    </table>
+    </div>
+    <div style="font-size:11px;color:#555;margin-top:10px;line-height:1.7;border-top:1px solid #222;padding-top:8px">
+      Para bater a meta operacional de <b style="color:#888">${fr(metaOp)}</b> em ${diasProx} dias, o ritmo precisa ser de <b style="color:#f39c12">${fr(metaOp/diasProx)}/dia</b> — contra <b style="color:#888">${fr(ritmoUlt)}/dia</b> em ${ultimoFech.m}.
+      Para o cenário otimista de <b style="color:#888">${fr(projOtim)}</b>, o ritmo sobe para <b style="color:#2ecc71">${fr(projOtim/diasProx)}/dia</b>.
+    </div>
+    </div>`;
+  })()}
   <div class="box"><div class="bt">Comparativo dos 2 Cenários — Fechamento Anual</div>
   <div class="cenarios-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
     <div style="border:1px solid #8a6000;border-radius:7px;padding:14px;min-width:0;overflow:hidden">
@@ -1608,19 +1661,19 @@ V.anual = function(){
       <div style="font-size:12px;color:#888;margin-bottom:10px">${pct(anoR,META_ANO)}% da meta · ${anoR>=META_ANO?'<span style="color:#2ecc71">META BATIDA 🎯</span>':'falta <b>'+fr(META_ANO-anoR)+'</b>'}</div>
       <div style="font-size:11px;color:#555;line-height:1.9;border-top:1px solid #333;padding-top:8px">
         Base: crescimento médio de +${fatorPct}% vs 2025<br>
-        (média de Abril a ${REAL_MESES.filter(m=>m.fechado).slice(-1)[0].m})<br>
-        Ago–Dez projetado: ${fr(tot2r)}<br>
+        (média de Abril a ${ultimoFech.m})<br>
+        ${mesesFuturos.length?mesesFuturos[0].m.slice(0,3)+'–'+mesesFuturos[mesesFuturos.length-1].m.slice(0,3):'—'} projetado: ${fr(tot2r)}<br>
         <span style="color:#f39c12">Projeção ano: +${Math.round((anoR/2272742-1)*100)}% vs 2025 (${fr(2272742)})</span>
       </div>
     </div>
     <div style="border:1px solid #1a6e3a;border-radius:7px;padding:14px;min-width:0;overflow:hidden">
       <div style="color:#2ecc71;font-weight:bold;font-size:13px;margin-bottom:6px">🟢 Otimista</div>
       <div style="font-size:26px;font-weight:bold;color:#2ecc71;margin-bottom:4px">${fr(anoO)}</div>
-      <div style="font-size:12px;color:#888;margin-bottom:10px">${pct(anoO,META_ANO)}% da meta · supera em <b style="color:#2ecc71">${fr(anoO-META_ANO)}</b></div>
+      <div style="font-size:12px;color:#888;margin-bottom:10px">${pct(anoO,META_ANO)}% da meta · ${anoO>=META_ANO?'supera em <b style="color:#2ecc71">'+fr(anoO-META_ANO)+'</b>':'falta <b style="color:#f39c12">'+fr(META_ANO-anoO)+'</b>'}</div>
       <div style="font-size:11px;color:#555;line-height:1.9;border-top:1px solid #333;padding-top:8px">
         Base: metas mensais estabelecidas<br>
         (${nomesMesesFuturos})<br>
-        Ago–Dez projetado: ${fr(tot2o)}<br>
+        ${mesesFuturos.length?mesesFuturos[0].m.slice(0,3)+'–'+mesesFuturos[mesesFuturos.length-1].m.slice(0,3):'—'} projetado: ${fr(tot2o)}<br>
         <span style="color:#2ecc71">Projeção ano: +${Math.round((anoO/2272742-1)*100)}% vs 2025 (${fr(2272742)})</span>
       </div>
     </div>
