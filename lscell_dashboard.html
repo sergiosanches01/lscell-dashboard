@@ -460,7 +460,8 @@ const REAL_MESES = [
   {m:'Maio',     fat:251613, meta:210000, fechado:true},
   {m:'Junho',    fat:223889, meta:210000, fechado:true},
   {m:'Julho',    fat:225904, meta:210000, fechado:true},
-  {m:'Agosto',   fat:218746, meta:210000, fechado:true}
+  {m:'Agosto',   fat:218746, meta:210000, fechado:true},
+  {m:'Setembro', fat:0,      meta:210000, fechado:false}
 ];
 
 const REAL_MESES_2025 = [
@@ -478,6 +479,11 @@ const PROJ_2SEM = [
   {m:'Novembro', meta:325000, r:246716, o:276621},
   {m:'Dezembro', meta:370000, r:323458, o:362665}
 ];
+
+// meses do 2o semestre ainda nao cobertos por REAL_MESES (evita Setembro duplicado)
+const PROJ_FUTUROS = PROJ_2SEM.filter(function(p){
+  return !REAL_MESES.some(function(m){ return m.m === p.m; });
+});
 /* ===== DADOS_END ===== */
 
 /* =========== HELPERS =========== */
@@ -822,7 +828,7 @@ function montarSerieMensalLoja(l, nomeLoja){
   const totalLojaMesesFechados = mesesFechados.reduce(function(a,b){return a+b;},0);
   const participacao = totalGeralMesesFechados>0 ? (totalLojaMesesFechados/totalGeralMesesFechados) : (1/NOMES.length);
 
-  const projFuturos = PROJ_2SEM.map(function(p){ return Math.round(p.meta * participacao); });
+  const projFuturos = PROJ_FUTUROS.map(function(p){ return Math.round(p.meta * participacao); });
 
   const valores = mesesFechados.concat([mesAtual]).concat(projFuturos); // 12 valores
   const valoresReal = mesesFechados.concat([mesAtualReal]).concat(projFuturos.map(function(){return 0;}));
@@ -855,7 +861,7 @@ function montarSerieMensalGeral(){
     valoresReal.push(mesAtualReal);
     valoresProj.push(mesAtualProj);
   }
-  PROJ_2SEM.forEach(function(p){
+  PROJ_FUTUROS.forEach(function(p){
     valores.push(p.meta);
     valoresReal.push(0);
     valoresProj.push(p.meta);
@@ -1630,19 +1636,19 @@ V.anual = function(){
           const var25a = (fat25a > 0 && d.fechado) ? Math.round((fatMes/fat25a-1)*100) : null;
           return `<td style="color:#555;font-size:11px">${fat25a > 0 ? fr(fat25a)+(var25a!==null?'<br><span style="font-size:9px;color:'+(var25a>=0?'#2ecc71':'#E8232A')+'">'+(var25a>=0?'+':'')+var25a+'%</span>':'') : '—'}</td>`;
         })()}
-        <td style="color:${cMes};font-weight:bold">${fr(fatMes)}</td>
+        <td style="color:${isProj?'#2ecc71':cMes};font-weight:bold">${isProj?fr(GERAL.fat_real):fr(fatMes)}${isProj?'<br><span style="font-size:9px;color:#f39c12;font-weight:normal">proj. '+fr(fatMes)+'</span>':''}</td>
         <td class="d">${fr(d.meta)}</td>
-        <td style="color:${cMes};font-weight:bold">${pct(fatMes,d.meta)}%</td>
+        <td style="color:${isProj?'#2ecc71':cMes};font-weight:bold">${isProj?pct(GERAL.fat_real,d.meta):pct(fatMes,d.meta)}%${isProj?'<br><span style="font-size:9px;color:#f39c12;font-weight:normal">proj. '+pct(fatMes,d.meta)+'%</span>':''}</td>
         <td style="font-weight:bold">${fr(acum)}</td>
         <td style="color:${acum/META_ANO>.66?'#2ecc71':acum/META_ANO>.33?'#f39c12':'#e74c3c'}">${pct(acum,META_ANO)}%</td>
         <td>${d.fechado?bdg(d.fat,d.meta):'<span class="bdg by">⚡ '+MES_ATUAL.slice(0,3)+' proj.</span>'}</td>
       </tr>`;
     }).join('')}
-    ${PROJ_2SEM.filter(d => !REAL_MESES.find(m => m.m === d.m)).map((d,i)=>{
+    ${PROJ_FUTUROS.map((d,i)=>{
       // Otimista = meta mensal; se o mês já fechou usa o real
       const mesReal = REAL_MESES.find(m => m.m === d.m && m.fechado);
       const fatMesO = mesReal ? mesReal.fat : d.meta;
-      const acum_ate = fat_1sem + PROJ_2SEM.slice(0,i+1).reduce((a,x)=>{
+      const acum_ate = fat_1sem + PROJ_FUTUROS.slice(0,i+1).reduce((a,x)=>{
         const mr = REAL_MESES.find(m=>m.m===x.m&&m.fechado);
         return a + (mr ? mr.fat : x.meta);
       },0);
