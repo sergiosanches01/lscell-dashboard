@@ -1429,7 +1429,7 @@ home: function(){
           <div style="width:100%;height:62px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:3px;border-bottom:0.5px solid #1e1e1e;margin-bottom:14px">
             <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;font-weight:700;color:#E8232A">🏆 Loja do mês</div>
           </div>
-          <div style="width:110px;height:110px;border-radius:12px;background:#1a1a1a;display:flex;align-items:center;justify-content:center;font-size:44px;border:2px solid #E8232A66;overflow:hidden;margin-bottom:12px">
+          <div class="h-dest-foto" style="width:110px;height:110px;border-radius:12px;background:#1a1a1a;display:flex;align-items:center;justify-content:center;font-size:44px;border:2px solid #E8232A66;overflow:hidden;margin-bottom:12px">
             ${(window.DEST_FOTO_LOJAS||{})[lojaTop.nome] ? '<img src="'+(window.DEST_FOTO_LOJAS||{})[lojaTop.nome]+'" style="width:100%;height:100%;object-fit:cover">' : '🏪'}
           </div>
           <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:#fff;line-height:1.1;margin-bottom:4px">${lojaTop.nome}</div>
@@ -1440,7 +1440,7 @@ home: function(){
             <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;font-weight:700;color:#e8a020">⭐ Vendedor da semana</div>
             <div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:#555">📦 Mais produto</div>
           </div>
-          <div style="width:110px;height:110px;border-radius:12px;background:#1a1a1a;display:flex;align-items:center;justify-content:center;font-size:44px;border:2px solid #4a90c466;overflow:hidden;margin-bottom:12px">
+          <div class="h-dest-foto" style="width:110px;height:110px;border-radius:12px;background:#1a1a1a;display:flex;align-items:center;justify-content:center;font-size:44px;border:2px solid #4a90c466;overflow:hidden;margin-bottom:12px">
             ${(window.DEST_FOTO_VENDS||{})[topProd.nome] ? '<img src="'+(window.DEST_FOTO_VENDS||{})[topProd.nome]+'" style="width:140%;height:140%;object-fit:cover;object-position:'+(DEST_FOTO_POSITIONS&&DEST_FOTO_POSITIONS[topProd.nome]?DEST_FOTO_POSITIONS[topProd.nome]:'center center')+';margin:'+(window.DEST_FOTO_MARGIN&&window.DEST_FOTO_MARGIN[topProd.nome]?window.DEST_FOTO_MARGIN[topProd.nome]:'-20%')+'">' : '👤'}
           </div>
           <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:#fff;line-height:1.1;margin-bottom:4px">${topProd.nome}</div>
@@ -1451,8 +1451,8 @@ home: function(){
             <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;font-weight:700;color:#e8a020">⭐ Vendedor da semana</div>
             <div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:#555">🔧 Mais serviço</div>
           </div>
-          <div style="width:110px;height:110px;border-radius:12px;background:#1a1a1a;display:flex;align-items:center;justify-content:center;font-size:44px;border:2px solid #9b59b666;overflow:hidden;margin-bottom:12px">
-            ${(window.DEST_FOTO_VENDS||{})[topServ.nome] ? '<img src="'+(window.DEST_FOTO_VENDS||{})[topServ.nome]+'" style="width:100%;height:100%;object-fit:cover;object-position:'+(DEST_FOTO_POSITIONS&&DEST_FOTO_POSITIONS[topServ.nome]?DEST_FOTO_POSITIONS[topServ.nome]:'center center')+'">' : '👤'}
+          <div class="h-dest-foto" style="width:110px;height:110px;border-radius:12px;background:#1a1a1a;display:flex;align-items:center;justify-content:center;font-size:44px;border:2px solid #9b59b666;overflow:hidden;margin-bottom:12px">
+            ${(window.DEST_FOTO_VENDS||{})[topServ.nome] ? '<img src="'+(window.DEST_FOTO_VENDS||{})[topServ.nome]+'" style="width:140%;height:140%;object-fit:cover;object-position:'+(DEST_FOTO_POSITIONS&&DEST_FOTO_POSITIONS[topServ.nome]?DEST_FOTO_POSITIONS[topServ.nome]:'center center')+';margin:'+(window.DEST_FOTO_MARGIN&&window.DEST_FOTO_MARGIN[topServ.nome]?window.DEST_FOTO_MARGIN[topServ.nome]:'-20%')+'">' : '👤'}
           </div>
           <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:#fff;line-height:1.1;margin-bottom:4px">${topServ.nome}</div>
           <div style="font-size:11px;color:#555"><b style="font-family:'Bebas Neue',sans-serif;font-size:15px;color:#777">${fr(topServ.val)}</b> na semana</div>
