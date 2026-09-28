@@ -249,45 +249,56 @@ tr:hover td{background:#161616}
 }
 
 /* ===== CARDS DA TABELA DE PRECOS (PC_CSS_START) ===== */
-.pc-card{background:#1e1e1e;border:1px solid #333;border-radius:10px;margin-bottom:12px;overflow:hidden;box-shadow:0 3px 10px rgba(0,0,0,.4);display:flex;min-height:140px}
-.pc-foto{width:114px;min-width:114px;background:#fff;display:flex;align-items:center;justify-content:center;padding:10px;border-right:1px solid #ddd}
-.pc-foto-box{position:relative;width:100%;height:120px;display:flex;align-items:center;justify-content:center}
+/* Texto usa fonte do sistema; emoji fica isolado em .pc-emo (antes a fonte de emoji era aplicada
+   ao texto todo e no iPhone os numeros saiam espacados/desalinhados) */
+.pc-card{background:#1e1e1e;border:1px solid #333;border-radius:12px;margin-bottom:12px;overflow:hidden;box-shadow:0 3px 10px rgba(0,0,0,.4);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif}
+.pc-top{display:flex;align-items:stretch}
+.pc-foto{width:120px;min-width:120px;background:#fff;display:flex;align-items:center;justify-content:center;padding:8px}
+.pc-foto-box{position:relative;width:100%;height:130px;display:flex;align-items:center;justify-content:center}
 .pc-foto-box img{position:relative;max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;flex-shrink:0;z-index:1}
-/* top/right/bottom/left no lugar de inset: inset so existe no Safari 14.1+ */
 .pc-foto-ph{position:absolute;top:0;right:0;bottom:0;left:0;display:flex;align-items:center;justify-content:center;font-size:34px;opacity:.25}
-.pc-body{flex:1;min-width:0;padding:12px 14px;display:flex;flex-direction:column;justify-content:space-between}
-.pc-nome{font-family:'Bebas Neue',sans-serif;font-size:18px;color:#fff;letter-spacing:1px;margin-bottom:8px;line-height:1.15}
-.pc-specs{display:grid;grid-template-columns:1fr 1fr;gap:3px 10px;margin-bottom:8px}
-.pc-emo,.pc-spec,.pc-label,.pc-parc{font-family:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji','Twemoji Mozilla',Arial,sans-serif}
-.pc-spec{font-size:11px;color:#bbb;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-/* margens no lugar de gap: gap em flex so existe no Safari 14.1+ */
-.pc-footer{display:flex;align-items:flex-end;justify-content:space-between;border-top:1px solid #2a2a2a;padding-top:8px}
-.pc-footer>*+*{margin-left:10px}
-.pc-label{font-size:10px;color:#888;margin-bottom:1px}
-.pc-vista{font-size:22px;font-weight:bold;color:#2ecc71;font-family:'Bebas Neue',sans-serif;letter-spacing:1px;line-height:1.1}
-.pc-parc{font-size:10px;color:#999}
-.pc-acoes{display:flex;align-items:center;flex-shrink:0}
+.pc-info{flex:1;min-width:0;padding:12px 14px}
+.pc-nome{font-family:'Bebas Neue',sans-serif;font-size:21px;color:#fff;letter-spacing:.8px;margin-bottom:8px;line-height:1.1}
+.pc-specs{display:grid;grid-template-columns:1fr 1fr;gap:5px 12px}
+.pc-spec{display:flex;align-items:flex-start;font-size:12px;color:#bbb;line-height:1.3;min-width:0}
+.pc-spec span:last-child{min-width:0;overflow-wrap:anywhere}
+.pc-emo{font-family:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif;font-size:12px;width:18px;flex-shrink:0;line-height:1.3}
+.pc-footer{display:flex;align-items:center;justify-content:space-between;border-top:1px solid #2a2a2a;padding:12px 14px;background:#191919}
+.pc-footer>*+*{margin-left:12px}
+.pc-label{font-size:11px;color:#8a8a8a;margin-bottom:2px;text-transform:uppercase;letter-spacing:.5px}
+.pc-vista{font-size:28px;font-weight:bold;color:#2ecc71;font-family:'Bebas Neue',sans-serif;letter-spacing:1px;line-height:1.05}
+.pc-precos{display:flex;align-items:center;flex-wrap:wrap}
+.pc-av{margin-right:16px}
+.pc-parcs{display:flex;flex-wrap:wrap}
+.pc-parc{display:flex;flex-direction:column;background:#232323;border:1px solid #2e2e2e;border-radius:6px;padding:5px 9px;margin:0 6px 0 0}
+.pc-parc-t{font-size:10px;color:#888;white-space:nowrap}
+.pc-parc-v{font-size:14px;font-weight:bold;color:#eee;white-space:nowrap}
+.pc-acoes{display:flex;flex-direction:row;flex-shrink:0}
 .pc-acoes>*+*{margin-left:8px}
-.pc-copy{-webkit-appearance:none;appearance:none;background:transparent;border:1px solid #555;color:#bbb;padding:9px 12px;border-radius:20px;font-size:12px;font-weight:bold;cursor:pointer;white-space:nowrap;font-family:inherit;-webkit-tap-highlight-color:transparent}
+.pc-copy{-webkit-appearance:none;appearance:none;background:transparent;border:1px solid #555;color:#ddd;padding:10px 14px;border-radius:8px;font-size:13px;font-weight:bold;cursor:pointer;white-space:nowrap;font-family:inherit;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 .pc-copy:active{background:#2a2a2a}
-.pc-wa{display:flex;align-items:center;justify-content:center;background:#25d366;color:#fff;padding:9px 14px;border-radius:20px;font-size:12px;font-weight:bold;text-decoration:none;white-space:nowrap;-webkit-tap-highlight-color:transparent}
-.pc-wa svg{margin-right:6px;flex-shrink:0}
 @media (max-width:560px){
-  .pc-card{min-height:0}
-  .pc-foto{width:88px;min-width:88px;padding:8px}
-  .pc-foto-box{height:98px}
-  .pc-body{padding:10px 11px}
-  .pc-nome{font-size:17px}
-  .pc-specs{grid-template-columns:1fr;gap:2px}
-  /* no celular a ficha tecnica quebra linha em vez de ser cortada com "..." */
-  .pc-spec{font-size:11.5px;white-space:normal;overflow:visible;text-overflow:clip;line-height:1.35}
-  .pc-footer{flex-direction:column;align-items:stretch}
-  .pc-footer>*+*{margin-left:0;margin-top:9px}
-  .pc-vista{font-size:26px}
-  .pc-parc{font-size:11px}
-  .pc-acoes{width:100%}
-  .pc-wa{flex:1;padding:12px 14px;font-size:14px;border-radius:8px}
-  .pc-copy{flex:1;padding:12px 10px;font-size:13px;border-radius:8px}
+  .pc-foto{width:96px;min-width:96px;padding:6px}
+  .pc-foto-box{height:112px}
+  .pc-info{padding:10px 12px}
+  .pc-nome{font-size:20px;margin-bottom:6px}
+  .pc-specs{grid-template-columns:1fr;gap:4px}
+  .pc-spec{font-size:13px}
+  .pc-emo{font-size:13px;width:20px}
+  .pc-footer{flex-direction:column;align-items:stretch;padding:12px}
+  .pc-footer>*+*{margin-left:0;margin-top:12px}
+  .pc-vista{font-size:32px}
+  .pc-precos{display:block}
+  .pc-av{margin-right:0}
+  .pc-parcs{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px}
+  .pc-parc{margin:0}
+  .pc-parc-v{font-size:15px}
+  .pc-acoes{flex-direction:row}
+  .pc-acoes>*+*{margin-top:0;margin-left:8px}
+  .pc-copy{flex:1;padding:13px 8px;font-size:14px;min-height:46px}
+  /* no celular a lista rola junto com a pagina (sem rolagem dentro de rolagem) */
+  .op-scroll.pc-lista{max-height:none;overflow:visible}
+  #preco-busca-input{font-size:16px!important} /* evita zoom automatico do iPhone ao tocar na busca */
 }
 /* ===== PC_CSS_END ===== */
 </style>
@@ -2243,44 +2254,44 @@ function precoCopiarImg(idx, btn){
 function precoRenderCard(item){
   var marcaCores = {xiaomi:'#F60',realme:'#FFCC00',samsung:'#1428A0',motorola:'#5C92FA'};
   var cor = marcaCores[item.marca] || '#555';
-
-  var txt = precoTextoWhats(item);
   var idx = PRECOS_DATA.indexOf(item);
-
 
   var fotoHtml;
   if(item.img){
     fotoHtml = '<div class="pc-foto-box">'
       + '<div class="pc-foto-ph" style="color:' + cor + '">📷</div>'
-      + '<img src="' + item.img + '" referrerpolicy="no-referrer" alt="' + item.modelo + '" onerror="this.style.opacity=0" />'
+      + '<img src="' + item.img + '" referrerpolicy="no-referrer" alt="' + item.modelo + '" loading="lazy" onerror="this.style.opacity=0" />'
       + '</div>';
   } else {
     fotoHtml = '<div class="pc-foto-box"><div class="pc-foto-ph" style="color:' + cor + ';opacity:.4">📷</div></div>';
   }
+  function spec(emo, txt){
+    return txt ? '<div class="pc-spec"><span class="pc-emo">' + emo + '</span><span>' + txt + '</span></div>' : '';
+  }
 
-  return '<div class="pc-card" style="border-color:' + cor + '33">'
-    + '<div class="pc-foto">' + fotoHtml + '</div>'
-    + '<div class="pc-body">'
-    + '<div>'
-    + '<div class="pc-nome">' + item.modelo + '</div>'
-    + '<div class="pc-specs">'
-    + '<div class="pc-spec">💾 ' + (item.ram||'') + '</div>'
-    + '<div class="pc-spec">🖥️ ' + (item.tela||'') + '</div>'
-    + '<div class="pc-spec">📸 ' + (item.camera||'') + '</div>'
-    + '<div class="pc-spec">🔋 ' + (item.bateria||'') + '</div>'
-    + '</div>'
+  return '<div class="pc-card" style="border-color:' + cor + '44">'
+    + '<div class="pc-top">'
+    +   '<div class="pc-foto">' + fotoHtml + '</div>'
+    +   '<div class="pc-info">'
+    +     '<div class="pc-nome">' + item.modelo + '</div>'
+    +     '<div class="pc-specs">'
+    +       spec('💾', item.ram) + spec('⚙️', item.proc) + spec('🖥️', item.tela) + spec('📸', item.camera) + spec('🔋', item.bateria)
+    +     '</div>'
+    +   '</div>'
     + '</div>'
     + '<div class="pc-footer">'
-    + '<div>'
-    + '<div class="pc-label">✅ À vista (Dinheiro/PIX)</div>'
-    + '<div class="pc-vista">' + frPreco(item.vista) + '</div>'
-    + '<div class="pc-parc">💳 10x: ' + frPreco(item.credito) + ' &nbsp;···&nbsp; 📄 24x: ' + frPreco(item.boleto) + '</div>'
-    + '</div>'
-    + '<div class="pc-acoes">'
-    + (item.img ? '<button type="button" class="pc-copy" onclick="precoCopiarImg(' + idx + ', this)">🖼️ Copiar imagem</button>' : '')
-    + '<button type="button" class="pc-copy" onclick="precoCopiar(' + idx + ', this)">📋 Copiar texto</button>'
-    + '</div>'
-    + '</div>'
+    +   '<div class="pc-precos">'
+    +     '<div class="pc-av"><div class="pc-label">À vista · Dinheiro / PIX</div>'
+    +     '<div class="pc-vista">' + frPreco(item.vista) + '</div></div>'
+    +     '<div class="pc-parcs">'
+    +       '<div class="pc-parc"><span class="pc-parc-t">Crédito 10x s/ juros</span><span class="pc-parc-v">' + frPreco(item.credito) + '</span></div>'
+    +       '<div class="pc-parc"><span class="pc-parc-t">Boleto até 24x</span><span class="pc-parc-v">' + frPreco(item.boleto) + '</span></div>'
+    +     '</div>'
+    +   '</div>'
+    +   '<div class="pc-acoes">'
+    +     '<button type="button" class="pc-copy" onclick="precoCopiar(' + idx + ', this)">📋 Copiar texto</button>'
+    +     (item.img ? '<button type="button" class="pc-copy" onclick="precoCopiarImg(' + idx + ', this)">🖼️ Copiar imagem</button>' : '')
+    +   '</div>'
     + '</div>'
     + '</div>';
 }
@@ -2310,7 +2321,7 @@ V.precos = function(){
         + 'style="width:100%;padding:10px 12px;background:#1a1a1a;border:1px solid #333;border-radius:5px;color:#eee;font-size:13px;margin-bottom:8px">'
         + (precoBuscaQ ? '<button onclick="precoLimpar()" style="padding:6px 14px;background:#222;border:1px solid #333;border-radius:5px;color:#aaa;font-size:11px;cursor:pointer">Limpar busca</button>' : '')
         + '</div>')
-    + '<div class="op-scroll">'+conteudoHtml+'</div>'
+    + '<div class="op-scroll pc-lista">'+conteudoHtml+'</div>'
     + '</div>';
 };
 
