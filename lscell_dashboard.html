@@ -302,11 +302,39 @@ tr:hover td{background:#161616}
 }
 /* ===== PC_CSS_END ===== */
 </style>
+<style>
+.mm-wrap{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.mm-card{border-radius:8px;padding:12px 14px;min-width:0}
+.mm-lbl{font-size:10px;color:#888;text-transform:uppercase;letter-spacing:.6px;margin-bottom:2px}
+.mm-meta{font-size:13px;color:#ccc;margin-bottom:8px}
+.mm-cap{font-size:9px;color:#666;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px}
+.mm-big{font-size:17px;font-weight:bold;white-space:nowrap}
+.mm-dia{font-size:14px;font-weight:bold;white-space:nowrap}
+.mm-sub{font-size:10px;margin-top:2px}
+.ml-row{padding:10px 0;border-bottom:1px solid #1e1e1e}
+.ml-row:last-of-type{border-bottom:none}
+.ml-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;font-size:13px;color:#eee}
+.ml-head span{font-size:10px;color:#666}
+.ml-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.ml-cel{background:#141414;border:1px solid #2a2a2a;border-radius:6px;padding:6px 8px;text-align:center;min-width:0}
+.ml-lbl{font-size:9px;color:#777;text-transform:uppercase;letter-spacing:.4px;white-space:nowrap}
+.ml-big{font-size:14px;font-weight:bold;white-space:nowrap;margin-top:2px}
+.ml-dia{font-size:10px;color:#888;white-space:nowrap}
+.rolar-hint{display:none;font-size:10px;color:#666;margin:-2px 0 8px}
+@media(max-width:600px){
+  .rolar-hint{display:block}
+  .mm-wrap{gap:6px}
+  .mm-card{padding:8px 7px}
+  .mm-lbl{font-size:9px}.mm-meta{font-size:11px;margin-bottom:6px}
+  .mm-big{font-size:13px}.mm-dia{font-size:12px}.mm-cap{font-size:8px}
+  .ml-cel{padding:5px 3px}.ml-big{font-size:12px}.ml-dia{font-size:9px}.ml-lbl{font-size:8px}
+}
+</style>
 </head>
 <body>
 <div id="app-header">
 <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:4px"><img id="logo-header-img" alt="LSCELL" style="height:32px;width:auto"><h1 style="margin:0">LSCELL — DASHBOARD SEMANAL</h1></div>
-<p class="sub">Gerado em: Domingo, 4 de Outubro de 2026</p>
+<p class="sub">Gerado em: Sexta, 9 de Outubro de 2026</p>
 <div class="semana-badge"><span class="sbadge" id="semana-badge-txt">📅 ...</span></div>
 <div id="main-nav-container"></div>
 <div id="tabs"></div>
@@ -320,7 +348,7 @@ const LOGO_B64 = 'iVBORw0KGgoAAAANSUhEUgAAAGsAAABuCAYAAAAgcu2/AAAKMWlDQ1BJQ0MgUH
 /* ===== DADOS_START ===== */
 const MES_ATUAL = 'Outubro';
 const SEM_ATUAL = 1;
-const META_MES_GERAL = 216000;
+const META_MES_GERAL = 217000;
 const DIAS_POR_SEMANA = [3, 6, 5, 12]; // S1=1-3out (qui-sab), S2=5-10, S3=13-17 (12/out feriado), S4=19-31
 const DIAS_HIST_S = [6,6,6,6]; // base historica: semanas de 6 dias
 const SEMANA_ATUAL_PARCIAL = false; // S1 fechada (3 dias)
@@ -329,85 +357,85 @@ const MESES_FECHADOS_LABELS = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio"
 
 const GERAL = {
   s: [
-    {n:'S1', fat:20694, meta:24923, real:true},
-    {n:'S2', fat:0, meta:49846, real:false},
-    {n:'S3', fat:0, meta:41538, real:false},
-    {n:'S4', fat:0, meta:99693, real:false},
+    {n:'S1', fat:20694, meta:65100, real:true},
+    {n:'S2', fat:0, meta:43400, real:false},
+    {n:'S3', fat:0, meta:54250, real:false},
+    {n:'S4', fat:0, meta:54250, real:false},
   ],
   fat_real: 20694,
   fat_proj: 0,
-  meta: 216000,
+  meta: 217000,
   tm_real: 85,
   orc_real: 193,
 };
 GERAL.fat_total_proj = GERAL.fat_real + GERAL.fat_proj;
 
-// Metas novas a partir de out/2026: Esteio 45k, Parque 45k, Shop 35k, Canoas 35k, Gravatai (Rondon) 33k, Avenida 23k = 216k
+// Metas reajustadas out/2026 (planilha 09/out): Esteio 45k, Parque 45k, Canoas 36k, Shop 35k, Gravatai (Rondon) 33k, Avenida 23k = 217k | niveis 217k/230k/250k | semanas 30/20/25/25%
 const LOJAS = {
   'Esteio': {
     meta:45000, tm:[52.26], orc:32,
     feriados:[0,0,0,0], // 12/out (feriado) ja descontado em DIAS_POR_SEMANA (S3 = 5 dias)
-    s_real:[3152.2], s_meta:[5192, 10385, 8654, 20769],
+    s_real:[3152.2], s_meta:[13500, 9000, 11250, 11250],
     hist_s1:[7746, 7746, 13737, 25276, 15036, 11208, 15644, 12030, 13942], hist_s2:[9317, 8966, 8967, 10425, 11971, 12677, 14737, 9649, 12980],
     hist_s3:[8093, 5165, 12109, 6037, 5913, 10012, 9686, 7718, 10347], hist_s4:[7686, 8282, 12032, 3904, 14788, 12262, 7537, 17379, 13412],
     prodMetaMes:25000, servMetaMes:20000,
-    prodSReal:[1672.2], prodSMeta:[2885, 5769, 4808, 11538],
-    servSReal:[1480], servSMeta:[2308, 4615, 3846, 9231],
+    prodSReal:[1672.2], prodSMeta:[7500, 5000, 6250, 6250],
+    servSReal:[1480], servSMeta:[6000, 4000, 5000, 5000],
     fat2025:[32491, 39284, 33147, 38118, 44593, 34250, 31719, 45454, 37629, 41218, 46211, 55123]
   },
   'Esteio Shop.': {
     meta:35000, tm:[136.67], orc:24,
     feriados:[0,0,0,0], // 12/out (feriado) ja descontado em DIAS_POR_SEMANA (S3 = 5 dias)
-    s_real:[3769.9], s_meta:[4038, 8077, 6731, 16154],
+    s_real:[3769.9], s_meta:[10500, 7000, 8750, 8750],
     hist_s1:[4335, 4335, 7189, 10900, 11336, 9591, 16169, 13506, 6214], hist_s2:[4084, 5119, 7320, 5021, 6114, 6809, 8438, 8656, 7103],
     hist_s3:[5009, 3949, 7177, 7681, 9768, 12928, 3723, 9518, 5857], hist_s4:[6802, 4396, 7144, 6178, 6770, 6360, 5138, 6114, 6532],
     prodMetaMes:31000, servMetaMes:4000,
-    prodSReal:[3280], prodSMeta:[3577, 7154, 5962, 14307],
-    servSReal:[489.9], servSMeta:[462, 923, 769, 1846],
+    prodSReal:[3280], prodSMeta:[9300, 6200, 7750, 7750],
+    servSReal:[489.9], servSMeta:[1200, 800, 1000, 1000],
     fat2025:[30715, 25724, 29990, 23927, 38002, 26488, 25549, 30020, 27225, 29370, 23435, 44958]
   },
   'Canoas': {
-    meta:35000, tm:[103.29], orc:60,
+    meta:36000, tm:[103.29], orc:60,
     feriados:[0,0,0,0], // 12/out (feriado) ja descontado em DIAS_POR_SEMANA (S3 = 5 dias)
-    s_real:[6562.5], s_meta:[4038, 8077, 6731, 16154],
+    s_real:[6562.5], s_meta:[10800, 7200, 9000, 9000],
     hist_s1:[10278, 10278, 7786, 13771, 18700, 9047, 11372, 13651, 8002], hist_s2:[8088, 3914, 8922, 6186, 7921, 11965, 8133, 6559, 7964],
     hist_s3:[5679, 3994, 9190, 8823, 10778, 11442, 7576, 7662, 7478], hist_s4:[12346, 9012, 10437, 10840, 11767, 11887, 7559, 11499, 9404],
-    prodMetaMes:22000, servMetaMes:13000,
-    prodSReal:[6197.5], prodSMeta:[2538, 5077, 4231, 10154],
-    servSReal:[365], servSMeta:[1500, 3000, 2500, 6000],
+    prodMetaMes:23000, servMetaMes:13000,
+    prodSReal:[6197.5], prodSMeta:[6900, 4600, 5750, 5750],
+    servSReal:[365], servSMeta:[3900, 2600, 3250, 3250],
     fat2025:[36937, 27521, 30928, 31359, 38043, 33162, 31242, 29623, 29928, 35887, 32598, 43698]
   },
   'Avenida': {
     meta:23000, tm:[37.25], orc:13,
     feriados:[0,0,0,0], // 12/out (feriado) ja descontado em DIAS_POR_SEMANA (S3 = 5 dias)
-    s_real:[854.3], s_meta:[2654, 5308, 4423, 10615],
+    s_real:[854.3], s_meta:[6900, 4600, 5750, 5750],
     hist_s1:[4441, 4201, 4252, 5301, 11281, 5058, 12769, 9610, 6103], hist_s2:[3186, 1720, 1754, 3704, 10245, 5301, 5532, 2206, 3124],
     hist_s3:[3013, 3872, 3404, 2069, 3647, 9156, 14219, 7027, 8648], hist_s4:[3294, 3660, 2159, 2895, 8512, 6560, 7176, 8326, 7037],
-    prodMetaMes:11500, servMetaMes:11500,
-    prodSReal:[484.3], prodSMeta:[1327, 2654, 2212, 5307],
-    servSReal:[370], servSMeta:[1327, 2654, 2212, 5307],
+    prodMetaMes:15000, servMetaMes:8000,
+    prodSReal:[484.3], prodSMeta:[4500, 3000, 3750, 3750],
+    servSReal:[370], servSMeta:[2400, 1600, 2000, 2000],
     fat2025:[17271, 11977, 17021, 15576, 19922, 14944, 17723, 14688, 15724, 17609, 15065, 18887]
   },
   'Parque': {
     meta:45000, tm:[72.46], orc:42,
     feriados:[0,0,0,0], // 12/out (feriado) ja descontado em DIAS_POR_SEMANA (S3 = 5 dias)
-    s_real:[3753.5], s_meta:[5192, 10385, 8654, 20769],
+    s_real:[3753.5], s_meta:[13500, 9000, 11250, 11250],
     hist_s1:[12552, 12552, 10794, 20080, 14303, 6822, 19136, 12637, 11714], hist_s2:[8687, 8787, 6226, 12985, 9318, 12429, 7017, 4985, 6559],
     hist_s3:[10530, 4147, 10007, 7151, 10927, 9747, 7622, 7188, 5622], hist_s4:[7049, 6257, 7626, 4449, 14574, 9454, 5869, 10627, 11965],
     prodMetaMes:33000, servMetaMes:12000,
-    prodSReal:[3043.5], prodSMeta:[3808, 7615, 6346, 15231],
-    servSReal:[710], servSMeta:[1385, 2769, 2308, 5538],
+    prodSReal:[3043.5], prodSMeta:[9900, 6600, 8250, 8250],
+    servSReal:[710], servSMeta:[3600, 2400, 3000, 3000],
     fat2025:[48392, 44975, 40134, 41025, 47019, 37364, 41215, 39820, 40057, 37033, 42603, 51598]
   },
   'Gravataí': {
     meta:33000, tm:[76.44], orc:22,
     feriados:[0,0,0,0], // 12/out (feriado) ja descontado em DIAS_POR_SEMANA (S3 = 5 dias)
-    s_real:[2601.7], s_meta:[3808, 7615, 6346, 15231],
+    s_real:[2601.7], s_meta:[9900, 6600, 8250, 8250],
     hist_s1:[7180, 7180, 7142, 18145, 14204, 11054, 9436, 10245, 5703], hist_s2:[5385, 6129, 8073, 11657, 9671, 9115, 6324, 8489, 16761],
     hist_s3:[6368, 3771, 7424, 10971, 5905, 5675, 8318, 6128, 6521], hist_s4:[5588, 8094, 10310, 5936, 8164, 7329, 6774, 7335, 9776],
-    prodMetaMes:19000, servMetaMes:14000,
-    prodSReal:[1681.7], prodSMeta:[2192, 4385, 3654, 8769],
-    servSReal:[920], servSMeta:[1615, 3231, 2692, 6462],
+    prodMetaMes:18000, servMetaMes:15000,
+    prodSReal:[1681.7], prodSMeta:[5400, 3600, 4500, 4500],
+    servSReal:[920], servSMeta:[4500, 3000, 3750, 3750],
     fat2025:[26986, 29489, 26509, 31871, 25085, 29126, 28128, 24497, 24287, 25782, 26994, 30779]
   }
 };
@@ -476,7 +504,7 @@ const REAL_MESES = [
   {m:'Julho',    fat:225904, meta:210000, fechado:true},
   {m:'Agosto',   fat:218746, meta:210000, fechado:true},
   {m:'Setembro', fat:208766, meta:210000, fechado:true},
-  {m:'Outubro',  fat:0,      meta:216000, fechado:false}
+  {m:'Outubro',  fat:0,      meta:217000, fechado:false}
 ];
 
 const REAL_MESES_2025 = [
@@ -623,6 +651,7 @@ function miniBarProdServ(lbl, real, meta){
 
 /* =========== FUNCAO SEMANAS GERAL =========== */
 // Calcula quantos dias uteis (seg-sab, sem domingo) restam de HOJE até o fim do mes corrente
+const FERIADOS = ['2026-10-12','2026-11-02','2026-11-15','2026-11-20','2026-12-25'];
 function diasUteisRestantesNoMes(){
   var hoje = new Date();
   var ano = hoje.getFullYear();
@@ -631,13 +660,51 @@ function diasUteisRestantesNoMes(){
   var dias = 0;
   for(var d = hoje.getDate(); d <= ultimoDia; d++){
     var diaSemana = new Date(ano, mesIdx, d).getDay(); // 0=domingo
-    if(diaSemana !== 0) dias++;
+    var iso = ano+'-'+String(mesIdx+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
+    if(diaSemana !== 0 && FERIADOS.indexOf(iso) < 0) dias++;
   }
   return Math.max(1, dias);
 }
 
 // Bloco com as 3 metas mensais (a meta oficial das lojas + 2 metas superiores de acompanhamento pessoal)
-const METAS_MENSAIS_NIVEIS = [216000, 231000, 250000];
+const METAS_MENSAIS_NIVEIS = [217000, 230000, 250000];
+// Metas 1/2/3 por loja (out/2026)
+const METAS_NIVEIS_LOJA = {
+  'Esteio':       [45000, 47000, 50000],
+  'Parque':       [45000, 47000, 50000],
+  'Esteio Shop.': [35000, 37500, 40000],
+  'Canoas':       [36000, 38500, 41500],
+  'Gravataí':     [33000, 35500, 38000],
+  'Avenida':      [23000, 25500, 30500]
+};
+function buildMetasMensaisCompacto(faturamentoAcumulado, niveis, titulo){
+  var diasRestantes = diasUteisRestantesNoMes();
+  var blocos = (niveis||METAS_MENSAIS_NIVEIS).map(function(metaNivel, idx){
+    var falta = Math.max(0, metaNivel - faturamentoAcumulado);
+    var jaBatida = faturamentoAcumulado >= metaNivel;
+    var porDia = falta / diasRestantes;
+    var labelNivel = (idx+1)+'ª Meta';
+    var corNivel = jaBatida ? '#2ecc71' : (idx===0 ? '#f39c12' : (idx===1 ? '#e67e22' : '#e74c3c'));
+    var bgNivel = jaBatida ? '#001a08' : '#141414';
+    var bdNivel = jaBatida ? '#1a6e3a' : '#2a2a2a';
+    return '<div class="mm-card" style="background:'+bgNivel+';border:1px solid '+bdNivel+'">'
+      + '<div class="mm-lbl">'+labelNivel+'</div>'
+      + '<div class="mm-meta">'+fr(metaNivel)+'</div>'
+      + (jaBatida
+          ? '<div class="mm-big" style="color:#2ecc71">🎯 Batida</div><div class="mm-sub" style="color:#5dca6a">+'+fr(faturamentoAcumulado-metaNivel)+'</div>'
+          : '<div class="mm-cap">Falta</div>'
+            + '<div class="mm-big" style="color:'+corNivel+'">'+fr(falta)+'</div>'
+            + '<div class="mm-cap" style="margin-top:6px;border-top:1px solid '+bdNivel+';padding-top:6px">Por dia</div>'
+            + '<div class="mm-dia" style="color:'+corNivel+'">'+fr(porDia)+'</div>')
+      + '</div>';
+  }).join('');
+  return '<div class="box"><div class="bt">'+(titulo||'Metas Mensais da Rede — quanto falta')+'</div>'
+    + '<div class="mm-wrap">'+blocos+'</div>'
+    + '<div style="font-size:10px;color:#444;margin-top:10px">Por dia = ÷ '+diasRestantes+' dia(s) útil(eis) restantes (seg a sáb, a partir de hoje, sem feriados).</div>'
+    + '</div>';
+}
+
+// Visão Mês Atual: formato original (cartões largos, rola para o lado no celular)
 function buildMetasMensais(faturamentoAcumulado){
   var diasRestantes = diasUteisRestantesNoMes();
   var blocos = METAS_MENSAIS_NIVEIS.map(function(metaNivel, idx){
@@ -653,21 +720,36 @@ function buildMetasMensais(faturamentoAcumulado){
       + '<div style="font-size:13px;color:#ccc;margin-bottom:8px">'+fr(metaNivel)+'</div>'
       + (jaBatida
           ? '<div style="font-size:15px;font-weight:bold;color:#2ecc71">🎯 Meta batida</div><div style="font-size:10px;color:#5dca6a;margin-top:2px">+'+fr(faturamentoAcumulado-metaNivel)+' acima</div>'
-          : (diasRestantes <= 0
-              ? '<div style="font-size:15px;font-weight:bold;color:'+corNivel+'">Não atingida</div>'
-                + '<div style="font-size:11px;color:#555;margin-top:4px">Faltou '+fr(falta)+'</div>'
-              : '<div style="font-size:9px;color:#666;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px">Falta no total</div>'
-                + '<div style="font-size:17px;font-weight:bold;color:'+corNivel+'">'+fr(falta)+'</div>'
-                + '<div style="font-size:9px;color:#555;margin-top:6px;border-top:1px solid '+bdNivel+';padding-top:6px">Por dia útil restante (÷ '+diasRestantes+')</div>'
-                + '<div style="font-size:14px;font-weight:bold;color:'+corNivel+';margin-top:2px">'+fr(porDia)+'/dia</div>'
-            ))
+          : '<div style="font-size:9px;color:#666;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px">Falta no total</div>'
+            + '<div style="font-size:17px;font-weight:bold;color:'+corNivel+'">'+fr(falta)+'</div>'
+            + '<div style="font-size:9px;color:#555;margin-top:6px;border-top:1px solid '+bdNivel+';padding-top:6px">Por dia útil restante (÷ '+diasRestantes+')</div>'
+            + '<div style="font-size:14px;font-weight:bold;color:'+corNivel+';margin-top:2px">'+fr(porDia)+'/dia</div>')
       + '</div>';
   }).join('');
-
   return '<div class="box"><div class="bt">Metas Mensais — quanto falta para cada nível</div>'
+    + '<div class="rolar-hint">↔ arraste para o lado para ver tudo</div>'
     + '<div style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin:-4px"><div style="display:flex;gap:10px;flex-wrap:nowrap;min-width:max-content;padding:4px">'+blocos+'</div></div>'
-    + (diasRestantes <= 0 ? '<div style="font-size:10px;color:#2ecc71;margin-top:10px">✓ Mês encerrado — resultado final.</div>' : '<div style="font-size:10px;color:#444;margin-top:10px">Considera '+diasRestantes+' dia(s) útil(eis) restantes no mês (segunda a sábado, a partir de hoje).</div>')
+    + '<div style="font-size:10px;color:#444;margin-top:10px">Considera '+diasRestantes+' dia(s) útil(eis) restantes no mês (segunda a sábado, a partir de hoje, sem feriados).</div>'
     + '</div>';
+}
+
+// Tabela: quanto falta por loja para Meta 1 / 2 / 3 (rola para o lado no celular)
+function buildMetasPorLoja(){
+  var dr = diasUteisRestantesNoMes();
+  var cores = ['#f39c12','#e67e22','#e74c3c'];
+  var cel = function(real, meta, i){
+    if(real >= meta) return '<td style="text-align:center;color:#2ecc71;font-weight:bold;white-space:nowrap">🎯 batida<div style="font-size:9px;color:#5dca6a;font-weight:normal">+'+fr(real-meta)+'</div></td>';
+    var f = meta - real;
+    return '<td style="text-align:center;white-space:nowrap"><div style="color:'+cores[i]+';font-weight:bold">'+fr(f)+'</div><div style="font-size:10px;color:#888">'+fr(f/dr)+'/dia</div><div style="font-size:9px;color:#444">meta '+fr(meta)+'</div></td>';
+  };
+  var linhas = NOMES.map(function(n){
+    var l = LOJAS[n], nv = METAS_NIVEIS_LOJA[n] || [l.meta,l.meta,l.meta];
+    return '<tr><td style="white-space:nowrap"><strong>'+n+'</strong><div style="font-size:10px;color:#666">real '+fr(l.fat_real)+'</div></td>'+nv.map(function(m,i){return cel(l.fat_real,m,i);}).join('')+'</tr>';
+  }).join('');
+  return '<div class="box"><div class="bt">Metas por Loja — quanto falta para Meta 1, 2 e 3</div>'
+    + '<div class="rolar-hint">↔ arraste para o lado para ver tudo</div>'
+    + '<div style="overflow-x:auto;-webkit-overflow-scrolling:touch"><table style="min-width:520px"><thead><tr><th>Loja</th><th style="text-align:center">1ª Meta</th><th style="text-align:center">2ª Meta</th><th style="text-align:center">3ª Meta</th></tr></thead><tbody>'+linhas+'</tbody></table></div>'
+    + '<div style="font-size:10px;color:#444;margin-top:10px">Valor por dia considera '+dr+' dia(s) útil(eis) restantes no mês (segunda a sábado, a partir de hoje, sem feriados).</div></div>';
 }
 
 /* Bloco de semana PARCIAL (mes ainda em curso dentro da semana) */
@@ -1057,6 +1139,8 @@ mes(){
 
   ${buildMetasMensais(fat_acum)}
 
+  ${buildMetasPorLoja()}
+
   <div class="box"><div class="bt">Ranking das Lojas no Mês (acumulado real)</div>
   ${[...NOMES].sort((a,b)=>LOJAS[b].fat_real-LOJAS[a].fat_real).map((n,i)=>{
     const l=LOJAS[n];
@@ -1177,6 +1261,8 @@ loja(){
       ${miniBarProdServ('🔧 Serviço', l.servRealAcum, l.servMetaMes)}
     </div>
   </div>
+
+  ${buildMetasMensaisCompacto(l.fat_real, METAS_NIVEIS_LOJA[curLoja], 'Metas do Mês — '+curLoja+' — quanto falta para cada nível')}
 
   <div class="box"><div class="bt">Semanas — ${curLoja} — ${MES_ATUAL} 2026</div>
   ${buildSemLoja(l)}
@@ -1403,7 +1489,7 @@ alertas(){
     <div class="ins gr"><strong>3. A meta é alcançável repetindo setembro.</strong> Faltam R$ 195.306 em 23 dias = <strong>R$ 8.492/dia</strong>, só 1,7% acima da média diária de setembro. Não precisa de salto de patamar — precisa de constância.</div>
     <div class="ins re"><strong>4. Segurar a segunda metade do mês.</strong> Em setembro o ritmo diário caiu 36% na segunda quinzena. Em outubro a S4 sozinha tem 12 dias (46% do mês). Se o padrão se repetir, a meta escapa na reta final — o acompanhamento diário na S4 precisa ser mais apertado.</div>
     <div class="ins re"><strong>5. Serviço continua sendo a prioridade.</strong> Na S1 de outubro o serviço foi R$ 4.335 — 21% do faturamento, contra 27% em setembro. Canoas e Esteio são as lojas que mais devem em serviço. Recuperar metade do déficit de serviço de setembro já garantiria a meta.</div>
-    <div class="ins ye"><strong>6. Novas metas valendo.</strong> A partir de outubro: Avenida sobe de R$ 15 mil para R$ 23 mil e Gravataí (Rondon) passa de R$ 35 mil para R$ 33 mil — rede em <strong>R$ 216 mil</strong>, com 2ª e 3ª metas em R$ 231 mil e R$ 250 mil. A aba de outubro da planilha ainda traz as metas antigas (R$ 210 mil) — vale atualizar para os números baterem.</div>
+    <div class="ins ye"><strong>6. Metas reajustadas.</strong> Planilha de outubro atualizada: Esteio e Parque R$ 45 mil, Canoas R$ 36 mil, Esteio Shopping R$ 35 mil, Gravataí (Rondon) R$ 33 mil e Avenida R$ 23 mil — rede em <strong>R$ 217 mil</strong>, com 2ª e 3ª metas em R$ 230 mil e R$ 250 mil. Divisão semanal: 30% / 20% / 25% / 25%.</div>
     <div class="ins ye"><strong>7. Esteio Shopping com o Calebe de volta.</strong> Com o time completo, a loja precisa recuperar o patamar de R$ 35 mil. Na S1 fez R$ 3.770, com o Filipe liderando (R$ 2.497).</div>
     <div class="ins ye"><strong>8. Realidade da meta anual.</strong> Acumulado Jan–Set: R$ 1.852.742. Para R$ 3 milhões faltariam R$ 1.147.258 em 3 meses — R$ 382 mil por mês. Mantendo o ritmo atual e com um dezembro forte, o ano tende a fechar perto de R$ 2,6 milhões.</div>
     <div class="ins gr"><strong>9. Base para outubro.</strong> Outubro de 2025 fechou em R$ 186.900. Repetir setembro (R$ 208.766) já seria <strong>+11,7% ano contra ano</strong>; bater a meta de R$ 216 mil seria +15,6%.</div>
@@ -1672,7 +1758,7 @@ V.anual = function(){
 
   <div class="box"><div class="bt">Faturamento Jan–Dez — Todas as Lojas</div>
   ${buildGraficoAnualBarras(montarSerieMensalGeral(), [
-    {valor: 216000, label: 'Meta', cor: '#f39c12'},
+    {valor: 217000, label: 'Meta', cor: '#f39c12'},
     {valor: 250000, label: 'Meta máx.', cor: '#2ecc71'}
   ])}
   </div>
