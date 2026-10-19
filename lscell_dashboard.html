@@ -334,7 +334,7 @@ tr:hover td{background:#161616}
 <body>
 <div id="app-header">
 <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:4px"><img id="logo-header-img" alt="LSCELL" style="height:32px;width:auto"><h1 style="margin:0">LSCELL — DASHBOARD SEMANAL</h1></div>
-<p class="sub">Gerado em: Segunda, 12 de Outubro de 2026</p>
+<p class="sub">Gerado em: Segunda, 19 de Outubro de 2026</p>
 <div class="semana-badge"><span class="sbadge" id="semana-badge-txt">📅 ...</span></div>
 <div id="main-nav-container"></div>
 <div id="tabs"></div>
@@ -347,96 +347,96 @@ const LOGO_B64 = 'iVBORw0KGgoAAAANSUhEUgAAAGsAAABuCAYAAAAgcu2/AAAKMWlDQ1BJQ0MgUH
 
 /* ===== DADOS_START ===== */
 const MES_ATUAL = 'Outubro';
-const SEM_ATUAL = 1;
+const SEM_ATUAL = 2;
 const META_MES_GERAL = 217000;
 const DIAS_POR_SEMANA = [9, 5, 6, 6]; // S1=1-10out (1-3 + 5-10), S2=13-17 (12/out feriado), S3=19-24, S4=26-31
 const DIAS_HIST_S = [6,6,6,6];
 const PESO_META_SEM = [0.30, 0.20, 0.25, 0.25]; // divisao da meta mensal por semana (igual a planilha) // base historica: semanas de 6 dias
-const SEMANA_ATUAL_PARCIAL = false; // S1 fechada (1 a 10/out, 9 dias)
-const DIAS_REALIZADOS_SEM_ATUAL = 9;
+const SEMANA_ATUAL_PARCIAL = false; // S2 fechada (13 a 17/out, 5 dias)
+const DIAS_REALIZADOS_SEM_ATUAL = 5;
 const MESES_FECHADOS_LABELS = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro"];
 
 const GERAL = {
   s: [
     {n:'S1', fat:86117, meta:65100, real:true},
-    {n:'S2', fat:0, meta:43400, real:false},
+    {n:'S2', fat:35976, meta:43400, real:true},
     {n:'S3', fat:0, meta:54250, real:false},
     {n:'S4', fat:0, meta:54250, real:false},
   ],
-  fat_real: 86117,
+  fat_real: 122093,
   fat_proj: 0,
   meta: 217000,
-  tm_real: 108,
-  orc_real: 616,
+  tm_real: 98,
+  orc_real: 940,
 };
 GERAL.fat_total_proj = GERAL.fat_real + GERAL.fat_proj;
 
 // Metas reajustadas out/2026 (planilha 09/out): Esteio 45k, Parque 45k, Canoas 36k, Shop 35k, Gravatai (Rondon) 33k, Avenida 23k = 217k | niveis 217k/230k/250k | semanas 30/20/25/25%
 const LOJAS = {
   'Esteio': {
-    meta:45000, tm:[132.65], orc:97,
+    meta:45000, tm:[132.65, 107.9], orc:157,
     feriados:[0,0,0,0], // 12/out (feriado) ja descontado em DIAS_POR_SEMANA (S2 = 5 dias)
-    s_real:[16421.85], s_meta:[13500, 9000, 11250, 11250],
+    s_real:[16421.85, 10499.15], s_meta:[13500, 9000, 11250, 11250],
     hist_s1:[7746, 7746, 13737, 25276, 15036, 11208, 15644, 12030, 13942], hist_s2:[9317, 8966, 8967, 10425, 11971, 12677, 14737, 9649, 12980],
     hist_s3:[8093, 5165, 12109, 6037, 5913, 10012, 9686, 7718, 10347], hist_s4:[7686, 8282, 12032, 3904, 14788, 12262, 7537, 17379, 13412],
     prodMetaMes:25000, servMetaMes:20000,
-    prodSReal:[12866.85], prodSMeta:[7500, 5000, 6250, 6250],
-    servSReal:[3555.0], servSMeta:[6000, 4000, 5000, 5000],
+    prodSReal:[12866.85, 6474.15], prodSMeta:[7500, 5000, 6250, 6250],
+    servSReal:[3555.0, 4025.0], servSMeta:[6000, 4000, 5000, 5000],
     fat2025:[32491, 39284, 33147, 38118, 44593, 34250, 31719, 45454, 37629, 41218, 46211, 55123]
   },
   'Esteio Shop.': {
-    meta:35000, tm:[85.83], orc:89,
+    meta:35000, tm:[85.83, 62.68], orc:137,
     feriados:[0,0,0,0], // 12/out (feriado) ja descontado em DIAS_POR_SEMANA (S2 = 5 dias)
-    s_real:[10339.08], s_meta:[10500, 7000, 8750, 8750],
+    s_real:[10339.08, 3623.56], s_meta:[10500, 7000, 8750, 8750],
     hist_s1:[4335, 4335, 7189, 10900, 11336, 9591, 16169, 13506, 6214], hist_s2:[4084, 5119, 7320, 5021, 6114, 6809, 8438, 8656, 7103],
     hist_s3:[5009, 3949, 7177, 7681, 9768, 12928, 3723, 9518, 5857], hist_s4:[6802, 4396, 7144, 6178, 6770, 6360, 5138, 6114, 6532],
     prodMetaMes:31000, servMetaMes:4000,
-    prodSReal:[7639.28], prodSMeta:[9300, 6200, 7750, 7750],
-    servSReal:[2699.8], servSMeta:[1200, 800, 1000, 1000],
+    prodSReal:[7639.28, 3008.56], prodSMeta:[9300, 6200, 7750, 7750],
+    servSReal:[2699.8, 615.0], servSMeta:[1200, 800, 1000, 1000],
     fat2025:[30715, 25724, 29990, 23927, 38002, 26488, 25549, 30020, 27225, 29370, 23435, 44958]
   },
   'Canoas': {
-    meta:36000, tm:[118.71], orc:151,
+    meta:36000, tm:[118.71, 52.71], orc:220,
     feriados:[0,0,0,0], // 12/out (feriado) ja descontado em DIAS_POR_SEMANA (S2 = 5 dias)
-    s_real:[21333.81], s_meta:[10800, 7200, 9000, 9000],
+    s_real:[21333.81, 4916.9], s_meta:[10800, 7200, 9000, 9000],
     hist_s1:[10278, 10278, 7786, 13771, 18700, 9047, 11372, 13651, 8002], hist_s2:[8088, 3914, 8922, 6186, 7921, 11965, 8133, 6559, 7964],
     hist_s3:[5679, 3994, 9190, 8823, 10778, 11442, 7576, 7662, 7478], hist_s4:[12346, 9012, 10437, 10840, 11767, 11887, 7559, 11499, 9404],
     prodMetaMes:23000, servMetaMes:13000,
-    prodSReal:[17888.81], prodSMeta:[6900, 4600, 5750, 5750],
-    servSReal:[3445.0], servSMeta:[3900, 2600, 3250, 3250],
+    prodSReal:[17888.81, 3636.9], prodSMeta:[6900, 4600, 5750, 5750],
+    servSReal:[3445.0, 1280.0], servSMeta:[3900, 2600, 3250, 3250],
     fat2025:[36937, 27521, 30928, 31359, 38043, 33162, 31242, 29623, 29928, 35887, 32598, 43698]
   },
   'Avenida': {
-    meta:23000, tm:[208.65], orc:57,
+    meta:23000, tm:[208.65, 87.34], orc:85,
     feriados:[0,0,0,0], // 12/out (feriado) ja descontado em DIAS_POR_SEMANA (S2 = 5 dias)
-    s_real:[13893.09], s_meta:[6900, 4600, 5750, 5750],
+    s_real:[13893.09, 3355.55], s_meta:[6900, 4600, 5750, 5750],
     hist_s1:[4441, 4201, 4252, 5301, 11281, 5058, 12769, 9610, 6103], hist_s2:[3186, 1720, 1754, 3704, 10245, 5301, 5532, 2206, 3124],
     hist_s3:[3013, 3872, 3404, 2069, 3647, 9156, 14219, 7027, 8648], hist_s4:[3294, 3660, 2159, 2895, 8512, 6560, 7176, 8326, 7037],
     prodMetaMes:15000, servMetaMes:8000,
-    prodSReal:[11893.09], prodSMeta:[4500, 3000, 3750, 3750],
-    servSReal:[2000.0], servSMeta:[2400, 1600, 2000, 2000],
+    prodSReal:[11893.09, 2445.55], prodSMeta:[4500, 3000, 3750, 3750],
+    servSReal:[2000.0, 910.0], servSMeta:[2400, 1600, 2000, 2000],
     fat2025:[17271, 11977, 17021, 15576, 19922, 14944, 17723, 14688, 15724, 17609, 15065, 18887]
   },
   'Parque': {
-    meta:45000, tm:[79.5], orc:140,
+    meta:45000, tm:[79.5, 97.01], orc:214,
     feriados:[0,0,0,0], // 12/out (feriado) ja descontado em DIAS_POR_SEMANA (S2 = 5 dias)
-    s_real:[16274.68], s_meta:[13500, 9000, 11250, 11250],
+    s_real:[16274.68, 8448.8], s_meta:[13500, 9000, 11250, 11250],
     hist_s1:[12552, 12552, 10794, 20080, 14303, 6822, 19136, 12637, 11714], hist_s2:[8687, 8787, 6226, 12985, 9318, 12429, 7017, 4985, 6559],
     hist_s3:[10530, 4147, 10007, 7151, 10927, 9747, 7622, 7188, 5622], hist_s4:[7049, 6257, 7626, 4449, 14574, 9454, 5869, 10627, 11965],
     prodMetaMes:33000, servMetaMes:12000,
-    prodSReal:[11129.88], prodSMeta:[9900, 6600, 8250, 8250],
-    servSReal:[5144.8], servSMeta:[3600, 2400, 3000, 3000],
+    prodSReal:[11129.88, 7178.8], prodSMeta:[9900, 6600, 8250, 8250],
+    servSReal:[5144.8, 1270.0], servSMeta:[3600, 2400, 3000, 3000],
     fat2025:[48392, 44975, 40134, 41025, 47019, 37364, 41215, 39820, 40057, 37033, 42603, 51598]
   },
   'Gravataí': {
-    meta:33000, tm:[61.36], orc:82,
+    meta:33000, tm:[61.36, 59.6], orc:127,
     feriados:[0,0,0,0], // 12/out (feriado) ja descontado em DIAS_POR_SEMANA (S2 = 5 dias)
-    s_real:[7854.3], s_meta:[9900, 6600, 8250, 8250],
+    s_real:[7854.3, 5132.1], s_meta:[9900, 6600, 8250, 8250],
     hist_s1:[7180, 7180, 7142, 18145, 14204, 11054, 9436, 10245, 5703], hist_s2:[5385, 6129, 8073, 11657, 9671, 9115, 6324, 8489, 16761],
     hist_s3:[6368, 3771, 7424, 10971, 5905, 5675, 8318, 6128, 6521], hist_s4:[5588, 8094, 10310, 5936, 8164, 7329, 6774, 7335, 9776],
     prodMetaMes:18000, servMetaMes:15000,
-    prodSReal:[5059.3], prodSMeta:[5400, 3600, 4500, 4500],
-    servSReal:[2795.0], servSMeta:[4500, 3000, 3750, 3750],
+    prodSReal:[5059.3, 2682.1], prodSMeta:[5400, 3600, 4500, 4500],
+    servSReal:[2795.0, 2450.0], servSMeta:[4500, 3000, 3750, 3750],
     fat2025:[26986, 29489, 26509, 31871, 25085, 29126, 28128, 24497, 24287, 25782, 26994, 30779]
   }
 };
@@ -1484,15 +1484,16 @@ alertas(){
   </div>
 
   <div class="box"><div class="bt">🎯 Pontos para Cuidar em Outubro</div>
-    <div class="ins ye"><strong>1. Calendário do mês.</strong> A S1 agora vai de 1 a 10/10 (9 dias). Hoje, 12/10, é feriado — a S2 fica com só 5 dias (13 a 17), a S3 vai de 19 a 24 e a S4 de 26 a 31 (6 dias cada). Total de <strong>26 dias úteis</strong>, faltam 17. Divisão da meta: 30% / 20% / 25% / 25%.</div>
-    <div class="ins gr"><strong>2. S1 forte: R$ 86.117 — 132% da meta da semana.</strong> Foram R$ 9.569 por dia útil, 15% acima da média diária de setembro (R$ 8.351). Já são 40% da meta do mês com 35% dos dias. O produto puxou (R$ 66.477, 153% da meta da semana); o serviço ficou em R$ 19.640 (91%).</div>
-    <div class="ins gr"><strong>3. Projeção: R$ 232.616 (107%).</strong> Passa a 1ª meta (R$ 217 mil) e encosta na 2ª (R$ 230 mil). Para a 1ª faltam R$ 130.883 = <strong>R$ 7.699/dia</strong>; para a 2ª, R$ 8.464/dia; para a 3ª (R$ 250 mil), R$ 9.640/dia — praticamente o ritmo da S1.</div>
-    <div class="ins re"><strong>4. Cuidado com a segunda metade.</strong> Em setembro o ritmo caiu 36% depois da S2 (de R$ 10.617 para R$ 6.840 por dia). Se outubro repetir esse ritmo nos 17 dias que faltam, o mês fecha perto de R$ 202 mil — abaixo da meta. A projeção de 107% depende de segurar um ritmo próximo de R$ 7.700/dia até o fim.</div>
-    <div class="ins re"><strong>5. Serviço ainda abaixo em 4 lojas.</strong> Contra a meta de serviço da S1: Esteio 59% (R$ 3.555 de R$ 6.000), Gravataí 62%, Avenida 83% e Canoas 88%. Parque (143%) e Esteio Shopping (225%) passaram.</div>
-    <div class="ins gr"><strong>6. Canoas e Avenida dobraram a meta da semana.</strong> Canoas fez R$ 21.334 (198% da S1) e Avenida R$ 13.893 (201%). Na Avenida o ticket médio de produto foi R$ 209, muito acima do normal — provavelmente venda de aparelho pontual. Por isso a projeção da Avenida (148%) pode estar otimista.</div>
-    <div class="ins re"><strong>7. Gravataí e Esteio Shopping abaixo.</strong> Gravataí fez R$ 7.854 (79% da S1) e projeta 81% do mês; o Henrique fez só R$ 315 em produto. Esteio Shopping ficou em 98% da S1, mas projeta 84% — precisa de R$ 1.451/dia para a 1ª meta.</div>
-    <div class="ins gr"><strong>8. Vendedores na S1.</strong> Brenda Morais lidera com R$ 13.893, seguida de Débora Pereira (R$ 11.356) e Gabrieli Rossano (R$ 9.978). Abaixo do ritmo: Henrique Arruda (R$ 1.350) e Filipe Boneto (R$ 4.376).</div>
-    <div class="ins gr"><strong>9. Base para outubro.</strong> Outubro de 2025 fechou em R$ 186.900. Bater a 1ª meta (R$ 217 mil) já seria +16,1% ano contra ano; a projeção atual (R$ 232.616) daria <strong>+24,5%</strong>.</div>
+    <div class="ins ye"><strong>1. Calendário do mês.</strong> S1 (1 a 10/10, 9 dias) e S2 (13 a 17/10, 5 dias por causa do feriado de 12/10) fechadas. Faltam a S3 (19 a 24) e a S4 (26 a 31), 6 dias cada — <strong>12 dias úteis</strong> de 26.</div>
+    <div class="ins re"><strong>2. S2 abaixo: R$ 35.976 — 83% da meta da semana (R$ 43.400).</strong> Foram R$ 7.195 por dia útil, 25% abaixo da S1 (R$ 9.569/dia). Produto fez R$ 25.426 (88% da meta da semana) e serviço R$ 10.550 (73%).</div>
+    <div class="ins gr"><strong>3. Acumulado: R$ 122.093 — 56% da meta com 54% dos dias.</strong> Ainda à frente do calendário, graças à S1. Projeção: <strong>R$ 222.511 (103%)</strong> — passa a 1ª meta (R$ 217 mil), mas se afastou da 2ª.</div>
+    <div class="ins re"><strong>4. O ritmo da S2 não fecha a meta.</strong> Para a 1ª meta faltam R$ 94.907 = <strong>R$ 7.909/dia</strong> nos 12 dias. Para a 2ª (R$ 230 mil), R$ 8.992/dia; para a 3ª (R$ 250 mil), R$ 10.659/dia. Se S3 e S4 repetirem o ritmo da S2 (R$ 7.195/dia), o mês fecha perto de R$ 208 mil (96%) — mesmo filme de setembro, quando a segunda metade caiu.</div>
+    <div class="ins re"><strong>5. Serviço é o ponto fraco.</strong> Acumulado de R$ 30.190 contra meta de R$ 72.000 — só 42% com 54% dos dias. Na S2, contra a meta da semana: Canoas 49%, Parque 53%, Avenida 57%, Esteio Shopping 77%, Gravataí 82%. Só Esteio bateu (101%).</div>
+    <div class="ins ye"><strong>6. Canoas e Avenida voltaram ao normal.</strong> Depois de dobrarem a meta na S1, fizeram 68% (Canoas, R$ 4.917) e 73% (Avenida, R$ 3.356) da S2. O ticket médio de produto caiu de R$ 119 para R$ 53 em Canoas e de R$ 209 para R$ 87 na Avenida — confirma que a S1 teve vendas pontuais. Mesmo assim as duas já estão em 73% e 75% da meta do mês.</div>
+    <div class="ins re"><strong>7. Esteio Shopping e Gravataí preocupam.</strong> Esteio Shopping fez R$ 3.624 na S2 (52% da semana) e está em 40% da meta do mês, projetando 76% — precisa de R$ 1.753/dia. Gravataí está em 39% e projeta 77% — precisa de R$ 1.668/dia. Parque (94% da S2) projeta 98%, encostando na meta.</div>
+    <div class="ins gr"><strong>8. Esteio foi a única loja acima da meta na S2:</strong> R$ 10.499 (117%), com serviço batendo a meta. Projeta 108% do mês.</div>
+    <div class="ins ye"><strong>9. Vendedores na S2.</strong> Melhores da semana: Caio Elias (R$ 5.340), Levy Vargas (R$ 5.160) e Davi Vargas (R$ 5.114). Abaixo do ritmo: Henrique Arruda (R$ 715) e Calebe Luike (R$ 1.479, sem serviço). No mês, Brenda Morais já passou do piso com R$ 17.249.</div>
+    <div class="ins gr"><strong>10. Base para outubro.</strong> Outubro de 2025 fechou em R$ 186.900. A projeção atual (R$ 222.511) daria <strong>+19,1%</strong> ano contra ano.</div>
   </div>
 
   <div class="box"><div class="bt">🏪 Diagnóstico por Loja — Semana ${SEM_ATUAL}</div>
@@ -2628,46 +2629,46 @@ curTab = 'home';
 
 // ── RANKING VENDEDORES ──
 
-window.RKM=["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro (S1)"];
+window.RKM=["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro (S2)"];
 window.RKMA=["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out"];
 window.RKP=[false,false,false,false,false,false,false,false,false,true];
 
 window.RKD=[
   {loja:'Esteio',nome:'Caio Elias',ideal:22500,piso:16000,pm:12500,sm:10000,
    ferias:{8:true},
-   prod:[16325, 9196, 9723, 17989, 27947, 22900, 14354, 20699, 410, 6897],serv:[6615, 5755, 8220, 7680, 5715, 9595, 7185, 7235, 225, 2145],
-   prodSem:[6896.72, 0.0, 0.0, 0.0],servSem:[2145.0, 0.0, 0.0, 0.0]},
+   prod:[16325, 9196, 9723, 17989, 27947, 22900, 14354, 20699, 410, 11141],serv:[6615, 5755, 8220, 7680, 5715, 9595, 7185, 7235, 225, 3240],
+   prodSem:[6896.72, 4244.55, 0.0, 0.0],servSem:[2145.0, 1095.0, 0.0, 0.0]},
   {loja:'Esteio',nome:'Levy Vargas',ideal:22500,piso:16000,pm:12500,sm:10000,
-   prod:[0, 0, 0, 0, 7745, 10664, 22250, 15012, 20037, 5970],serv:[0, 0, 0, 0, 1935, 2930, 3815, 2680, 5900, 1120],
-   prodSem:[5970.13, 0.0, 0.0, 0.0],servSem:[1120.0, 0.0, 0.0, 0.0]},
+   prod:[0, 0, 0, 0, 7745, 10664, 22250, 15012, 20037, 8200],serv:[0, 0, 0, 0, 1935, 2930, 3815, 2680, 5900, 4050],
+   prodSem:[5970.13, 2229.6, 0.0, 0.0],servSem:[1120.0, 2930.0, 0.0, 0.0]},
   {loja:'Esteio Shop.',nome:'Calebe Luike',ideal:17500,piso:16000,pm:15500,sm:2000,
    lojaMes:{8:'Esteio'}, // cobrindo ferias do Caio em set
-   prod:[16614, 11965, 22461, 21232, 19556, 16189, 12486, 15851, 18544, 3723],serv:[6359, 4570, 5569, 5434, 2015, 5224, 3664, 2924, 8395, 2530],
-   prodSem:[3722.98, 0.0, 0.0, 0.0],servSem:[2529.8, 0.0, 0.0, 0.0]},
+   prod:[16614, 11965, 22461, 21232, 19556, 16189, 12486, 15851, 18544, 5202],serv:[6359, 4570, 5569, 5434, 2015, 5224, 3664, 2924, 8395, 2530],
+   prodSem:[3722.98, 1479.06, 0.0, 0.0],servSem:[2529.8, 0.0, 0.0, 0.0]},
   {loja:'Esteio Shop.',nome:'Filipe Boneto',ideal:17500,piso:16000,pm:15500,sm:2000,
-   prod:[7322, 11457, 28059, 18437, 13659, 9918, 13578, 12800, 17876, 3916],serv:[5865, 4285, 4614, 3395, 2160, 3665, 3740, 6450, 3350, 460],
-   prodSem:[3916.3, 0.0, 0.0, 0.0],servSem:[460.0, 0.0, 0.0, 0.0]},
+   prod:[7322, 11457, 28059, 18437, 13659, 9918, 13578, 12800, 17876, 5446],serv:[5865, 4285, 4614, 3395, 2160, 3665, 3740, 6450, 3350, 1075],
+   prodSem:[3916.3, 1529.5, 0.0, 0.0],servSem:[460.0, 615.0, 0.0, 0.0]},
   {loja:'Canoas',nome:'Gabrieli Rossano',ideal:17500,piso:16000,pm:11000,sm:6500,
-   prod:[13426, 12009, 16232, 4903, 24469, 23189, 14664, 13150, 12558, 8643],serv:[5265, 4000, 6225, 4695, 4542, 3010, 3890, 3905, 2150, 1335],
-   prodSem:[8642.9, 0.0, 0.0, 0.0],servSem:[1335.0, 0.0, 0.0, 0.0]},
+   prod:[13426, 12009, 16232, 4903, 24469, 23189, 14664, 13150, 12558, 10235],serv:[5265, 4000, 6225, 4695, 4542, 3010, 3890, 3905, 2150, 1880],
+   prodSem:[8642.9, 1592.4, 0.0, 0.0],servSem:[1335.0, 545.0, 0.0, 0.0]},
   {loja:'Canoas',nome:'Débora Pereira',ideal:17500,piso:16000,pm:11000,sm:6500,
-   prod:[0, 0, 0, 0, 6399, 13452, 10756, 15896, 12790, 9246],serv:[0, 0, 0, 0, 2065, 5190, 5330, 6310, 5350, 2110],
-   prodSem:[9245.91, 0.0, 0.0, 0.0],servSem:[2110.0, 0.0, 0.0, 0.0]},
+   prod:[0, 0, 0, 0, 6399, 13452, 10756, 15896, 12790, 11290],serv:[0, 0, 0, 0, 2065, 5190, 5330, 6310, 5350, 2845],
+   prodSem:[9245.91, 2044.5, 0.0, 0.0],servSem:[2110.0, 735.0, 0.0, 0.0]},
   {loja:'Avenida',nome:'Brenda Morais',ideal:25000,piso:16000,pm:7500,sm:7500,
-   prod:[8757, 2401, 6518, 7428, 25136, 19301, 32173, 17973, 16447, 11893],serv:[6839, 1920, 6250, 6540, 8849, 6359, 7523, 7042, 7800, 2000],
-   prodSem:[11893.09, 0.0, 0.0, 0.0],servSem:[2000.0, 0.0, 0.0, 0.0]},
+   prod:[8757, 2401, 6518, 7428, 25136, 19301, 32173, 17973, 16447, 14339],serv:[6839, 1920, 6250, 6540, 8849, 6359, 7523, 7042, 7800, 2910],
+   prodSem:[11893.09, 2445.55, 0.0, 0.0],servSem:[2000.0, 910.0, 0.0, 0.0]},
   {loja:'Gravataí',nome:'Elieser Garcia',ideal:25000,piso:16000,pm:14500,sm:10500,
-   prod:[1119, 7818, 17182, 33498, 26128, 21624, 11661, 17400, 22606, 4559],serv:[1965, 8509, 12830, 8260, 6645, 8765, 6924, 11125, 12365, 2185],
-   prodSem:[4559.3, 0.0, 0.0, 0.0],servSem:[2185.0, 0.0, 0.0, 0.0]},
+   prod:[1119, 7818, 17182, 33498, 26128, 21624, 11661, 17400, 22606, 7206],serv:[1965, 8509, 12830, 8260, 6645, 8765, 6924, 11125, 12365, 3955],
+   prodSem:[4559.3, 2647.1, 0.0, 0.0],servSem:[2185.0, 1770.0, 0.0, 0.0]},
   {loja:'Gravataí',nome:'Henrique Arruda',ideal:10000,piso:5000,pm:5500,sm:4500,
-   prod:[7173, 8200, 80, 2931, 495, 2575, 5507, 4363, 2925, 315],serv:[12436, 5715, 3750, 2055, 2690, 700, 6760, 6514, 1080, 1035],
-   prodSem:[315.0, 0.0, 0.0, 0.0],servSem:[1035.0, 0.0, 0.0, 0.0]},
+   prod:[7173, 8200, 80, 2931, 495, 2575, 5507, 4363, 2925, 350],serv:[12436, 5715, 3750, 2055, 2690, 700, 6760, 6514, 1080, 1715],
+   prodSem:[315.0, 35.0, 0.0, 0.0],servSem:[1035.0, 680.0, 0.0, 0.0]},
   {loja:'Parque',nome:'Davi Vargas',ideal:22500,piso:16000,pm:16500,sm:6000,
-   prod:[18504, 10794, 15075, 19302, 18712, 19628, 12087, 8470, 10483, 5522],serv:[8075, 4260, 7760, 4500, 6930, 3545, 1920, 2540, 6440, 2830],
-   prodSem:[5521.81, 0.0, 0.0, 0.0],servSem:[2829.8, 0.0, 0.0, 0.0]},
+   prod:[18504, 10794, 15075, 19302, 18712, 19628, 12087, 8470, 10483, 9611],serv:[8075, 4260, 7760, 4500, 6930, 3545, 1920, 2540, 6440, 3855],
+   prodSem:[5521.81, 4089.4, 0.0, 0.0],servSem:[2829.8, 1025.0, 0.0, 0.0]},
   {loja:'Parque',nome:'Gabriel Soares',ideal:22500,piso:16000,pm:16500,sm:6000,
-   prod:[14035, 13554, 10721, 17142, 21342, 13425, 19008, 15448, 15422, 5608],serv:[1950, 3135, 2595, 3720, 1964, 2704, 4290, 3150, 3410, 1890],
-   prodSem:[5608.07, 0.0, 0.0, 0.0],servSem:[1890.0, 0.0, 0.0, 0.0]}
+   prod:[14035, 13554, 10721, 17142, 21342, 13425, 19008, 15448, 15422, 8697],serv:[1950, 3135, 2595, 3720, 1964, 2704, 4290, 3150, 3410, 2135],
+   prodSem:[5608.07, 3089.4, 0.0, 0.0],servSem:[1890.0, 245.0, 0.0, 0.0]}
 ];
 window.rkIdx=9;
 
